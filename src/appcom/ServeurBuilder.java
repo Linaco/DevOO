@@ -30,7 +30,7 @@ public class ServeurBuilder {
 	public ServeurBuilder deployerServicesControleur(Controleur c){
 		
 		new ServiceControleur(c,"charger-plan",this.serveur){
-			protected String getReponse(InputStream in){
+			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			    DocumentBuilder builder;
@@ -40,18 +40,24 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						getControleur().chargerPlan(doc);
-						return "[format reponse encore inconnu]";
+						return Reponse.succes("La communication s'est bien déroulée.");
 						
 					} catch (SAXException e) {
 						e.printStackTrace();
+						return Reponse.erreur("Erreur lors du parsing.");
 					} catch (IOException e) {
 						e.printStackTrace();
+						return Reponse.erreur("Erreur lors de la lecture du fichier.");
 					}
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
+					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
 				}
-				return null;
 			}
+		};
+		
+		new ServiceControleur(c,"charger-livraison",this.serveur){
+			
 		};
 		
 		return this;
