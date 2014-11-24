@@ -25,10 +25,16 @@ public class ServiceHandler implements HttpHandler {
 	 * @param in Buffer du contenu de la requête si besoin
 	 * @return la reponse à donner au JS
 	 */
-	protected String getReponse(BufferedReader in){
+	protected Reponse getReponse(BufferedReader in){
 		return null;
 	}
-	protected String getReponse(InputStream in){
+	
+	/**
+	 * Génère une réponse au service pour le javascript
+	 * @param in Stream du contenu de la requête si besoin
+	 * @return la reponse à donner au JS
+	 */
+	protected Reponse getReponse(InputStream in){
 		return null;
 	}
 	
@@ -45,19 +51,20 @@ public class ServiceHandler implements HttpHandler {
         responseHeaders.set("Content-Type","text/plain");
         responseHeaders.set("Access-Control-Allow-Origin", "*");
         
-        String reponse = getReponse(t.getRequestBody());
-        if( reponse == null ){
+        Reponse rep = getReponse(t.getRequestBody());
+        if( rep == null ){
 	        BufferedReader in = new BufferedReader (new InputStreamReader (t.getRequestBody()));
-			reponse = getReponse(in);
-			if( reponse == null ) throw new IOException();
+			rep = getReponse(in);
+			if( rep == null ) throw new IOException();
         }
-        t.sendResponseHeaders(200, reponse.length());
+        t.sendResponseHeaders(rep.code, rep.message.length());
         
         OutputStream os = t.getResponseBody();
-        os.write(reponse.getBytes());
+        os.write(rep.message.getBytes());
         os.close();
 
 	}
+
 	
 	/**
 	 * 
@@ -65,6 +72,26 @@ public class ServiceHandler implements HttpHandler {
 	 */
 	public String getNomService(){
 		return this.nomService;
+	}
+	
+	/**
+	 * Cette classe a pour but de contenir les réponse aux requêtes http
+	 * @author rnicolet
+	 *
+	 */
+	protected static class Reponse{
+		 public int code;
+		 public String message;
+		 private Reponse(int code, String message){
+			 this.code = code;
+			 this.message = message;
+		 }
+		 public static Reponse erreur(String msg){
+			 return new Reponse(500,msg);
+		 }
+		 public static Reponse succes(String msg){
+			 return new Reponse(200,msg);
+		 }
 	}
 
 }
