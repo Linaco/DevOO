@@ -92,21 +92,27 @@ function Controleur(){
         //... récupérer fichier
         //c.appelService("test", [50,20], function(reponse){alert(reponse);});
     };
+    this._chargerPlanOk = function(msg){
+        vue.info(msg);
+        // vue.creerPlan();
+    }.bind(this);
     this.chargerPlan = function(evt){
-        var f = evt.target.files[0];
-        if(f){
-            var reader = new FileReader();
-            reader.onload = function(e){
-                com.appelService('charger-plan',[e.target.result],vue.info);
-            };
-            reader.readAsText(f);
-        }
-    };
+        com.envoyerXml(evt,'charger-plan',this._chargerPlanOk);
+    }.bind(this);
 
+    // déclenche le clic sur l'élément 'input' de la page html
     this.clicChargerLivraisons = function(){
         document.getElementById('charger-livraisons').click();
-        //... récupérer fichier
     };
+    // Handler pour le retour du service charger-livraisons
+    this._chargerLivraisonsOk = function(msg){
+        vue.info(msg);
+        // vue.creerPlan();
+    };
+    this.chargerLivraisons = function(evt){
+        com.envoyerXml(evt,'charger-livraisons',this._chargerLivraisonsOk);
+    }.bind(this);
+
     this.clicTelechargerInitineraire = function(){
         var pdf = new jsPDF();
         var elementHandler = {
@@ -265,14 +271,31 @@ function Com(){
     this.appelService = function(nomService, params, fonctionRetour){
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.open("POST","http://localhost:4500/"+nomService,false);
-        xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        //xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        xmlhttp.overrideMimeType('text/xml');
 
         var msg = "";
         for( var i = 0; i < params.length; ++i){
             msg += params[i];
         }
         xmlhttp.send(msg); // bloquant
-
         fonctionRetour(xmlhttp.responseText);
     }
+
+    this.envoyerXml = function(fileEvt, nomService, fonctionRetour){
+        var f = fileEvt.target.files[0];
+        if(f){
+            var extension = f.name.split('.').pop();
+            if(extension === "xml" || extension === "XML"){
+                var reader = new FileReader();
+                
+                reader.onload = function(e){
+                    this.appelService(nomService,[e.target.result],fonctionRetour);
+                }.bind(this);
+                reader.readAsText(f);
+            } else {
+                vue.erreur("Le fichier sélectionné (."+extension+") n'a pas la bonne extension (.xml) !");
+            }
+        }
+    }.bind(this);
 }
