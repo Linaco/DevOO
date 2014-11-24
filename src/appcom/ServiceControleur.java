@@ -1,12 +1,18 @@
 package appcom;
 
+import controleur.Controleur;
+
 public class ServiceControleur extends ServiceHandler {
 
-	protected Object controleur;
+	private Controleur controleur;
 	
-	public ServiceControleur(Object controleur, String nomService, ServeurLivraison serveur) {
+	public ServiceControleur(Controleur controleur, String nomService, ServeurLivraison serveur) {
 		super(nomService, serveur);
 		this.controleur = controleur;
+	}
+	
+	protected Controleur getControleur(){
+		return this.controleur;
 	}
 
 }
