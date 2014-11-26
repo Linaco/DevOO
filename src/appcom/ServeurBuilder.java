@@ -39,7 +39,9 @@ public class ServeurBuilder {
 					try {
 						
 						Document doc = builder.parse(in);
-						getControleur().chargerPlan(doc);
+						
+						this.getControleur().chargerPlan(doc);
+						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
 					} catch (SAXException e) {
