@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ public class FeuilleDeRoute {
     /**
      * 
      */
-    private Etape Itinéraire;
+    private Etape Itineraire;
 
 
     /**
@@ -35,14 +35,14 @@ public class FeuilleDeRoute {
     /**
      * @param Livraison
      */
-    public void ajouterLivraison(void Livraison) {
+    public void ajouterLivraison(Livraison l) {
         // TODO implement here
     }
 
     /**
      * @param idLivraison
      */
-    public void supprimerLivraison(void idLivraison) {
+    public void supprimerLivraison(int idLivraison) {
         // TODO implement here
     }
 

@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 import java.util.*;
 
@@ -21,7 +21,7 @@ public class Livraison {
     /**
      * 
      */
-    private pair<double, double> plageHoraireDemandee;
+    //private pair<double, double> plageHoraireDemandee;
 
     /**
      * 
@@ -32,23 +32,23 @@ public class Livraison {
     /**
      * @return
      */
-    public pair<double double> getPlageHoraire() {
+    /*public pair<double, double> getPlageHoraire() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /**
      * @return
      */
-    public bool isRealisable() {
+    public boolean isRealisable() {
         // TODO implement here
-        return null;
+        return false;
     }
 
     /**
      * @param double
      */
-    public void setHeurePassage(void double) {
+    public void setHeurePassage(double heure) {
         // TODO implement here
     }
 

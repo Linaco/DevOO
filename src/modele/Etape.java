@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public class Etape {
     /**
      * @param double
      */
-    public void setHeurePassagePrevue(void double) {
+    public void setHeurePassagePrevue(double heure) {
         // TODO implement here
     }
 
