@@ -5,27 +5,19 @@ import java.util.*;
 /**
  * 
  */
-public class Commande {
+public interface Commande {
 
     /**
      * 
      */
-    public Commande() {
-    }
-
+    public void executer();
 
     /**
      * 
      */
-    public void executer() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void annuler() {
-        // TODO implement here
-    }
+    public void annuler();
+    
+    ArrayList<String> arguments = new ArrayList<String>();
+    
 
 }
