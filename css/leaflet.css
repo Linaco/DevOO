@@ -181,7 +181,7 @@
 /* visual tweaks */
 
 .leaflet-container {
-	background: #06C;
+	background: #0f0933;
 	outline: 0;
 	}
 .leaflet-container a {
@@ -209,7 +209,7 @@
 	}
 .leaflet-bar a,
 .leaflet-bar a:hover {
-	background-color: #fff;
+	background-color: #ffffff;
 	border-bottom: 1px solid #ccc;
 	width: 26px;
 	height: 26px;
@@ -217,7 +217,7 @@
 	display: block;
 	text-align: center;
 	text-decoration: none;
-	color: #0066CC;
+	color: #20244e;
 	}
 .leaflet-bar a,
 .leaflet-control-layers-toggle {
