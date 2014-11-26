@@ -7,31 +7,28 @@ import modele.Livraison;
 /**
  * 
  */
-public class CommandeSupression extends Commande {
+public class CommandeSupression implements Commande {
 
-    /**
-     * 
-     */
-    public CommandeSupression() {
+    
+    public CommandeSupression(Livraison livraison) {
+    	this.livraison = livraison;
     }
 
-    /**
-     * 
-     */
+    
     private Livraison livraison;
 
-    /**
-     * 
-     */
+    
+    @Override
     public void annuler() {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
-    public void refaire() {
-        // TODO implement here
-    }
+	@Override
+	public void executer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+    
 
 }
