@@ -217,6 +217,85 @@ function VueIntersection(pos, id){
     return this;
 }
 
+
+var RainbowLine = L.FeatureGroup.extend({
+
+    options:{
+        weight: 5,
+    },
+
+    lines: [],
+    linepath: null,
+    dpos: null,
+
+    initialize: function(linepath, colors, options){
+        L.FeatureGroup.prototype.initialize.call(this,[]);
+        L.setOptions(this,options);
+        this.linepath = linepath;
+
+        var vect = [linepath[1][0]-linepath[0][0],linepath[1][1]-linepath[0][1]];
+        vect = [-vect[1],vect[0]]; // perp
+        var length = Math.sqrt(vect[1]*vect[1] + vect[0]*vect[0]);
+        if(length > 0) vect = [vect[0]/length,vect[1]/length];
+        var weight = this.options.weight/1000;
+        this.dpos = [vect[0]*weight,vect[1]*weight];
+
+        if(colors){
+            for(var i = 0; i < colors.length; ++i){
+                this.addColor(colors[i]);
+            }
+        }
+
+    },
+
+    addColor: function(color){
+        var path = [[this.linepath[0][0]+this.dpos[0]*this.lines.length,
+                    this.linepath[0][1]+this.dpos[1]*this.lines.length],
+                    [this.linepath[1][0]+this.dpos[0]*this.lines.length,
+                    this.linepath[1][1]+this.dpos[1]*this.lines.length]];
+        console.log(path);
+        var line = L.polyline(path,{color: color, opacity:1});
+        this.lines[this.lines.length] = line;
+        this.addLayer(line);
+    }
+
+});
+L.rainbowLine = function(linepath, colors, options){
+    return new RainbowLine(linepath,colors,options);
+};
+
+var fg = L.rainbowLine([[0.4,0.4],[0.5,0.5]],["blue","red","yellow","white","black","pink"]).addTo(map);
+
+function MultiLigne(ab, n, label){
+    this.lines = [];
+
+
+    this.addTo = function(map){
+        for(var i = 0; i < this.lines.length; ++i){
+            console.log(this.lines);
+            this.lines[i].addTo(map);
+        }
+    }.bind(this);
+
+    for(var i = 0; i < n; ++i){
+        this.lines[i] = L.polyline(ab,{weight:5,color:'#fff',opacity:0.8});
+        console.log(this.lines[i]);
+        if( label ){
+            this.lines[i].bindLabel(label);
+        }
+        
+        /*.on("mouseover", function (){
+            this.setStyle({color:"#0f0"});
+        })
+        .on("mouseout", function (){
+            this.setStyle({color:'#fff'});
+        });*/
+    }
+
+
+    return this;
+}
+
 function VueRoute(intersec1, intersec2, nom){
     // attributs
     this.A = intersec1;
@@ -264,7 +343,7 @@ var v2 = new VueIntersection([0.6,0.4],2).afficher();
 var r = new VueRoute(v1,v2,"Rue de la paix").afficher();
 
 ///////////////////////////////////////////////////
-// Class Vue
+// Class Com
 
 function Com(){
 
@@ -299,3 +378,17 @@ function Com(){
         }
     }.bind(this);
 }
+
+/*
+function addLine( A, B, label){
+    L.polyline([A,B],{weight:5,color:'#fff',opacity:0.8})
+        .addTo(map)
+        .bindLabel(label)
+        .on("mouseover", function (){
+            this.setStyle({color:"#0f0"});
+        })
+        .on("mouseout", function (){
+            this.setStyle({color:'#fff'});
+        });
+}
+*/

@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.*;
+import modele.GrapheRoutier.*;
 
 import tsp.TSP;
 
@@ -17,8 +18,8 @@ public class GrapheLivraison implements Graph {
 	
 	/**
 	 * 
-	 * @param matriceAdjacence Matrice contenant les couts des plus courts chemins entre chaque livraison. Le dépôt doit être à l'indice 0.
-	 * @param lLivraisons Liste des livraisons pour la tournée à calculer, ordonnée selon le même ordre que les colonnes de la matrice d'adjacence.
+	 * @param matriceAdjacence Matrice contenant les couts des plus courts chemins entre chaque livraison. Le depet doit etre a l'indice 0.
+	 * @param lLivraisons Liste des livraisons pour la tournee a calculer, ordonnee selon le meme ordre que les colonnes de la matrice d'adjacence.
 	 */
 	public GrapheLivraison(int[][] matriceAdjacence, List<Livraison> lLivraisons){
 		this.nbSommets = matriceAdjacence[0].length;
@@ -39,12 +40,14 @@ public class GrapheLivraison implements Graph {
 				}
 			}
 		}
+		maxArcCost = coutMaximum;
+		minArcCost = coutMinimum;
 		livraisons = lLivraisons;
 	}
-
+    
 	/**
 	 * 
-	 * @return La list ordonnée des livraisons si la tournée spécifiée est réalisable, null sinon
+	 * @return La list ordonnee des livraisons si la tournee specifiee est realisable, null sinon
 	 */
     public List<Livraison> calculerOrdreLivraisons() {
     	List<Livraison> lListe = new ArrayList<>();
@@ -60,7 +63,7 @@ public class GrapheLivraison implements Graph {
     	
     	int livraisonCourante = solution[0];
     	while(livraisonCourante != 0){
-    		lListe.add(livraisons.get(livraisonCourante));
+    		lListe.add(livraisons.get(livraisonCourante-1));
     		livraisonCourante=solution[livraisonCourante];
     	}
     	
@@ -113,9 +116,10 @@ public class GrapheLivraison implements Graph {
 	public int getNbSucc(int i) throws ArrayIndexOutOfBoundsException {
 		List<Integer> liste = new ArrayList<>();
 		for(int j=0;j<nbSommets;j++){
-			if(matriceAdjacence[i][j]!=-1) liste.add(j);
+			if(matriceAdjacence[i][j]!=-1) {liste.add(j);}
 		}
 		return liste.size();
 	}
 
+    
 }

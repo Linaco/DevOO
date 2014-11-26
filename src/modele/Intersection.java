@@ -1,7 +1,7 @@
 package modele;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class Intersection {
 	
@@ -14,18 +14,21 @@ public class Intersection {
 		this.x = x;
 		this.y = y;
 		this.troncSortants = new ArrayList<Route>();
+
 	}
 	
-	public void ajouterRoute(Route route){
-		this.troncSortants.add(route);
-	}
-	
+
 	public int getId(){
 		return id;
 	}
 	
 	public int getX(){
 		return x;
+	}
+
+
+	public void ajouterRoute(Route route) {
+		troncSortants.add(route);
 	}
 
 	public int getY(){

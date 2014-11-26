@@ -13,12 +13,13 @@ import org.w3c.dom.NodeList;
 public class GrapheRoutier {
 	
 	private List<Intersection> listeIntersection;
+	private List<Route> listeRoute;
 
-    /**
-     * 
-     */
+  
+    
     public GrapheRoutier() {
     	this.listeIntersection = new ArrayList<Intersection>();
+
     }
     
     public List<Intersection> consulterListeIntersection(){
@@ -29,9 +30,7 @@ public class GrapheRoutier {
     	this.listeIntersection.add(inter.getId(),inter);
     }
     
-    public Intersection rechercherInterParId(int id){
-    	return listeIntersection.get(id);
-    }
+   
     
    
 
@@ -39,8 +38,25 @@ public class GrapheRoutier {
     /**
      * 
      */
+
+    
+    
+    public Intersection rechercherInterParId(int id){
+    	return listeIntersection.get(id);
+    }
+    
+
     public void CalculerPlusCourtChemin() {
         // TODO implement here
     }
-
+    
+    public void AjouterIntersection(Intersection intersection) {
+    	listeIntersection.add(intersection.getId(), intersection);
+    }
+    
+    public void AjouterRoute(Route route) {
+    	listeRoute.add(route.getId(),route);
+    }
+    
+    
 }

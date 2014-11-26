@@ -3,6 +3,7 @@ package controleur;
 import java.util.Iterator;
 
 import org.w3c.dom.*;
+import modele.*;
 
 import modele.*;
 
@@ -16,7 +17,10 @@ public class Controleur {
 	
 	public int chargerPlan(Document plan){
 		//creation du graphe
+
 		grapheRoutier = new GrapheRoutier();
+
+
 		//premier passage et creation des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
 		
@@ -52,6 +56,7 @@ public class Controleur {
 				int idParent= Integer.parseInt(parent.getAttributes().getNamedItem("id").getTextContent());
 				Intersection papa = grapheRoutier.rechercherInterParId(idParent);
 				papa.ajouterRoute(r);
+
 				
 			}
 		}
