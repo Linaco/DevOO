@@ -13,7 +13,7 @@ public class Livraison {
 	private String heureDebut,heureFin;
 	private int id,idClient,adresse;
 	
-    public Livraison(Intersection inter, String heureDeb, string heureF, int id, int idClient, int adresse) {
+    public Livraison(Intersection inter, String heureDeb, String heureF, int id, int idClient, int adresse) {
     	PointDeLivraison = inter;
     	heureDebut = heureDeb;
     	heureFin = heureF;
