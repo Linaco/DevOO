@@ -40,6 +40,8 @@ public class GrapheLivraison implements Graph {
 				}
 			}
 		}
+		maxArcCost = coutMaximum;
+		minArcCost = coutMinimum;
 		livraisons = lLivraisons;
 	}
 
@@ -84,7 +86,7 @@ public class GrapheLivraison implements Graph {
     	
     	int livraisonCourante = solution[0];
     	while(livraisonCourante != 0){
-    		lListe.add(livraisons.get(livraisonCourante));
+    		lListe.add(livraisons.get(livraisonCourante-1));
     		livraisonCourante=solution[livraisonCourante];
     	}
     	
