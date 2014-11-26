@@ -19,7 +19,7 @@ public class MainClass {
 		Controleur c = new Controleur();
 		
 		ServeurBuilder.nouveauServeur()
-			.deployerServicesControleur(c);
+			.deployerServicesControleur(c).deployerServicesVue(c);
 		
 	}
 
