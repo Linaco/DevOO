@@ -164,8 +164,8 @@ function Vue(controleur){
     // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
     // Ajout des controls (boutons)
-    console.log("ctrl : ");
-    console.log(controleur);
+    //console.log("ctrl : ");
+    //console.log(controleur);
     L.control.zoom({position:'topright'}).addTo(this.map);
     L.easyButton('fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
     L.easyButton('fa-arrow-circle-right', controleur.retablir, 'Redo', this.map);
@@ -175,7 +175,7 @@ function Vue(controleur){
     L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
     this.controlCalcul = L.easyButton('fa-refresh', null, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
     this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
-    console.log(this.controlCalcul.getContainer().className);
+    //console.log(this.controlCalcul.getContainer().className);
     var controlFDR = L.easyButton('fa-file-text', controleur.clicTelechargerInitineraire, "Télécharger la feuille de route", this.map).setPosition('bottomright');
 
 }
@@ -218,15 +218,12 @@ function VueIntersection(pos, id){
 }
 
 
-var RainbowLine = L.FeatureGroup.extend({
+L.Rainbowline = L.FeatureGroup.extend({
 
     options:{
-        weight: 5,
+        weight: 0.002,
+        fillOpacity:0.8
     },
-
-    lines: [],
-    linepath: null,
-    dpos: null,
 
     initialize: function(linepath, colors, options){
         L.FeatureGroup.prototype.initialize.call(this,[]);
@@ -237,9 +234,10 @@ var RainbowLine = L.FeatureGroup.extend({
         vect = [-vect[1],vect[0]]; // perp
         var length = Math.sqrt(vect[1]*vect[1] + vect[0]*vect[0]);
         if(length > 0) vect = [vect[0]/length,vect[1]/length];
-        var weight = this.options.weight/1000;
+        var weight = this.options.weight;
         this.dpos = [vect[0]*weight,vect[1]*weight];
 
+        this.lines= [];
         if(colors){
             for(var i = 0; i < colors.length; ++i){
                 this.addColor(colors[i]);
@@ -249,52 +247,76 @@ var RainbowLine = L.FeatureGroup.extend({
     },
 
     addColor: function(color){
-        var path = [[this.linepath[0][0]+this.dpos[0]*this.lines.length,
-                    this.linepath[0][1]+this.dpos[1]*this.lines.length],
-                    [this.linepath[1][0]+this.dpos[0]*this.lines.length,
-                    this.linepath[1][1]+this.dpos[1]*this.lines.length]];
-        console.log(path);
-        var line = L.polyline(path,{color: color, opacity:1});
+        var toggle = this.lines.length%2 == 0 ? 1 : -1;
+        var d0 = Math.floor(this.lines.length/2);
+        var d1 = (d0+1)*toggle;
+        d0 *= toggle;
+        var path = [[this.linepath[0][0]+this.dpos[0]*d0,
+                    this.linepath[0][1]+this.dpos[1]*d0],
+                    [this.linepath[1][0]+this.dpos[0]*d0,
+                    this.linepath[1][1]+this.dpos[1]*d0],
+                    [this.linepath[1][0]+this.dpos[0]*d1,
+                    this.linepath[1][1]+this.dpos[1]*d1],
+                    [this.linepath[0][0]+this.dpos[0]*d1,
+                    this.linepath[0][1]+this.dpos[1]*d1]];
+
+        var opt = this.options;
+        opt.color = color;
+        var line = L.polygon(path,opt);
         this.lines[this.lines.length] = line;
         this.addLayer(line);
     }
 
 });
-L.rainbowLine = function(linepath, colors, options){
-    return new RainbowLine(linepath,colors,options);
+L.rainbowline = function(linepath, colors, options){
+    return new L.Rainbowline(linepath,colors,options);
 };
 
-var fg = L.rainbowLine([[0.4,0.4],[0.5,0.5]],["blue","red","yellow","white","black","pink"]).addTo(map);
+L.MultiRainbowline = L.FeatureGroup.extend({
+    initialize: function(paths, colors, options){
+        L.FeatureGroup.prototype.initialize.call(this,[]);
+        L.setOptions(this,options);
+        this._children = [];
 
-function MultiLigne(ab, n, label){
-    this.lines = [];
-
-
-    this.addTo = function(map){
-        for(var i = 0; i < this.lines.length; ++i){
-            console.log(this.lines);
-            this.lines[i].addTo(map);
+        for(var i = 0; i < paths.length; ++i){
+            this._children[i] = L.rainbowline(paths[i],colors,options);
+            console.log(i);
+            this.addLayer(this._children[i]);
         }
-    }.bind(this);
+    },
 
-    for(var i = 0; i < n; ++i){
-        this.lines[i] = L.polyline(ab,{weight:5,color:'#fff',opacity:0.8});
-        console.log(this.lines[i]);
-        if( label ){
-            this.lines[i].bindLabel(label);
+    addColor: function(color){
+        for(var i = 0; i < this._children; ++i ){
+            this._children[i].addColor(color);
         }
-        
-        /*.on("mouseover", function (){
-            this.setStyle({color:"#0f0"});
-        })
-        .on("mouseout", function (){
-            this.setStyle({color:'#fff'});
-        });*/
     }
-
-
-    return this;
+});
+L.multiRainbowline = function(paths, colors, options){
+    return new L.MultiRainbowline(paths, colors, options);
 }
+
+L.Arc = L.Polyline.extend({
+    initialize: function(ab, offset){
+        var radius = this._radius(ab[0], ab[1], offset);
+        this._createPath(ab[0], ab[1], radius);
+    },
+
+    _radius: function(a, b, offset){
+        var abpow2 = Math.pow(b[0]-a[0],2)+Math.pow(b[1]-a[1],2);
+        return 0.5*offset + abpow2/(8*offset);
+    },
+    _createPath: function(a, b, r){
+
+    }
+});
+
+var path = [[0.4,0.4],[0.6,0.5]];
+//var fg = L.rainbowLine(path,["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"]).bindLabel("HEY").on("click",function(){alert("hey");}).addTo(map);
+//var fg2 = L.rainbowLine([[0.6,0.5],[0.7,0.4]],["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"]).bindLabel("HEY").on("click",function(){alert("hey");}).addTo(map);
+var colors = ["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"];
+var paths = [[[0.4,0.4],[0.6,0.5]],[[0.6,0.5],[0.7,0.2]],[[0.7,0.2],[0.4,0.4]]];
+var mrl = L.multiRainbowline(paths,colors).addTo(map);
+
 
 function VueRoute(intersec1, intersec2, nom){
     // attributs
@@ -302,7 +324,7 @@ function VueRoute(intersec1, intersec2, nom){
     this.B = intersec2;
     this.nom = nom;
 
-    this.paramDefaut = {weight:5,color:'#fff',opacity:0.8};
+    this.paramDefaut = {weight:5,color:'#5f5f5f',opacity:0.8};
     
     this.ligne;
 
@@ -324,14 +346,13 @@ function VueRoute(intersec1, intersec2, nom){
     }
 
     // Constructeur
-    console.log(this);
     this.ligne = L.polyline([this.A.pos,this.B.pos],this.paramDefaut)
         .bindLabel(this.nom)
         .on("mouseover", function (){
             this.setStyle({color:"#0f0"});
         })
         .on("mouseout", function (){
-            this.setStyle({color:'#fff'});
+            this.setStyle({color:'#2f2f2f'});
         })
         .on('click', this._clic, this);
 
