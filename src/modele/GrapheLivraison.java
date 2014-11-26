@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.*;
+import modele.GrapheRoutier.*;
 
 import tsp.TSP;
 
@@ -39,9 +40,34 @@ public class GrapheLivraison implements Graph {
 				}
 			}
 		}
+		maxArcCost = coutMaximum;
+		minArcCost = coutMinimum;
 		livraisons = lLivraisons;
 	}
 
+<<<<<<< HEAD
+	private List<Livraison> listeLivraison;
+	private Intersection entrepot;
+	private String heureDebut,heureFin;
+	private int id,idClient,adresse;
+    
+    public GrapheLivraison(Intersection entrepot) {
+    	listeLivraison = = new ArrayList<Livraison>();
+    	this.entrepot = entrepot;
+    }
+
+    public void calculerOrdreLivraisons() {
+        // TODO implement here
+    }
+    
+    public void AjouterLivraison(Livraison livraison) {
+    	this.listeLivraison.add(livraison.getId(),livraison);
+    }
+    
+    public void SupprimerLivraison(int idLivraison) {
+    	this.listeLivraison.add(idLivraison, null);
+    }
+=======
 	/**
 	 * 
 	 * @return La list ordonnée des livraisons si la tournée spécifiée est réalisable, null sinon
@@ -60,7 +86,7 @@ public class GrapheLivraison implements Graph {
     	
     	int livraisonCourante = solution[0];
     	while(livraisonCourante != 0){
-    		lListe.add(livraisons.get(livraisonCourante));
+    		lListe.add(livraisons.get(livraisonCourante-1));
     		livraisonCourante=solution[livraisonCourante];
     	}
     	
@@ -117,5 +143,7 @@ public class GrapheLivraison implements Graph {
 		}
 		return liste.size();
 	}
+>>>>>>> 9665d5aa406cb27ff1de3eccc7e0f79b6e64d349
 
+    
 }
