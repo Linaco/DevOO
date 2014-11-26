@@ -237,7 +237,7 @@ var RainbowLine = L.FeatureGroup.extend({
         vect = [-vect[1],vect[0]]; // perp
         var length = Math.sqrt(vect[1]*vect[1] + vect[0]*vect[0]);
         if(length > 0) vect = [vect[0]/length,vect[1]/length];
-        var weight = this.options.weight/500;
+        var weight = this.options.weight/1000;
         this.dpos = [vect[0]*weight,vect[1]*weight];
 
         if(colors){
@@ -254,7 +254,7 @@ var RainbowLine = L.FeatureGroup.extend({
                     [this.linepath[1][0]+this.dpos[0]*this.lines.length,
                     this.linepath[1][1]+this.dpos[1]*this.lines.length]];
         console.log(path);
-        var line = L.polyline(path,{color: color});
+        var line = L.polyline(path,{color: color, opacity:1});
         this.lines[this.lines.length] = line;
         this.addLayer(line);
     }
@@ -264,7 +264,7 @@ L.rainbowLine = function(linepath, colors, options){
     return new RainbowLine(linepath,colors,options);
 };
 
-var fg = L.rainbowLine([[0.4,0.4],[0.5,0.5]],["blue","red","yellow"]).addTo(map);
+var fg = L.rainbowLine([[0.4,0.4],[0.5,0.5]],["blue","red","yellow","white","black","pink"]).addTo(map);
 
 function MultiLigne(ab, n, label){
     this.lines = [];
