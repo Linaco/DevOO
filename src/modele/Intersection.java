@@ -16,7 +16,9 @@ public class Intersection {
 		this.troncSortants = new ArrayList<Route>();
 	}
 	
-	
+	public void ajouterRoute(Route route){
+		this.troncSortants.add(route);
+	}
 	
 	public int getId(){
 		return id;

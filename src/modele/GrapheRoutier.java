@@ -21,6 +21,10 @@ public class GrapheRoutier {
     	this.listeIntersection = new ArrayList<Intersection>();
     }
     
+    public List<Intersection> consulterListeIntersection(){
+    	return listeIntersection;
+    }
+    
     public void ajouterIntersection(Intersection inter){
     	this.listeIntersection.add(inter.getId(),inter);
     }

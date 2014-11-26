@@ -8,26 +8,16 @@ import modele.*;
 
 public class Controleur {
 	
+	private GrapheRoutier grapheRoutier;
+	
 	public Controleur(){
 		
 	}
 	
-	
-		/*
-		public boolean existeDejaParId(int idRoute ){
-			Iterator<Route> it = listRoutes.iterator();
-			while(it.hasNext()){
-				if(it.next().getId() == idRoute){
-					return true;
-				}
-			}		
-			return false;
-		}*/
-	
 	public int chargerPlan(Document plan){
-		//création du graphe
-		GrapheRoutier graphe = new GrapheRoutier();
-		//premier passage et création des intersections
+		//creation du graphe
+		grapheRoutier = new GrapheRoutier();
+		//premier passage et creation des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
 		
 		for (int i = 0; i<intersections.getLength()-1;i++){
@@ -38,21 +28,30 @@ public class Controleur {
 				int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 				int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
 				Intersection inter = new Intersection(id,x,y);
-				graphe.ajouterIntersection(inter);
+				grapheRoutier.ajouterIntersection(inter);
 			}
 		}
 		
-		//deuxième passage 
+		//deuxieme passage 
 		NodeList routes = plan.getElementsByTagName("LeTronconSortant");
 		for(int j = 0 ; j<routes.getLength()-1 ; j++){
 			Node route = routes.item(j);
 			if(route.hasAttributes()){
 				NamedNodeMap attr = route.getAttributes();
+				
+				//creation de route
 				String nom = attr.getNamedItem("nomRue").getTextContent();
 				double vitesse = Double.parseDouble(attr.getNamedItem("vitesse").getTextContent());
 				double longueur = Double.parseDouble(attr.getNamedItem("longueur").getTextContent());
 				int idInter = Integer.parseInt(attr.getNamedItem("idNoeudDestination").getTextContent());
-				Intersection inter = graphe.rechercherInterParId(idInter);
+				Intersection inter = grapheRoutier.rechercherInterParId(idInter);
+				Route r = new Route(nom,vitesse,longueur,inter);
+				
+				//association a l'intersection parent
+				Node parent = route.getParentNode();
+				int idParent= Integer.parseInt(parent.getAttributes().getNamedItem("id").getTextContent());
+				Intersection papa = grapheRoutier.rechercherInterParId(idParent);
+				papa.ajouterRoute(r);
 				
 			}
 		}

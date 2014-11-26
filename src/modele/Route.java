@@ -14,7 +14,7 @@ public class Route {
 	public Route(String nom, double vitesse, double longueur, Intersection inter1){
 		this.name = nom;
 		this.vitesse = vitesse;
-		this.longueur = longueur;a
+		this.longueur = longueur;
 		this.id = idRoutes++;
 		this.inter1 = inter1;
 	}
