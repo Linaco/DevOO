@@ -10,6 +10,11 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+/**
+ * 
+ * @author Robin Nicolet - 2081 on GitHub
+ *
+ */
 public class ServiceHandler implements HttpHandler {
 
 	private String nomService;
@@ -37,6 +42,14 @@ public class ServiceHandler implements HttpHandler {
 	protected Reponse getReponse(InputStream in){
 		return null;
 	}
+	/**
+	 * Génère une réponse au service pour le javascript
+	 * @param in Stream du contenu de la requête si besoin
+	 * @return la reponse à donner au JS
+	 */
+	protected Reponse getReponse(String in){
+		return null;
+	}
 	
 	/**
 	 * Gère une requete : récupère le contenu, crée une reponse puis la renvoie
@@ -55,7 +68,15 @@ public class ServiceHandler implements HttpHandler {
         if( rep == null ){
 	        BufferedReader in = new BufferedReader (new InputStreamReader (t.getRequestBody()));
 			rep = getReponse(in);
-			if( rep == null ) throw new IOException();
+			if( rep == null ){
+				String instr = "";
+				String buf;
+				while( (buf = in.readLine()) != null){
+					instr += buf;
+				}
+				rep =  getReponse(instr);
+				if( rep == null ) throw new IOException();
+			}
         }
         t.sendResponseHeaders(rep.code, rep.message.length());
         
