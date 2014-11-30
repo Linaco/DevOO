@@ -278,9 +278,9 @@ L.MultiRainbowline = L.FeatureGroup.extend({
         L.setOptions(this,options);
         this._children = [];
 
-        for(var i = 0; i < paths.length; ++i){
-            this._children[i] = L.rainbowline(paths[i],colors,options);
-            console.log(i);
+        for(var i = 0; i < paths.length-1; ++i){
+            this._children[i] = L.rainbowline([paths[i],path[i+1]],colors,options);
+            //console.log(i);
             this.addLayer(this._children[i]);
         }
     },
@@ -310,12 +310,14 @@ L.Arc = L.Polyline.extend({
     }
 });
 
-var path = [[0.4,0.4],[0.6,0.5]];
+console.log(path);
+var path2 = [[0.4,0.4],[0.6,0.5]];
 //var fg = L.rainbowLine(path,["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"]).bindLabel("HEY").on("click",function(){alert("hey");}).addTo(map);
 //var fg2 = L.rainbowLine([[0.6,0.5],[0.7,0.4]],["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"]).bindLabel("HEY").on("click",function(){alert("hey");}).addTo(map);
 var colors = ["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"];
-var paths = [[[0.4,0.4],[0.6,0.5]],[[0.6,0.5],[0.7,0.2]],[[0.7,0.2],[0.4,0.4]]];
-var mrl = L.multiRainbowline(paths,colors).addTo(map);
+//var colors = ["#fff","#7a6bd9","#fe6a6d"];
+//var paths = [[[0.4,0.4],[0.6,0.5]],[[0.6,0.5],[0.7,0.2]],[[0.7,0.2],[0.4,0.4]]];
+//var mrl = L.multiRainbowline(path,colors,{weight:0.01}).addTo(map);
 
 
 function VueRoute(intersec1, intersec2, nom){
@@ -359,9 +361,15 @@ function VueRoute(intersec1, intersec2, nom){
     return this;
 }
 
-var v1 = new VueIntersection([0.4,0.4],2).afficher();
-var v2 = new VueIntersection([0.6,0.4],2).afficher();
+var v1 = new VueIntersection([0.2,0.2],2).afficher();
+var v2 = new VueIntersection([0.5,0.5],2).afficher();
 var r = new VueRoute(v1,v2,"Rue de la paix").afficher();
+
+for(var i = 0; i < 5; ++i){
+    var path = ArcMaker.arcPath([0.2,0.2],[0.5,0.5],0.05+0.02*i,10);
+    var pl = L.polyline(path,{weight: 3,color: colors[i]}).addTo(map);
+}
+
 
 ///////////////////////////////////////////////////
 // Class Com
