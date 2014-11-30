@@ -3,13 +3,12 @@ package controleur;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.*;
-
+import java.util.*;
 import modele.*;
 
 public class Controleur {
@@ -18,12 +17,15 @@ public class Controleur {
 	
 	private GrapheRoutier grapheRoutier;
 	private GrapheLivraison grapheLivraison;
-	private FeuilleDeRoute feuilledeRoute;
-	
+	private FeuilleDeRoute feuilleDeRoute;
+	private List<Commande> listeCommande;
+
+	private GrapheRoutier grapheRoutier;
 	public Controleur(){
+		feuilleDeRoute = new FeuilleDeRoute();
+		listeCommande = new ArrayList<Commande>();
 		grapheRoutier = new GrapheRoutier();
 		grapheLivraison = new GrapheLivraison();
-		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
 	public boolean chargerLivraisons(String path){
@@ -67,7 +69,7 @@ public class Controleur {
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
 								PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
-								feuilledeRoute.ajouterPlageHoraire(ph);
+								feuilleDeRoute.ajouterPlageHoraire(ph);
 							}catch (Exception e){
 								System.err.println("Format d'heure invalide.");
 								return false;
@@ -187,7 +189,22 @@ public class Controleur {
 		return true;
 	}
 
+	
+	public void doCommande(Commande commande){
+		
+	}
+	
+	public void undoCommande(){
+		
+	}
+	
+	public void redoCommande(){
+		
+	}
+
+
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
+
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }

@@ -9,12 +9,15 @@ public class FeuilleDeRoute {
 	
 	private List<PlageHoraire>	plageHoraires;
 
-    /**
-     * 
-     */
+   
+	 private ArrayList<Etape> itineraire;
+	 private GrapheLivraison grapheLivraison; //a initialiser
+	 private List<Livraison> listeLivraison;
+	
     public FeuilleDeRoute() {
     	this.plageHoraires= new ArrayList<PlageHoraire>();
-    	
+    	itineraire = new ArrayList<Etape>();
+    	listeLivraison = grapheLivraison.livraisons;
     }
     
     //getters
@@ -30,13 +33,14 @@ public class FeuilleDeRoute {
     }
 
     public void ajouterLivraison(Livraison l) {
-        // TODO implement here
+        listeLivraison.add(l.getId(),l);
     }
 
     public void supprimerLivraison(int idLivraison) {
-        // TODO implement here
+
+        //Joindre les deux morceaux precedents
+        listeLivraison.add(idLivraison,null);
     }
     
-    //private ArrayList<Etape> itineraire = new ArrayList<Etape>();
 
 }

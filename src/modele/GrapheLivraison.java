@@ -50,7 +50,7 @@ public class GrapheLivraison implements Graph {
 	}
     
 	/**
-	 * 
+	 * Méthode de calcul de l'ordre des livraisons en fonction des chemins entre elles
 	 * @return La list ordonnee des livraisons si la tournee specifiee est realisable, null sinon
 	 */
     public List<Livraison> calculerOrdreLivraisons() {
