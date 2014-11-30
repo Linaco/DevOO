@@ -147,7 +147,7 @@ function VueRoute(intersec1, intersec2, nom){
     this.decorateurSens = L.polylineDecorator(this.ligneBase, {
         patterns: [
             // define a pattern of 10px-wide dashes, repeated every 20px on the line 
-            {offset: "50%", repeat: '0%', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, pathOptions: {opacity:0.7,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
+            {offset: "20px", repeat: '50px', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, headAngle:40, pathOptions: {opacity:0.5,fillOpacity:0.2,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
         ]
     });
     return this;
