@@ -15,6 +15,18 @@ public class Controleur {
 		
 	}
 	
+	public boolean checkInter(int id, int x, int y){
+		if(id>=0 || id<=grapheRoutier.consulterListeIntersection().size()-1){
+			return false;
+		}else if(x<0){
+			return false;
+		}else if(y<0){
+			return false;
+		}else{
+			return true;
+		}		
+	}
+	
 	public int chargerPlan(Document plan){
 		//creation du graphe
 
@@ -31,8 +43,10 @@ public class Controleur {
 				int id = Integer.parseInt(attr.getNamedItem("id").getTextContent());
 				int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 				int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
-				Intersection inter = new Intersection(id,x,y);
-				grapheRoutier.ajouterIntersection(inter);
+				if(checkInter(id,x,y)){
+					Intersection inter = new Intersection(id,x,y);
+					grapheRoutier.ajouterIntersection(inter);
+				}
 			}
 		}
 		

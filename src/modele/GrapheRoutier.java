@@ -30,16 +30,7 @@ public class GrapheRoutier {
     	this.listeIntersection.add(inter.getId(),inter);
     }
     
-   
-    
-   
 
-
-    /**
-     * 
-     */
-
-    
     
     public Intersection rechercherInterParId(int id){
     	return listeIntersection.get(id);
