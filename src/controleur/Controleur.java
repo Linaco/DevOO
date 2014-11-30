@@ -1,22 +1,45 @@
 package controleur;
 
+import java.util.Iterator;
+
 import org.w3c.dom.*;
 import java.util.*;
 import modele.*;
 
+import modele.*;
+
 public class Controleur {
 	
+<<<<<<< HEAD
 	private FeuilleDeRoute feuilleDeRoute;
 	private List<Commande> listeCommande;
+=======
+	private GrapheRoutier grapheRoutier;
+>>>>>>> 53de675fed369e4fab7050e250ca831b16951a75
 	
 	public Controleur(){
 		feuilleDeRoute = new FeuilleDeRoute();
 		listeCommande = new ArrayList<Commande>();
 	}
 	
+	public boolean checkInter(int id, int x, int y){
+		if(id>=0 || id<=grapheRoutier.consulterListeIntersection().size()-1){
+			return false;
+		}else if(x<0){
+			return false;
+		}else if(y<0){
+			return false;
+		}else{
+			return true;
+		}		
+	}
+	
 	public int chargerPlan(Document plan){
 		//creation du graphe
-		GrapheRoutier graphe = new GrapheRoutier();
+
+		grapheRoutier = new GrapheRoutier();
+
+
 		//premier passage et creation des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
 		
@@ -27,8 +50,10 @@ public class Controleur {
 				int id = Integer.parseInt(attr.getNamedItem("id").getTextContent());
 				int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 				int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
-				Intersection inter = new Intersection(id,x,y);
-				graphe.AjouterIntersection(inter);
+				if(checkInter(id,x,y)){
+					Intersection inter = new Intersection(id,x,y);
+					grapheRoutier.ajouterIntersection(inter);
+				}
 			}
 		}
 		
@@ -38,9 +63,21 @@ public class Controleur {
 			Node route = routes.item(j);
 			if(route.hasAttributes()){
 				NamedNodeMap attr = route.getAttributes();
+				
+				//creation de route
 				String nom = attr.getNamedItem("nomRue").getTextContent();
 				double vitesse = Double.parseDouble(attr.getNamedItem("vitesse").getTextContent());
 				double longueur = Double.parseDouble(attr.getNamedItem("longueur").getTextContent());
+				int idInter = Integer.parseInt(attr.getNamedItem("idNoeudDestination").getTextContent());
+				Intersection inter = grapheRoutier.rechercherInterParId(idInter);
+				Route r = new Route(nom,vitesse,longueur,inter);
+				
+				//association a l'intersection parent
+				Node parent = route.getParentNode();
+				int idParent= Integer.parseInt(parent.getAttributes().getNamedItem("id").getTextContent());
+				Intersection papa = grapheRoutier.rechercherInterParId(idParent);
+				papa.ajouterRoute(r);
+
 				
 			}
 		}

@@ -1,6 +1,10 @@
 package modele;
 
+import java.util.function.IntUnaryOperator;
+
+
 public class Route {
+	
 
 	private static int idRoutes =0;
 	
@@ -9,6 +13,7 @@ public class Route {
 	private int id;
 	private Intersection inter;
 	
+
 	public Route(String nom, double vitesse, double longueur, Intersection inter){
 		this.name = nom;
 		this.vitesse = vitesse;
