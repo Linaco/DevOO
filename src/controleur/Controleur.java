@@ -1,6 +1,9 @@
 package controleur;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,10 +13,78 @@ import org.w3c.dom.*;
 import modele.*;
 
 public class Controleur {
+	
+	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
+	
 	private GrapheRoutier grapheRoutier;
+	private GrapheLivraison grapheLivraison;
+	private FeuilleDeRoute feuilledeRoute;
 	
 	public Controleur(){
 		grapheRoutier = new GrapheRoutier();
+		grapheLivraison = new GrapheLivraison();
+		feuilledeRoute = new FeuilleDeRoute();
+	}
+	
+	public boolean chargerLivraisons(String path){
+	
+		//Generation du document
+		Document livDoc;		
+		try{
+			File fXmlFile = new File(path);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			livDoc = dBuilder.parse(fXmlFile);
+		}catch(Exception e){
+			System.err.println("Erreur à la création de doc");
+			e.printStackTrace();
+			return false;
+		}
+		livDoc.getDocumentElement().normalize();
+
+		NodeList phNodeList = livDoc.getElementsByTagName("Plage");
+		if(phNodeList.getLength()==0){
+			System.err.println("Aucune plage horaire ");
+			return false;
+		}
+		
+		//premier passage, creation des plages horaires
+		//TODO géré les heures casse couille
+		for(int i =0;i<phNodeList.getLength();i++){
+			Node phNode = phNodeList.item(i);
+			if(phNode.getNodeType() == Node.ELEMENT_NODE){
+				Element phElement = (Element)phNode;
+				if(phElement.hasAttributes()){
+					NamedNodeMap nnm = phElement.getAttributes();
+					try{
+						String heureDeb = nnm.getNamedItem("heureDebut").getTextContent();
+						String heureF = nnm.getNamedItem("heureFin").getTextContent();
+						if(heureDeb.equals(null) && heureF.equals(null)){
+							System.err.println("Heure invalide");
+							return false;
+						}else{
+							try{
+								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
+								Date heureFin = HOUR_FORMAT.parse(heureF);
+								PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
+								feuilledeRoute.ajouterPlageHoraire(ph);
+							}catch (Exception e){
+								System.err.println("Format d'heure invalide.");
+								return false;
+							}
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+						return false;
+					}
+				}else{
+					System.err.println("HasAttributes.");
+					return false;
+				}
+			}
+		}
+		
+		return true;
 	}
 	
 	public boolean chargerPlan(String path){
@@ -83,12 +154,12 @@ public class Controleur {
 					try{
 						NamedNodeMap attr = elementRoute.getAttributes();
 						String nom = attr.getNamedItem("nomRue").getTextContent();
-						float vitesse = Float.parseFloat(attr.getNamedItem("vitesse").getTextContent().replace(",", "."));
+						double vitesse = Double.parseDouble(attr.getNamedItem("vitesse").getTextContent().replace(",", "."));
 						if(vitesse<0){
 							System.err.println("Vitesse <0");
 							return false;
 						}
-						float longueur = Float.parseFloat(attr.getNamedItem("longueur").getTextContent().replace(",", "."));
+						double longueur = Double.parseDouble(attr.getNamedItem("longueur").getTextContent().replace(",", "."));
 						if(longueur<0){
 							System.err.println("longueur <0");
 							return false;
@@ -117,4 +188,6 @@ public class Controleur {
 	}
 
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
+	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
+	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }

@@ -16,6 +16,10 @@ public class GrapheLivraison implements Graph {
 	int[][] matriceAdjacence;
 	List<Livraison> livraisons;
 	
+	public GrapheLivraison(){
+		livraisons = new ArrayList<Livraison>();
+	}
+	
 	/**
 	 * 
 	 * @param matriceAdjacence Matrice contenant les couts des plus courts chemins entre chaque livraison. Le depet doit etre a l'indice 0.
@@ -71,7 +75,8 @@ public class GrapheLivraison implements Graph {
     }
 
 
-
+    public List<Livraison> getLivraisons(){return this.livraisons;}
+    
 	@Override
 	public int getMaxArcCost() {
 		return maxArcCost;
