@@ -18,9 +18,10 @@
 <LeTronconSortant nomRue="v0" vitesse="4,000000" longueur="581,700000" idNoeudDestination="2"/>
 <LeTronconSortant nomRue="v0" vitesse="4,500000" longueur="334,000000" idNoeudDestination="4"/>
 </Noeud>
-<Noeud id="4" x="77" y="350">
+<Noeud  x="77" y="350">
 <LeTronconSortant nomRue="v0" vitesse="4,200000" longueur="334,000000" idNoeudDestination="3"/>
 <LeTronconSortant nomRue="v0" vitesse="4,100000" longueur="426,700000" idNoeudDestination="5"/>
+</Noeud>
 <Noeud id="5" x="83" y="403">
 <LeTronconSortant nomRue="v0" vitesse="4,100000" longueur="426,700000" idNoeudDestination="4"/>
 <LeTronconSortant nomRue="v0" vitesse="4,000000" longueur="640,700000" idNoeudDestination="6"/>
