@@ -1,12 +1,17 @@
 package controleur;
 
 import org.w3c.dom.*;
+import java.util.*;
 import modele.*;
 
 public class Controleur {
 	
+	private FeuilleDeRoute feuilleDeRoute;
+	private List<Commande> listeCommande;
+	
 	public Controleur(){
-		
+		feuilleDeRoute = new FeuilleDeRoute();
+		listeCommande = new ArrayList<Commande>();
 	}
 	
 	public int chargerPlan(Document plan){
@@ -41,6 +46,18 @@ public class Controleur {
 		}
 		
 		return 0;
+	}
+	
+	public void doCommande(Commande commande){
+		
+	}
+	
+	public void undoCommande(){
+		
+	}
+	
+	public void redoCommande(){
+		
 	}
 	
 }

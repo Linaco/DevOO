@@ -1,6 +1,7 @@
 package controleur;
 
 import java.util.*;
+import modele.*;
 
 /**
  * 
@@ -10,7 +11,7 @@ public interface Commande {
     /**
      * 
      */
-    public void executer();
+    public void executer(Livraison l);
 
     /**
      * 

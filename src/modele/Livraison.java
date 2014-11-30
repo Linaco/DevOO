@@ -11,15 +11,17 @@ public class Livraison {
     //private pair<double, double> plageHoraireDemandee;
     private Intersection PointDeLivraison;
 	private String heureDebut,heureFin;
-	private int id,idClient,adresse;
+	private int idXML,idClient,adresse;
+	private static int id = 0;
 	
-    public Livraison(Intersection inter, String heureDeb, String heureF, int id, int idClient, int adresse) {
+    public Livraison(Intersection inter, String heureDeb, String heureF, int idXML, int idClient, int adresse) {
     	PointDeLivraison = inter;
     	heureDebut = heureDeb;
     	heureFin = heureF;
-    	this.id = id;
+    	this.idXML = idXML;
     	this.idClient = idClient;
     	this.adresse = adresse;
+    	this.id = id++;
     }
     
     /*public pair<double, double> getPlageHoraire() {

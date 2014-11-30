@@ -1,17 +1,17 @@
 package controleur;
 
 import java.util.*;
-
-import modele.Livraison;
+import modele.*;
 
 /**
  * 
  */
 public class CommandeAjout implements Commande {
 
-    
-    public CommandeAjout(Livraison livraison) {
-    	this.livraison = livraison;
+	private FeuilleDeRoute fdr;
+	
+    public CommandeAjout(FeuilleDeRoute feuilleDeRoute) {
+    	fdr = feuilleDeRoute;
     }
     
 
@@ -21,11 +21,9 @@ public class CommandeAjout implements Commande {
     }
 
 	@Override
-	public void executer() {
-		// TODO Auto-generated method stub
+	public void executer(Livraison l) {
+		fdr.ajouterLivraison(l);
 		
 	}
-
-    private Livraison livraison;
 
 }
