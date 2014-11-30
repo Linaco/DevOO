@@ -147,10 +147,13 @@ var colors = ["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"];
 
 
 
-var v1 = new VueIntersection([0.2,0.2],2).afficher();
-var v2 = new VueIntersection([0.5,0.5],2).afficher();
+var v1 = new VueIntersection([0.2,0.2],2);
+var v2 = new VueIntersection([0.5,0.5],2);
 var r = new VueRoute(v1,v2,"Rue de la paix").afficher();
+r.ajouterPassage(0,"red");
 var r2 = new VueRoute(v2,v1, "2").afficher();
+v1.afficher();
+v2.afficher();
 
 //var path = ArcMaker.arcPath([0.5,0.5],[0.2,0.2],0.05+0.02,10);
 /*for(var i = 0; i < 5; ++i){

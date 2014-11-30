@@ -81,7 +81,9 @@ function VueRoute(intersec1, intersec2, nom){
     // attributs
     this.defaut = {
         ecartArc: 0.05,
-        nbLigne: 20
+        ecartSuivant : 0.02,
+        nbLigne: 20,
+        couleur: '#5f5f5f'
     }
 
     this.A = intersec1;
@@ -89,18 +91,21 @@ function VueRoute(intersec1, intersec2, nom){
     this.nom = nom;
 
 
-    this.paramDefaut = {weight:5,color:'#5f5f5f',opacity:0.8};
+    this.paramDefaut = {weight:5,color: this.defaut.couleur ,opacity:0.8};
     
-    this.ligne;
+    this.ligneBase;
+
+    this.passages = [];
 
     // methodes
     this.afficher = function(){
-         this.ligne.addTo(map);
-         return this;
+        this.ligneBase.addTo(map);
+        this.decorateurSens.addTo(map);
+        return this;
     }
 
     this.masquer = function(){
-        map.removeLayer(this.ligne);
+        map.removeLayer(this.ligneBase);
         this.A.masquer();
         this.B.masquer();
         return this;
@@ -111,23 +116,36 @@ function VueRoute(intersec1, intersec2, nom){
     }
 
     this.ajouterPassage = function(idLivraison, color) {
+        var path = ArcMaker.arcPath(this.A.pos, this.B.pos,
+                this.defaut.ecartArc + this.defaut.ecartSuivant*(1+this.passages),
+                this.defaut.nbLigne);
+        var opt = this.paramDefaut;
+        opt.color = color;
+        opt.idLivraison = idLivraison;
+        console.log(opt);
+        this.passages[this.passages.length] = L.polyline(path, opt).addTo(map);
+    }
 
-    };
-    
     this.path = ArcMaker.arcPath(this.A.pos, this.B.pos,
                 this.defaut.ecartArc,
                 this.defaut.nbLigne);
 
-    this.ligne = L.polyline(this.path,this.paramDefaut)
+    this.ligneBase = L.polyline(this.path,this.paramDefaut)
         .bindLabel(this.nom)
         .on("mouseover", function (){
             this.setStyle({color:"#0f0"});
         })
         .on("mouseout", function (){
-            this.setStyle({color:'#2f2f2f'});
+            this.setStyle({color: '#5f5f5f'});
         })
         .on('click', this._clic, this);
 
+    this.decorateurSens = L.polylineDecorator(this.ligneBase, {
+        patterns: [
+            // define a pattern of 10px-wide dashes, repeated every 20px on the line 
+            {offset: "50%", repeat: '0%', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, pathOptions: {opacity:0,color: "yellow",fillColor:"yellow",fillOpacity:0.8}})}
+        ]
+    });
     return this;
 }
 
