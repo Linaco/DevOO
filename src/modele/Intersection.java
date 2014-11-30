@@ -49,10 +49,15 @@ public class Intersection {
 	
 	
 	/**
-	 * Ajout de la route passé en parametre a troncsSortants
+	 * Ajout de la route passï¿½ en parametre a troncsSortants
 	 * @param route
 	 */
 	public void addTroncSortant(Route route){
 		this.troncSortants.add(route);
 	}
+        
+        @Override
+        public boolean equals(Object o){
+            return this.id==((Intersection)o).id;
+        }
 }
