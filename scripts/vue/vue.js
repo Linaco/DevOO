@@ -69,7 +69,7 @@ function VueIntersection(pos, id){
 
     // Constructeur
     this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)
-            .bindPopup("Noeud "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
+            .bindPopup("Intersection "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
             .on("mouseover",function () {this.openPopup();})
             .on("mouseout",function () {this.closePopup();})
             .on("click",this._clic, this); // 3e parametre -> pour changer le this
@@ -100,6 +100,9 @@ function VueRoute(intersec1, intersec2, nom){
     // methodes
     this.afficher = function(){
         this.ligneBase.addTo(map);
+        for( var i = 0; i < this.passages.length; ++i){
+            this.passages[i].addTo(map);
+        }
         this.decorateurSens.addTo(map);
         return this;
     }
@@ -117,13 +120,14 @@ function VueRoute(intersec1, intersec2, nom){
 
     this.ajouterPassage = function(idLivraison, color) {
         var path = ArcMaker.arcPath(this.A.pos, this.B.pos,
-                this.defaut.ecartArc + this.defaut.ecartSuivant*(1+this.passages),
+                this.defaut.ecartArc + this.defaut.ecartSuivant*(1+this.passages.length),
                 this.defaut.nbLigne);
         var opt = this.paramDefaut;
         opt.color = color;
+        opt.opacity = 0.7;
         opt.idLivraison = idLivraison;
         console.log(opt);
-        this.passages[this.passages.length] = L.polyline(path, opt).addTo(map);
+        this.passages[this.passages.length] = L.polyline(path, opt);
     }
 
     this.path = ArcMaker.arcPath(this.A.pos, this.B.pos,
@@ -143,7 +147,7 @@ function VueRoute(intersec1, intersec2, nom){
     this.decorateurSens = L.polylineDecorator(this.ligneBase, {
         patterns: [
             // define a pattern of 10px-wide dashes, repeated every 20px on the line 
-            {offset: "50%", repeat: '0%', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, pathOptions: {opacity:0,color: "yellow",fillColor:"yellow",fillOpacity:0.8}})}
+            {offset: "50%", repeat: '0%', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, pathOptions: {opacity:0.7,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
         ]
     });
     return this;
