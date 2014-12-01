@@ -20,7 +20,6 @@ public class Controleur {
 	private FeuilleDeRoute feuilleDeRoute;
 	private List<Commande> listeCommande;
 
-	private GrapheRoutier grapheRoutier;
 	public Controleur(){
 		feuilleDeRoute = new FeuilleDeRoute();
 		listeCommande = new ArrayList<Commande>();
@@ -206,5 +205,5 @@ public class Controleur {
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
 
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
-	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
+	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilleDeRoute;}
 }
