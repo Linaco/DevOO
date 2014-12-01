@@ -2,6 +2,10 @@
 // Class Vue
 
 function Vue(controleur){
+    // attributs
+    this.intersections = [];
+    this.itineraire;
+
     // functions
     this.enableRedo = function(){
         console.log("Vue.enableRedo");
@@ -20,6 +24,16 @@ function Vue(controleur){
         .openOn(map);*/
     };
 
+    this.afficherChargement = function(msg){
+        document.getElementById("msg-chargement").textContent
+            = "Calcul de l'itinéraire en cours, veuillez patienter...";
+        $('#modalChargement').modal({backdrop: 'static', keyboard: false});
+    }
+
+    this.fermerChargement = function(){
+        $('#modalChargement').modal('hide');
+    }
+
     //Constructeur
     // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
@@ -33,8 +47,8 @@ function Vue(controleur){
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
     L.easyButton('fa-cubes', controleur.clicChargerLivraisons, 'Charger les livraison', this.map).setPosition('bottomleft');
     L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
-    this.controlCalcul = L.easyButton('fa-refresh', null, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
-    this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
+    this.controlCalcul = L.easyButton('fa-refresh', controleur._clicCalcul, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
+    //this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
     //console.log(this.controlCalcul.getContainer().className);
     var controlFDR = L.easyButton('fa-file-text', controleur.clicTelechargerInitineraire, "Télécharger la feuille de route", this.map).setPosition('bottomright');
 
@@ -46,34 +60,61 @@ function VueIntersection(pos, id){
     this.pos = pos;
     this.id = id;
 
-    this.paramDefaut = {color: '#fff', fillColor: '#fff', fillOpacity: 0.5};
-    this.paramSelec = {color: 'red', fillColor: 'red'};
+    this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
+    this.paramSelec = {color: 'red', opacity: 0.8, fillColor: 'yellow', fillOpacity: 0.8};
     this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
     this.rayonDefaut = 520;
 
+    this.etat = "standard";
+
     this.cercle;
 
-    this.livraisons = [];
+    this.livraison = false;
+    this.routesSortantes = [];
 
     // methodes
-    /*this.ajouterLivraison = function(idClient){
-        this.livraisons[this.livraisons.length] = {idClient:idClient};
-    }*/ // --> NON, une livraison est associée à une étape
-
-    this.vueSelectionnable = function(){
-        // todo : plus gros, plus voyant
+    this.setLivraison = function(bool) {
+        this.livraison = bool? true : false;
     }
 
-    this.vueStandard = function(){
-        // todo : vue standard
+    this.ajouterRouteSortante = function(route) {
+        //console.log("ajouterRouteSortante : route ", route);
+        this.routesSortantes[this.routesSortantes.length] = route;
     }
 
-    this.desactiver = function(){
-        // todo : désactiver le clic
+    this.etatSelectionnable = function(){
+        this.cercle.setStyle(this.paramSelec);
+        this.etat = "selectionnable";
+        //this._clic = this._clicSelectionnable;
+        this.activerClic(this._clicSelectionnable);
+        return this;
     }
 
-    this.activer = function(){
-        // todo : activer le clic
+    this.etatStandard = function(){
+        this.cercle.setStyle(this.paramDefaut);
+        this.etat = "standard";
+        //this._clic = this._clicStandard;
+        this.activerClic(this._clicStandard);
+        return this;
+    }
+
+    this.etatDesactive = function(){
+        this.cercle.setStyle(this.paramDesactive);
+        this.etat = "desactive";
+        this.desactiverClic();
+        return this;
+    }
+
+    this.desactiverClic = function() {
+        this.cercle.off("click");
+        return this;
+    }
+
+    this.activerClic = function(fct){
+        this.desactiverClic();
+        f = fct ? fct : this._clicStandard;
+        this.cercle.on("click",f,this);
+        return this;
     }
 
     this.afficher = function(){
@@ -86,22 +127,24 @@ function VueIntersection(pos, id){
         return this;
     }
 
-    this._clic = function(e){
-        //todo : Clic sur une intersection
-        console.log(this);
+    this._clicSelectionnable = function() {
+        console.log("clic selectionnable", this);
+        this.etatStandard();
+    }
+    this._clicStandard = function() {
+        console.log("clic standard",this);
+        this.etatSelectionnable();
     }
 
     // Constructeur
     this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)
             .bindPopup("Intersection "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
             .on("mouseover",function () {this.openPopup();})
-            .on("mouseout",function () {this.closePopup();})
-            .on("click",this._clic, this); // 3e parametre -> pour changer le this
-
+            .on("mouseout",function () {this.closePopup();});
     return this;
 }
 
-function VueRoute(intersec1, intersec2, nom){
+function VueRoute(intersec1, intersec2){
     // attributs
     this.defaut = {
         ecartArc: 0.05,
@@ -112,7 +155,7 @@ function VueRoute(intersec1, intersec2, nom){
 
     this.A = intersec1;
     this.B = intersec2;
-    this.nom = nom;
+    this.nom = "route sans nom";
 
 
     this.paramDefaut = {weight:5,color: this.defaut.couleur ,opacity:0.8};
@@ -122,6 +165,15 @@ function VueRoute(intersec1, intersec2, nom){
     this.passages = [];
 
     // methodes
+    // setters
+    this.setNom = function(nom) {
+        this.ligneBase.unbindLabel();
+        this.nom = nom;
+        this.ligneBase.bindLabel(nom);
+        return this;
+    };
+
+    // affichage
     this.afficher = function(){
         this.ligneBase.addTo(map);
         for( var i = 0; i < this.passages.length; ++i){
@@ -138,34 +190,42 @@ function VueRoute(intersec1, intersec2, nom){
         return this;
     }
 
-    this._clic = function(evt){
-        this.masquer();
-    }
+    // events
+    this._clic = function(){
+        //this.masquer();
+    }.bind(this);
 
-    this.ajouterPassage = function(idLivraison, color) {
+    this._mouseover = function() {
+        this.ligneBase.setStyle({color:"#0f0"});
+    }.bind(this);
+
+    this._mouseout = function() {
+        this.ligneBase.setStyle({color: '#5f5f5f'});
+    }.bind(this);
+
+    // métier
+    this.ajouterPassage = function(idLivraison, couleur) {
         var path = ArcMaker.arcPath(this.A.pos, this.B.pos,
                 this.defaut.ecartArc + this.defaut.ecartSuivant*(1+this.passages.length),
                 this.defaut.nbLigne);
         var opt = this.paramDefaut;
-        opt.color = color;
+        opt.color = couleur;
         opt.opacity = 0.7;
         opt.idLivraison = idLivraison;
-        console.log(opt);
+        //console.log(opt);
         this.passages[this.passages.length] = L.polyline(path, opt);
     }
+
+    // initialisation
+    this.A.ajouterRouteSortante(this);
 
     this.path = ArcMaker.arcPath(this.A.pos, this.B.pos,
                 this.defaut.ecartArc,
                 this.defaut.nbLigne);
 
     this.ligneBase = L.polyline(this.path,this.paramDefaut)
-        .bindLabel(this.nom)
-        .on("mouseover", function (){
-            this.setStyle({color:"#0f0"});
-        })
-        .on("mouseout", function (){
-            this.setStyle({color: '#5f5f5f'});
-        })
+        .on("mouseover", this._mouseover)
+        .on("mouseout", this._mouseout)
         .on('click', this._clic, this);
 
     this.decorateurSens = L.polylineDecorator(this.ligneBase, {
