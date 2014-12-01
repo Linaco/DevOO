@@ -22,8 +22,7 @@ public class CommandeAjout implements Commande {
 
 	@Override
 	public void executer(Livraison l) {
-		fdr.ajouterLivraison(l);
-		
+		this.fdr.ajouterLivraison(l);
 	}
 
 }

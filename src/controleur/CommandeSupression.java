@@ -1,21 +1,18 @@
 package controleur;
 
 import java.util.*;
-
-import modele.Livraison;
+import modele.*;
 
 /**
  * 
  */
 public class CommandeSupression implements Commande {
 
+	private FeuilleDeRoute fdr;
     
-    public CommandeSupression(Livraison livraison) {
-    	this.livraison = livraison;
+    public CommandeSupression(FeuilleDeRoute feuilleDeRoute) {
+    	this.fdr = feuilleDeRoute;
     }
-
-    
-    private Livraison livraison;
 
     
     @Override
@@ -25,7 +22,7 @@ public class CommandeSupression implements Commande {
 
 	@Override
 	public void executer(Livraison l) {
-		// TODO Auto-generated method stub
+		this.fdr.supprimerLivraison(l);
 		
 	}
 
