@@ -39,7 +39,12 @@ public class FeuilleDeRoute {
 	   }
 	   return null;
    }
-    public void calculerParcours(GrapheRoutier carte) {
+   
+   /**
+    * Calcul le parcours pour les livraisons demandées et crée l'itinéraire
+    * @param carte Le Graphe Routier à utiliser pour calculer le parcours
+    */
+   public void calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
         List<Livraison> livraisonsPlageSuivante;
         List<Livraison> toutesLivraisons = new ArrayList<>();
@@ -106,9 +111,7 @@ public class FeuilleDeRoute {
         }
         GrapheLivraison solveur = new GrapheLivraison(matriceAdjacence, toutesLivraisons);
         List<Livraison> test = solveur.calculerOrdreLivraisons();
-        for(Livraison l : test){
-            System.out.println(l.getIdInPH());
-        }
+
     }
 
     
