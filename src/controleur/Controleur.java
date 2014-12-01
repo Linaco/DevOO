@@ -1,12 +1,10 @@
-              package controleur;
+package controleur;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.*;
 
@@ -27,20 +25,9 @@ public class Controleur {
 		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
-	public boolean chargerLivraisons(String path){
+	public boolean chargerLivraisons(Document livDoc){
 	
 		//Generation du document
-		Document livDoc;		
-		try{
-			File fXmlFile = new File(path);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			livDoc = dBuilder.parse(fXmlFile);
-		}catch(Exception e){
-			System.err.println("Erreur à la création de doc");
-			e.printStackTrace();
-			return false;
-		}
 		livDoc.getDocumentElement().normalize();
 
 		Node entrepotNode = livDoc.getElementsByTagName("Entrepot").item(0);
@@ -157,18 +144,8 @@ public class Controleur {
 		return true;
 	}
 	
-	public boolean chargerPlan(String path){
-		Document plan;
-		try{
-			File fXmlFile = new File(path);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			plan = dBuilder.parse(fXmlFile);
-		}catch(Exception e){
-			System.err.println("Erreur à la création de doc");
-			e.printStackTrace();
-			return false;
-		}
+	public boolean chargerPlan(Document plan){
+		
 		plan.getDocumentElement().normalize();
 		//premier passage et création des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
@@ -259,5 +236,5 @@ public class Controleur {
 
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
-	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilleDeRoute;}
+	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }
