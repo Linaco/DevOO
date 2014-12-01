@@ -20,9 +20,11 @@ function Controleur(){
     // functions
     this.annuler = function() {
         console.log("undo");
+        vue.info("Annulation...");
     };
     this.retablir = function(){
         console.log("redo");
+        vue.erreur("Erreur lors du rétablissement de l'action...");
     };
     this.clicChargerPlan = function(){
         document.getElementById('charger-plan').click();
