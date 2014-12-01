@@ -3,12 +3,13 @@ package controleur;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.*;
-import java.util.*;
+
 import modele.*;
 
 public class Controleur {
@@ -17,15 +18,12 @@ public class Controleur {
 	
 	private GrapheRoutier grapheRoutier;
 	private GrapheLivraison grapheLivraison;
-	private FeuilleDeRoute feuilleDeRoute;
-	private List<Commande> listeCommande;
-
-	private GrapheRoutier grapheRoutier;
+	private FeuilleDeRoute feuilledeRoute;
+	
 	public Controleur(){
-		feuilleDeRoute = new FeuilleDeRoute();
-		listeCommande = new ArrayList<Commande>();
 		grapheRoutier = new GrapheRoutier();
 		grapheLivraison = new GrapheLivraison();
+		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
 	public boolean chargerLivraisons(String path){
@@ -44,6 +42,23 @@ public class Controleur {
 		}
 		livDoc.getDocumentElement().normalize();
 
+		Node entrepotNode = livDoc.getElementsByTagName("Entrepot").item(0);
+		if(entrepotNode.getNodeType()==Node.ELEMENT_NODE){
+			Element entreElement = (Element)entrepotNode;
+			try{
+				int idInter = Integer.parseInt(entreElement.getAttribute("adresse"));
+				if(grapheRoutier.interExiste(idInter)){
+					feuilledeRoute.renseignerEntrepot(grapheRoutier.rechercherInterParId(idInter));
+				}else{
+					System.err.println("Entrepot invalide");
+					return false;
+				}
+			}catch(Exception e){
+				System.err.println("Entrepot invalide");
+				return false;
+			}
+		}
+		
 		NodeList phNodeList = livDoc.getElementsByTagName("Plage");
 		if(phNodeList.getLength()==0){
 			System.err.println("Aucune plage horaire ");
@@ -69,14 +84,14 @@ public class Controleur {
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
 								PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
-								feuilleDeRoute.ajouterPlageHoraire(ph);
+								feuilledeRoute.ajouterPlageHoraire(ph);
 							}catch (Exception e){
 								System.err.println("Format d'heure invalide.");
 								return false;
 							}
 						}
 					}catch(Exception e){
-						e.printStackTrace();
+						System.err.println("Format Plage horaire invalide.");
 						return false;
 					}
 				}else{
@@ -85,6 +100,58 @@ public class Controleur {
 				}
 			}
 		}
+			
+		NodeList livNodeList = livDoc.getElementsByTagName("Livraison");
+		if(livNodeList.getLength() ==0){
+			System.err.println("Aucune livraison");
+			return false;
+		}
+		for(int j=0; j<livNodeList.getLength(); j++){
+			Node livNode = livNodeList.item(j);
+			if(livNode.getNodeType() == Node.ELEMENT_NODE){
+				Element livElement = (Element)livNode;
+				Element phParent = (Element)livElement.getParentNode().getParentNode();
+				String hDeb = phParent.getAttribute("heureDebut");
+				PlageHoraire phParentObj;
+				try{
+					Date hDebDate = HOUR_FORMAT.parse(hDeb);
+					phParentObj = feuilledeRoute.rechercherPHParHD(hDebDate);
+					if(phParentObj.equals(null)){
+						System.err.println("Plage Horaire Parente non trouvée");
+						return false;
+					}
+					
+				}catch(Exception e){
+					e.printStackTrace();
+					System.err.println("Page horaire parente invalide");
+					return false;
+				}
+				
+				if(livElement.hasAttributes()){
+					NamedNodeMap nnm = livElement.getAttributes();
+					try{
+						int id = Integer.parseInt(nnm.getNamedItem("id").getTextContent());
+						int idClient = Integer.parseInt(nnm.getNamedItem("client").getTextContent());
+						int idInter = Integer.parseInt(nnm.getNamedItem("adresse").getTextContent());
+						
+						
+						if(grapheRoutier.interExiste(idInter)){
+							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
+							Livraison liv = new Livraison(inter,id, idClient);
+							phParentObj.addLivraison(liv);
+						}
+					}catch(Exception e){
+						System.err.println("Format de livraion invalide");
+						return false;
+					}
+					
+				}else{
+					System.err.println("Has arrtibute");
+					return false;
+				}
+			}
+		}
+		
 		
 		return true;
 	}
@@ -189,22 +256,7 @@ public class Controleur {
 		return true;
 	}
 
-	
-	public void doCommande(Commande commande){
-		
-	}
-	
-	public void undoCommande(){
-		
-	}
-	
-	public void redoCommande(){
-		
-	}
-
-
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
-
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }

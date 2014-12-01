@@ -7,39 +7,40 @@ import java.util.*;
  */
 public class FeuilleDeRoute {
 	
+	private Intersection entrepot;
 	private List<PlageHoraire>	plageHoraires;
 
    
 	 private ArrayList<Etape> itineraire;
-	 private GrapheLivraison grapheLivraison; //a initialiser
-	 private List<Livraison> listeLivraison;
 	
     public FeuilleDeRoute() {
     	this.plageHoraires= new ArrayList<PlageHoraire>();
     	itineraire = new ArrayList<Etape>();
-    	listeLivraison = grapheLivraison.livraisons;
     }
     
     //getters
     public List<PlageHoraire> getPlagesHoraires(){return this.plageHoraires;}
+    public Intersection getEntrepot(){return this.entrepot;}
     
     
     public void ajouterPlageHoraire(PlageHoraire ph){
     	this.plageHoraires.add(ph);
     }
     
+    public void renseignerEntrepot(Intersection entrepot){
+    	this.entrepot = entrepot;
+    }
+    
+   public PlageHoraire rechercherPHParHD(Date hDeb){
+	   for(int i=0;i<plageHoraires.size();i++){
+		   if(hDeb.equals(plageHoraires.get(i).getHeureDebut())){
+			   return plageHoraires.get(i);
+		   }
+	   }
+	   return null;
+   }
     public void calculerParcours() {
         // TODO implement here
-    }
-
-    public void ajouterLivraison(Livraison l) {
-        listeLivraison.add(l.getId(),l);
-    }
-
-    public void supprimerLivraison(int idLivraison) {
-
-        //Joindre les deux morceaux precedents
-        listeLivraison.add(idLivraison,null);
     }
     
 
