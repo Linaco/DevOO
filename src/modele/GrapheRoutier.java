@@ -8,6 +8,7 @@ import java.util.*;
 public class GrapheRoutier {
 	
     private List<Intersection> listeIntersection;
+    private List<Object[]> listePlusCourtsChemins;
     
     //
     private class Noeud implements Comparable{
@@ -50,6 +51,7 @@ public class GrapheRoutier {
      */
     public GrapheRoutier() {
     	this.listeIntersection = new ArrayList<Intersection>();
+        listePlusCourtsChemins = new ArrayList<>();        
     }
     
     public void ajouterIntersection(Intersection inter){
@@ -85,6 +87,15 @@ public class GrapheRoutier {
         List<Intersection> solution = new ArrayList<>();
         Object[] retour = new Object[2];
         
+        for(Object[] chemin : listePlusCourtsChemins){
+            solution = (List) chemin[0];
+            if(solution.get(0).equals(depart)&&solution.get(solution.size()-1).equals(arrivee)){
+                return chemin;
+            }
+        }
+        
+        solution.clear();
+        
         for(;;){
             if(frontiere.isEmpty()) {
                 return null;
@@ -99,6 +110,7 @@ public class GrapheRoutier {
                 solution.add(noeudCourant.intersection);
                 Collections.reverse(solution);
                 retour[0]=solution;
+                listePlusCourtsChemins.add(retour);
                 return retour;
             }
             dejaExplores.add(noeudCourant);
