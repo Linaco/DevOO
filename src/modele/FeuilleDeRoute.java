@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.*;
+import modele.*;
 
 /**
  * 
@@ -39,24 +40,23 @@ public class FeuilleDeRoute {
 	   }
 	   return null;
    }
-<<<<<<< HEAD
    
    public void ajouterLivraison(Livraison l){
 	   PlageHoraire pH = l.getPlageHoraire();
 	   Boolean b = false;
 	   int index = 0;
-	   for(int i=0; i<this.plageHoraires.size();i++){
-		   if(plageHoraires.get(i).getHeureDebut()==pH.getHeureDebut() && plageHoraires.get(i).getHeureFin()==pH.getHeureFin()){
+	   for(int i=0; i<this.plagesHoraires.size();i++){
+		   if(plagesHoraires.get(i).getHeureDebut()==pH.getHeureDebut() && plagesHoraires.get(i).getHeureFin()==pH.getHeureFin()){
 			   b = true;
 			   index = i;
-			   i=this.plageHoraires.size();
+			   i=this.plagesHoraires.size();
 		   }
 	   }
 	   if(!b){
 		   pH.addLivraison(l);
-		   plageHoraires.add(pH);
+		   plagesHoraires.add(pH);
 	   }else{
-		   plageHoraires.get(index).addLivraison(l);
+		   plagesHoraires.get(index).addLivraison(l);
 	   }
    }
    
@@ -64,10 +64,7 @@ public class FeuilleDeRoute {
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
    }
-   
-    public void calculerParcours() {
-        // TODO implement here
-=======
+
     public void calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
         List<Livraison> livraisonsPlageSuivante;
@@ -138,9 +135,6 @@ public class FeuilleDeRoute {
         for(Livraison l : test){
             System.out.println(l.getIdInPH());
         }
->>>>>>> 548ba3307d77b535e316f6382164eec13b93439c
     }
-
-    
 
 }
