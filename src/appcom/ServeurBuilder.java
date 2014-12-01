@@ -34,7 +34,7 @@ public class ServeurBuilder {
 	 */
 	public ServeurBuilder deployerServicesControleur(Controleur c){
 		
-		new ServiceControleur(c,"genererPlan",this.serveur){
+		new ServiceControleur(c,"charger-plan",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -64,7 +64,7 @@ public class ServeurBuilder {
 			}
 		};
 		
-		new ServiceControleur(c,"genererLivraisons",this.serveur){
+		new ServiceControleur(c,"charger-livraisons",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -75,7 +75,7 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//xml
-						this.getControleur().chargerPlan(doc);
+						this.getControleur().chargerLivraisons(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -94,7 +94,7 @@ public class ServeurBuilder {
 			}
 		};
 		
-		new ServiceModele(c,"creerLivraison",this.serveur){
+		new ServiceControleur(c,"ajouter-livraison",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -105,7 +105,7 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//a changer
-						this.getControleur().chargerPlan(doc);
+						//this.getControleur().chargerPlan(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -124,7 +124,7 @@ public class ServeurBuilder {
 			}
 		};
 		
-		new ServiceModele(c,"undo",this.serveur){
+		new ServiceControleur(c,"supprimer-livraison",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -135,7 +135,7 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//a changer
-						this.getControleur().chargerPlan(doc);
+						//this.getControleur().chargerPlan(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -154,7 +154,7 @@ public class ServeurBuilder {
 			}
 		};
 		
-		new ServiceModele(c,"redo",this.serveur){
+		new ServiceControleur(c,"annuler",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -165,7 +165,7 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//a changer
-						this.getControleur().chargerPlan(doc);
+						//this.getControleur().chargerPlan(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -184,7 +184,7 @@ public class ServeurBuilder {
 			}
 		};
 		
-		new ServiceModele(c,"calculFeuilleDeRoute",this.serveur){
+		new ServiceControleur(c,"retablir",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -195,7 +195,37 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//a changer
-						this.getControleur().chargerPlan(doc);
+						//this.getControleur().chargerPlan(doc);
+						
+						return Reponse.succes("La communication s'est bien déroulée.");
+						
+					} catch (SAXException e) {
+						e.printStackTrace();
+						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
+								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
+					} catch (IOException e) {
+						e.printStackTrace();
+						return Reponse.erreur("Erreur lors de la lecture du fichier.");
+					}
+				} catch (ParserConfigurationException e) {
+					e.printStackTrace();
+					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
+				}
+			}
+		};
+		
+		new ServiceControleur(c,"calculer-itineraire",this.serveur){
+			protected Reponse getReponse(InputStream in){
+				
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			    DocumentBuilder builder;
+				try {
+					builder = factory.newDocumentBuilder();
+					try {
+						
+						Document doc = builder.parse(in);
+						//a changer
+						//this.getControleur().chargerPlan(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -225,7 +255,7 @@ public class ServeurBuilder {
 	 */
 	public ServeurBuilder deployerServicesVue(Controleur c){
 		
-		new ServiceModele(c,"SelectionnerRoute",this.serveur){
+		new ServiceModele(c,"itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -236,7 +266,7 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//route
-						this.getControleur().chargerPlan(doc);
+						//this.getControleur().chargerPlan(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -255,7 +285,7 @@ public class ServeurBuilder {
 			}
 		};
 		
-		new ServiceModele(c,"SelectionnerIntersection",this.serveur){
+		new ServiceModele(c,"plan",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -266,7 +296,7 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//intersection
-						this.getControleur().chargerPlan(doc);
+						//this.getControleur().chargerPlan(doc);
 						
 						return Reponse.succes("La communication s'est bien déroulée.");
 						
@@ -284,97 +314,6 @@ public class ServeurBuilder {
 				}
 			}
 		};
-		
-		new ServiceModele(c,"creerGrapheRoutier",this.serveur){
-			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//list <intersection>
-						this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
-				}
-			}
-		};
-		
-		new ServiceModele(c,"selectionnerLivraison",this.serveur){
-			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//livraison
-						this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
-				}
-			}
-		};
-		
-		new ServiceModele(c,"creerGrapheLivraisons",this.serveur){
-			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//list <livraison>
-						this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
-				}
-			}
-		};
-		
 		
 		return this;
 	}

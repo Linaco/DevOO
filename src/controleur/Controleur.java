@@ -19,7 +19,8 @@ public class Controleur {
 	private GrapheRoutier grapheRoutier;
 	private GrapheLivraison grapheLivraison;
 	private FeuilleDeRoute feuilledeRoute;
-	
+	private List<Commande> listeCommande;
+
 	public Controleur(){
 		grapheRoutier = new GrapheRoutier();
 		grapheLivraison = new GrapheLivraison();
@@ -258,5 +259,5 @@ public class Controleur {
 
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
-	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
+	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilleDeRoute;}
 }
