@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
+
 import org.w3c.dom.*;
 
 import modele.*;
@@ -25,7 +28,10 @@ public class Controleur {
 		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
+	//deprec sur getHours
+	@SuppressWarnings("deprecation")
 	public boolean chargerLivraisons(Document livDoc){
+		
 	
 		//Generation du document
 		livDoc.getDocumentElement().normalize();
@@ -71,8 +77,15 @@ public class Controleur {
 							try{
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
-								PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
-								feuilledeRoute.ajouterPlageHoraire(ph);
+								if(heureDebut.getHours()<0 && heureDebut.getHours()>24
+								&& heureFin.getHours()<0 && heureFin.getHours()>24
+									&& heureDebut.getHours() > heureFin.getHours()){
+									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
+									feuilledeRoute.ajouterPlageHoraire(ph);
+								}else{
+									System.err.println("Format d'heure invalide.");
+									return false;
+								}
 							}catch (Exception e){
 								System.err.println("Format d'heure invalide.");
 								return false;
