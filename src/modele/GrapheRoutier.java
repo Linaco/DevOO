@@ -100,7 +100,7 @@ public class GrapheRoutier {
             }
             dejaExplores.add(noeudCourant);
             for(Route r : noeudCourant.intersection.getTroncsSortants()){
-                successeurCourant = new Noeud(r.getInter(),noeudCourant,r.getTempsParcours());
+                successeurCourant = new Noeud(r.getInter(),noeudCourant,noeudCourant.coutAcces+r.getTempsParcours());
                 if(!dejaExplores.contains(successeurCourant)){
                     if(!frontiere.contains(successeurCourant)){
                         frontiere.add(successeurCourant);
