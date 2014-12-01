@@ -1,9 +1,7 @@
 package modele;
 
-import java.io.PrintStream;
 
-
-public class Route implements DisplayTest{
+public class Route {
 	
 	private static int idRoutes =0;
 	
@@ -35,12 +33,5 @@ public class Route implements DisplayTest{
         }
 	
 	public Intersection getInter(){return this.inter;}
-
-
-	public boolean display(PrintStream stream) {
-		stream.println(name+" "+id +" "+vitesse+" "+longueur+ " -> " + inter);
-
-		return true;		
-	}
 	
 }

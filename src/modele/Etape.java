@@ -1,12 +1,11 @@
 package modele;
 
-import java.io.PrintStream;
 import java.util.*;
 
 /**
  * 
  */
-public class Etape implements DisplayTest{
+public class Etape {
 
     /**
      * 
@@ -32,11 +31,6 @@ public class Etape implements DisplayTest{
      */
     public void setHeurePassagePrevue(double heure) {
         // TODO implement here
-    }
-    
-    public boolean display(PrintStream stream){
-    	stream.println(heurePassagePrevue);
-    	return true;
     }
 
 }

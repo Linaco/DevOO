@@ -1,6 +1,5 @@
 package modele;
 
-import java.io.PrintStream;
 import java.util.*;
 import modele.GrapheRoutier.*;
 
@@ -9,7 +8,7 @@ import tsp.TSP;
 /**
  * 
  */
-public class GrapheLivraison implements Graph, DisplayTest {
+public class GrapheLivraison implements Graph {
 
 	int maxArcCost;
 	int minArcCost;
@@ -71,7 +70,6 @@ public class GrapheLivraison implements Graph, DisplayTest {
     		lListe.add(livraisons.get(livraisonCourante-1));
     		livraisonCourante=solution[livraisonCourante];
     	}
-    	
     	return lListe;
     }
 
@@ -125,34 +123,6 @@ public class GrapheLivraison implements Graph, DisplayTest {
 			if(matriceAdjacence[i][j]!=-1) {liste.add(j);}
 		}
 		return liste.size();
-	}
-	
-	public boolean display(PrintStream stream){
-		/*
-			int maxArcCost;
-			int minArcCost;
-			int nbSommets;
-			int[][] matriceAdjacence;
-			List<Livraison> livraisons;
-		 */
-		
-		stream.print("Nb Sommets :" + nbSommets + " MinArcCost : "+ minArcCost+ " MaxArcCost : "+maxArcCost);
-		stream.println("Livraisons :");
-		
-		for(int i=0; i<livraisons.size();i++){
-			livraisons.get(i).display(stream);
-		}
-		
-		stream.println("Matric Adjacence :");
-		
-		for(int i=0; i<matriceAdjacence.length;i++){
-			for(int j = 0; j < matriceAdjacence[i].length;j++){
-				stream.print(matriceAdjacence[i][j]+ " ");
-			}
-			stream.println("");
-		}
-		
-		return true;
 	}
 
     
