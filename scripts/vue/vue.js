@@ -4,6 +4,7 @@
 function Vue(controleur){
     // attributs
     this.intersections = [];
+    this.routes = [];
     this.itineraire;
 
     // functions
@@ -40,6 +41,54 @@ function Vue(controleur){
         $('#modalChargement').modal('hide');
     }
 
+    //visibilité
+    this.afficher = function() {
+        for( var i = 0; i < this.routes.length; ++i ){
+            this.routes[i].afficher();
+        }
+        for( var i = 0; i < this.intersections.length; ++i ){
+            this.intersections[i].afficher();
+        }
+    };
+
+    this.masquer = function() {
+        for( var i = 0; i < this.intersections.length; ++i ){
+            this.intersections[i].masquer();
+        }
+        for( var i = 0; i < this.routes.length; ++i ){
+            this.routes[i].masquer();
+        }
+    };
+
+    //métier
+    this.ajouterIntersection = function(pos, id) {
+        return this.intersections[this.intersections.length]
+            = new VueIntersection(pos,id);
+    }
+
+    this.ajouterRoute = function(i1,i2){
+        var a = this.getIntersection(i1),
+            b = this.   getIntersection(i2);
+        if ( a && b ) return this.routes[this.routes.length] 
+            = new VueRoute(a,b);
+        return null;
+    }
+
+    this.ajouterLivraison = function(idIntersection) {
+        var i = getIntersection(idIntersection);
+        if(i) i.setLivraison(true);
+        return this;
+    }
+
+    this.getIntersection = function(id) {
+        for( var i = 0; i < this.intersections.length; ++i ){
+            if( this.intersections[i].id == id){
+                return this.intersections[i];
+            }
+        }
+        return null;
+    }
+
     //Constructeur
     // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
@@ -69,6 +118,7 @@ function VueIntersection(pos, id){
     this.id = id;
 
     this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
+    this.paramLivraison = {color: '#f0f', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
     this.paramSelec = {color: 'red', opacity: 0.8, fillColor: 'yellow', fillOpacity: 0.8};
     this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
     this.rayonDefaut = 520;
@@ -83,6 +133,22 @@ function VueIntersection(pos, id){
     // methodes
     this.setLivraison = function(bool) {
         this.livraison = bool? true : false;
+        this.majEtat();
+        return this;
+    }
+
+    this.majEtat = function(){
+        switch(this.etat){
+            case "standard":
+                this.etatStandard();
+                break;
+            case "selectionnable":
+                this.etatSelectionnable();
+                break;
+            case "desactive":
+                this.etatDesactive();
+                break;
+        }
     }
 
     this.ajouterRouteSortante = function(route) {
@@ -99,7 +165,7 @@ function VueIntersection(pos, id){
     }
 
     this.etatStandard = function(){
-        this.cercle.setStyle(this.paramDefaut);
+        this.cercle.setStyle(this.livraison ? this.paramLivraison : this.paramDefaut);
         this.etat = "standard";
         //this._clic = this._clicStandard;
         this.activerClic(this._clicStandard);
@@ -222,6 +288,7 @@ function VueRoute(intersec1, intersec2){
         opt.idLivraison = idLivraison;
         //console.log(opt);
         this.passages[this.passages.length] = L.polyline(path, opt);
+        return this;
     }
 
     // initialisation
