@@ -24,7 +24,7 @@ public class CommandeSupression implements Commande {
     }
 
 	@Override
-	public void executer() {
+	public void executer(Livraison l) {
 		// TODO Auto-generated method stub
 		
 	}

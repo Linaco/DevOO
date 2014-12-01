@@ -47,11 +47,35 @@ function VueIntersection(pos, id){
     this.id = id;
 
     this.paramDefaut = {color: '#fff', fillColor: '#fff', fillOpacity: 0.5};
+    this.paramSelec = {color: 'red', fillColor: 'red'};
+    this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
     this.rayonDefaut = 520;
 
     this.cercle;
 
+    this.livraisons = [];
+
     // methodes
+    /*this.ajouterLivraison = function(idClient){
+        this.livraisons[this.livraisons.length] = {idClient:idClient};
+    }*/ // --> NON, une livraison est associée à une étape
+
+    this.vueSelectionnable = function(){
+        // todo : plus gros, plus voyant
+    }
+
+    this.vueStandard = function(){
+        // todo : vue standard
+    }
+
+    this.desactiver = function(){
+        // todo : désactiver le clic
+    }
+
+    this.activer = function(){
+        // todo : activer le clic
+    }
+
     this.afficher = function(){
         this.cercle.addTo(map);
         return this;
@@ -153,3 +177,18 @@ function VueRoute(intersec1, intersec2, nom){
     return this;
 }
 
+function VueEtape(idIntersection, idLivraison, plage){
+    this.intersection = idIntersection;
+    this.livraison = idLivraison;
+    this.plage = plage;
+}
+
+function VueItineraire(){
+    // attributs
+    this.etapes = [];
+    // methodes
+    this.ajouterEtape = function(idIntersection, idLivraison, plage){
+        this.etapes[this.etapes.length]
+            = new VueEtape(idIntersection, idLivraison, plage);
+    }
+}

@@ -45,9 +45,10 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						
-						this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
+						if (this.getControleur().chargerPlan(doc))
+							return Reponse.succes("La communication s'est bien déroulée.");
+						else
+							return Reponse.succes("Le service de chargement du plan n'a pas abouti.");
 						
 					} catch (SAXException e) {
 						e.printStackTrace();
@@ -75,9 +76,10 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						//xml
-						this.getControleur().chargerLivraisons(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
+						if (this.getControleur().chargerLivraisons(doc))
+							return Reponse.succes("La communication s'est bien déroulée.");
+						else
+							return Reponse.succes("Le service de chargement des livraisons n'a pas abouti.");	
 						
 					} catch (SAXException e) {
 						e.printStackTrace();

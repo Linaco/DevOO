@@ -1,68 +1,5 @@
 var ctrl = new Controleur();
-
-/////////////////////////////////////////////////////////////////////////
-/*
-if (window.XMLHttpRequest)
-{// code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-}
-else
-{// code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
-xmlhttp.open("GET","xml/plan10x10.xml",false);
-xmlhttp.send();
-xmlDoc=xmlhttp.responseXML;
-
-console.log(xmlDoc);
-*/
 var map = ctrl.vue.map;
-/*
-var nodes = xmlDoc.getElementsByTagName("Noeud");
-for( var i = 0; i < nodes.length; ++i){
-    var node = nodes[i];
-    var pos = [node.getAttribute('x')/1000, node.getAttribute('y')/1000];
-
-    var trs = node.getElementsByTagName("LeTronconSortant");
-    for( var j = 0; j < trs.length; ++j){
-        var tr = trs[j];
-        var node2 = xmlDoc.getElementById(tr.getAttribute("idNoeudDestination"));
-        var pos2 = [node2.getAttribute('x')/1000, node2.getAttribute('y')/1000];
-
-        addLine(pos, pos2, tr.getAttribute("nomRue"));
-    }
-}
-
-for( var i = 0; i < nodes.length; ++i){
-    var node = nodes[i];
-    var pos = [node.getAttribute('x')/1000, node.getAttribute('y')/1000];
-    addCircle(pos,node.getAttribute('id'));
-}
-
-function addLine( A, B, label){
-    L.polyline([A,B],{weight:5,color:'#fff',opacity:0.8})
-        .addTo(map)
-        .bindLabel(label)
-        .on("mouseover", function (){
-            this.setStyle({color:"#0f0"});
-        })
-        .on("mouseout", function (){
-            this.setStyle({color:'#fff'});
-        });
-}
-
-function addCircle( pos, id){
-    var circle = L.circle(pos, 520, {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5
-    }).addTo(map)
-        .bindPopup("Node "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
-        .on("mouseover",function () {this.openPopup();})
-        .on("mouseout",function () {this.closePopup();})
-        .on("click",function () {alert("Vous avez sélectionné un noeud. Malheureusement cette fonctionnalité n'est pas encore implémentée...");});
-};
-*/
 //////////////////////////////////////////////////////////////////////////////////
 if (window.File && window.FileReader && window.FileList && window.Blob) {
     // Great success! All the File APIs are supported.
@@ -132,6 +69,8 @@ function Controleur(){
         pdf.output("dataurlnewwindow");
         //... récupérer fichier
     };
+
+    
 
     // init
     this.vue = vue = new Vue(this);
