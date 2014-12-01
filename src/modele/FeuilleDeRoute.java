@@ -33,7 +33,7 @@ public class FeuilleDeRoute {
     }
 
     public void ajouterLivraison(Livraison l) {
-        listeLivraison.add(l.getId(),l);
+     //    listeLivraison.add(l.getId(),l);
     }
 
     public void supprimerLivraison(int idLivraison) {
