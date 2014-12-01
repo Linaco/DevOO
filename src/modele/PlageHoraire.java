@@ -26,6 +26,10 @@ public class PlageHoraire implements DisplayTest{
 	public void addLivraison(Livraison liv){
 		this.listeLivraisons.add(liv);
 	}
+	
+	public void deleteLivraison(Livraison liv){
+		this.listeLivraisons.remove(liv);
+	}
 
 	public boolean display(PrintStream stream) {
 		stream.print(heureDebut+ " "+ heureFin);
