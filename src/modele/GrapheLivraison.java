@@ -9,7 +9,7 @@ import tsp.TSP;
 /**
  * 
  */
-public class GrapheLivraison implements Graph, DisplayTest {
+public class GrapheLivraison implements Graph {
 
 	int maxArcCost;
 	int minArcCost;
@@ -71,7 +71,7 @@ public class GrapheLivraison implements Graph, DisplayTest {
     		lListe.add(livraisons.get(livraisonCourante-1));
     		livraisonCourante=solution[livraisonCourante];
     	}
-    	
+
     	return lListe;
     }
 

@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * 
  */
-public class Etape implements DisplayTest{
+public class Etape {
 
     /**
      * 

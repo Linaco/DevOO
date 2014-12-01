@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * 
  */
-public class Livraison implements DisplayTest{
+public class Livraison {
 	
 	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
    
@@ -59,6 +59,11 @@ public class Livraison implements DisplayTest{
     	plageHoraire.display(stream);
     	stream.print(" Client: "+idClient);
     	return true;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        return((Livraison)o).id==this.id;
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * 
  */
-public class GrapheRoutier  implements DisplayTest{
+public class GrapheRoutier {
 	
     private List<Intersection> listeIntersection;
     private List<Object[]> listePlusCourtsChemins;
@@ -85,7 +85,7 @@ public class GrapheRoutier  implements DisplayTest{
     * @param arrivee Intersection correspondant au point d'arrivée du chemin calculé
     * @return Tableau contenant la liste ordonnée des routes à suivre pour atteindre le l'arrivée depuis le départ avec un cout minimal et le cout de la solution, null si aucune solution
     */
-    public Object[] calculerPlusCourtChemin(Intersection depart, Intersection arrivee) {
+     public Object[] calculerPlusCourtChemin(Intersection depart, Intersection arrivee) {
 
         Noeud noeudCourant = new Noeud(depart,null,0);
         Noeud successeurCourant;
@@ -129,7 +129,8 @@ public class GrapheRoutier  implements DisplayTest{
                         frontiere.add(successeurCourant);
                     }
                     else{
-                        for(Noeud n:frontiere){
+                        PriorityQueue<Noeud> frontiereParcours= new PriorityQueue<>(frontiere);
+                        for(Noeud n:frontiereParcours){
                             if (n.equals(successeurCourant) && n.coutAcces>successeurCourant.coutAcces){
                                 frontiere.remove(n);
                                 frontiere.add(successeurCourant);
