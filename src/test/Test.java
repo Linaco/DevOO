@@ -1,4 +1,5 @@
 package test;
+import modele.*;
 import controleur.Controleur;
 
 public class Test {
@@ -8,14 +9,14 @@ public class Test {
 		Controleur contJav = new Controleur();
 		String pathPlan = "C:/Users/bastien/Desktop/DevOO/xml/plan10x10.xml";
 		if(contJav.chargerPlan(pathPlan)){
-			System.out.println("Génération ok");
+			System.out.println("Gï¿½nï¿½ration ok");
 		}else{
 			System.out.println("caca");
 		}
 		System.out.println("Test parsage liv.xml");
 		String pathLiv = "C:/Users/bastien/Desktop/DevOO/xml/livraison10x10-2.xml";
 		if(contJav.chargerLivraisons(pathLiv)){
-			System.out.println("Génération liv ok ");
+			System.out.println("Gï¿½nï¿½ration liv ok ");
 		}else{
 			System.out.println("pipi");
 		

@@ -1,11 +1,12 @@
 package modele;
 
+import java.io.PrintStream;
 import java.util.*;
 
 /**
  * 
  */
-public class GrapheRoutier {
+public class GrapheRoutier  implements DisplayTest{
 	
     private List<Intersection> listeIntersection;
     
@@ -67,6 +68,13 @@ public class GrapheRoutier {
     
     public Intersection rechercherInterParId(int id){
     	return listeIntersection.get(id);
+    }
+    
+    public boolean display(PrintStream stream){
+    	for(int i = 0; i<listeIntersection.size(); i++){
+    		listeIntersection.get(i).display(stream);
+    	}
+    	return true;
     }
     
    /**
