@@ -1,11 +1,12 @@
 package modele;
 
+import java.io.PrintStream;
 import java.util.*;
 
 /**
  * 
  */
-public class GrapheRoutier {
+public class GrapheRoutier  implements DisplayTest{
 	
     private List<Intersection> listeIntersection;
     private List<Object[]> listePlusCourtsChemins;
@@ -55,7 +56,7 @@ public class GrapheRoutier {
     }
     
     public void ajouterIntersection(Intersection inter){
-    	this.listeIntersection.add(inter);
+    	this.listeIntersection.add(inter.getId(),inter);
     }
     
     public boolean interExiste(int idInter){
@@ -69,6 +70,13 @@ public class GrapheRoutier {
     
     public Intersection rechercherInterParId(int id){
     	return listeIntersection.get(id);
+    }
+    
+    public boolean display(PrintStream stream){
+    	for(int i = 0; i<listeIntersection.size(); i++){
+    		listeIntersection.get(i).display(stream);
+    	}
+    	return true;
     }
     
    /**
@@ -121,8 +129,7 @@ public class GrapheRoutier {
                         frontiere.add(successeurCourant);
                     }
                     else{
-                        PriorityQueue<Noeud> frontiereParcours= new PriorityQueue<>(frontiere);
-                        for(Noeud n:frontiereParcours){
+                        for(Noeud n:frontiere){
                             if (n.equals(successeurCourant) && n.coutAcces>successeurCourant.coutAcces){
                                 frontiere.remove(n);
                                 frontiere.add(successeurCourant);

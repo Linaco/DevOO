@@ -1,10 +1,11 @@
 package modele;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlageHoraire {
+public class PlageHoraire implements DisplayTest{
 	
 	private Date heureDebut;
 	private Date heureFin;
@@ -25,12 +26,14 @@ public class PlageHoraire {
 	public void addLivraison(Livraison liv){
 		this.listeLivraisons.add(liv);
 	}
-        
-        @Override
-        public boolean equals(Object o){
-            PlageHoraire p = (PlageHoraire)o;
-            return(this.heureDebut.equals(p.heureDebut)&&this.heureFin.equals(p.heureFin));
-        }
+
+	public boolean display(PrintStream stream) {
+		stream.print(heureDebut+ " "+ heureFin);
+		for(int i = 0; i<listeLivraisons.size(); i++){
+    		listeLivraisons.get(i).display(stream);
+    	}
+		return true;
+	}
 
 
 }

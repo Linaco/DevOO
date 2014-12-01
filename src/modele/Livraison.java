@@ -1,5 +1,6 @@
 package modele;
 
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -7,7 +8,7 @@ import java.util.*;
 /**
  * 
  */
-public class Livraison {
+public class Livraison implements DisplayTest{
 	
 	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
    
@@ -53,9 +54,11 @@ public class Livraison {
     	this.plageHoraire = ph;
     }
     
-    @Override
-    public boolean equals(Object o){
-        return((Livraison)o).id==this.id;
+    public boolean display(PrintStream stream){
+    	PointDeLivraison.display(stream);
+    	plageHoraire.display(stream);
+    	stream.print(" Client: "+idClient);
+    	return true;
     }
 
 }

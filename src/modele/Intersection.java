@@ -1,9 +1,10 @@
 package modele;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Intersection {
+public class Intersection implements DisplayTest{
 	
 	
 	private int id,x,y;
@@ -49,10 +50,20 @@ public class Intersection {
 	
 	
 	/**
-	 * Ajout de la route passee en parametre a troncsSortants
+	 * Ajout de la route pass� en parametre a troncsSortants
 	 * @param route
 	 */
 	public void addTroncSortant(Route route){
 		this.troncSortants.add(route);
+	}
+
+	public boolean display(PrintStream stream) {
+		stream.println("Intersection : "+id+" "+"x:"+x+" y:"+y);
+		stream.println("Troncs sortants :");
+		for(int i = 0; i<troncSortants.size(); i++){
+			stream.print("\t");
+    		troncSortants.get(i).display(stream);
+    	}
+		return true;
 	}
 }
