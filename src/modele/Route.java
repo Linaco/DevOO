@@ -27,6 +27,10 @@ public class Route {
 	public double getVitesse(){return this.vitesse;}
 	
 	public double getLongueur(){return this.longueur;}
+        
+        public double getTempsParcours(){
+            return longueur/vitesse;
+        }
 	
 	public Intersection getInter(){return this.inter;}
 	
