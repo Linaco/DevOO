@@ -12,17 +12,23 @@ function Vue(controleur){
     };
     this.disableRedo = function(){
         console.log("Vue.disableRedo");
-    };
+    }
     this.erreur = function(msg){
-        alert(msg);
-    };
+        this.fermerInfo();
+        document.getElementById("msg-erreur").textContent = msg;
+        $('#modal-erreur').modal('show');
+    }
+    this.fermerErreur = function(){
+        $('#modal-erreur').modal('hide');
+    }
     this.info = function(msg){
-        alert(msg);
-        /*var popup = L.popup()
-        .setLatLng([0.4, 0.4])
-        .setContent(msg)
-        .openOn(map);*/
-    };
+        this.fermerErreur();
+        document.getElementById("msg-info").textContent = msg;
+        $('#modal-info').modal('show');
+    }
+    this.fermerInfo = function(){
+        $('#modal-info').modal('hide');
+    }
 
     this.afficherChargement = function(msg){
         document.getElementById("msg-chargement").textContent
@@ -52,6 +58,8 @@ function Vue(controleur){
     //console.log(this.controlCalcul.getContainer().className);
     var controlFDR = L.easyButton('fa-file-text', controleur.clicTelechargerInitineraire, "Télécharger la feuille de route", this.map).setPosition('bottomright');
 
+    $('#modal-info').modal({backdrop: false, show: false});
+    $('#modal-erreur').modal({backdrop: false, show: false});
 }
 
 function VueIntersection(pos, id){
