@@ -83,6 +83,21 @@ public class GrapheRoutier {
     	return true;
     }
     
+    /**
+     * 
+     * @param depart L'interserction dont on veut connaitre la route sortante
+     * @param arrivee L'intersection dont on veut connaitre la route entrante
+     * @return La route allant de depart à arrivée
+     */
+    public Route getRoute(Intersection depart, Intersection arrivee){
+        for(Route r:depart.getTroncsSortants()){
+            if(r.getInter().equals(arrivee)){
+                return r;
+            }
+        }
+        return null;
+    }
+    
    /**
     * Calcul le plus court chemin entre le depart et l'arrivée donnés
     * @param depart Intersection correspondant au point de départ du chemin calculé

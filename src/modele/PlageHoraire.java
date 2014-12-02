@@ -25,6 +25,7 @@ public class PlageHoraire {
 	
 	public void addLivraison(Livraison liv){
 		this.listeLivraisons.add(liv);
+                liv.setPlageHoraire(this);
 	}
 	
 	public void deleteLivraison(Livraison liv){
