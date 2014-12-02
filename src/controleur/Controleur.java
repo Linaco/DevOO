@@ -229,6 +229,7 @@ public class Controleur {
 						if(grapheRoutier.interExiste(idInter)){
 							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
 							Route routeObj = new Route(nom,vitesse,longueur,inter);
+							//todo : remplacer inter par la bonne intersection
 							inter.addTroncSortant(routeObj);
 						}else{
 							System.err.println("Erreur sur route");
