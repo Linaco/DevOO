@@ -38,7 +38,7 @@ public class Route implements DisplayTest{
 
 
 	public boolean display(PrintStream stream) {
-		stream.println(name+" "+id +" "+vitesse+" "+longueur+ " -> " + inter);
+		stream.println(name+" id : "+id +" vitesse : "+vitesse+" long : "+longueur+ " -> " + inter);
 
 		return true;		
 	}
