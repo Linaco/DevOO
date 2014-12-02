@@ -12,15 +12,12 @@ import modele.*;
 public class FeuilleDeRoute {
 	
 	private Intersection entrepot;
-<<<<<<< HEAD
-	private List<PlageHoraire> plagesHoraires;   
-=======
 	private List<PlageHoraire> plagesHoraires;
-        private Date debutJournee;
-        private int tempsMoyenLivraisonSecondes;
+    private Date debutJournee;
+    private int tempsMoyenLivraisonSecondes;
    
->>>>>>> 3df05dbdc84da2f0f1ecbc5318902d8a93a61b22
-	 private ArrayList<Etape> itineraire;
+
+    private ArrayList<Etape> itineraire;
 	
     public FeuilleDeRoute() {
     	this.plagesHoraires= new ArrayList<>();
