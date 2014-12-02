@@ -69,7 +69,7 @@ public class FeuilleDeRoute {
     	if(index == 0){
     		return true;
     	}else if(this.plagesHoraires.get(index-1).getHeureFin().after(heureD)){
-    		System.err.println("Plages supperpos�es");
+    		System.err.println("Plages supperpos�es");
     		return false;
     	}else{
     		return true;
@@ -126,7 +126,7 @@ public class FeuilleDeRoute {
    }
    
    /**
-    * Fonction permettant d'ajouter une nouvelle livraison à la feuile de route tout en modifiant la liste des étapes.
+    * Fonction permettant d'ajouter une nouvelle livraison à la feuile de route tout en mettant à jour l'itinéraire.
     * @param nouvelleLivraison
     * @param livraisonPrecedente
     */
@@ -166,10 +166,21 @@ public class FeuilleDeRoute {
 	   itineraire.addAll(posEtapes.get(0)+1, nouvellesEtapes);
 	   int positionNouvelleLivraison = posEtapes.get(0)+nouvellesEtapes.size();
 	   //ajout des nouvelles étapes de nouvelle livraison-->livraison suivante
-	   Object[]resultatCalcul2 = carte.calculerPlusCourtChemin(nouvelleLivraison.getPointLivraison(), itineraire.get(positionNouvelleLivraison+1).getAdresse());
-	   
+	   resultatCalcul = carte.calculerPlusCourtChemin(nouvelleLivraison.getPointLivraison(), itineraire.get(positionNouvelleLivraison+1).getAdresse());
+	   listeIntersection = (List<Intersection>)resultatCalcul[0];
+	   nouvellesEtapes.clear();
+	   for(int i=1;i<listeIntersection.size()-1;i++){
+		   heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
+		   nouvellesEtapes.add(new Etape(heureCourante,listeIntersection.get(i)));
+	   }
+	   itineraire.addAll(positionNouvelleLivraison+1, nouvellesEtapes);
    }
    
+   /**
+    * Fonction permettant de supprimer une livraison de la feuille de route tout en mettant à jour l'itinéraire
+    * @param livraison
+    * @param grapheroutier
+    */
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
@@ -179,7 +190,16 @@ public class FeuilleDeRoute {
 	   for(int i=0;i<positionSuivante-positionPrecedente;i++){
 		   itineraire.remove(positionPrecedente+1);
 	   }
-	   
+	   //liaison entre précédent et suivant
+	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(itineraire.get(positionPrecedente).getAdresse(), itineraire.get(positionSuivante).getAdresse());
+	   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
+	   List<Etape> nouvellesEtapes = new ArrayList<Etape>();
+	   Date heureCourante = itineraire.get(positionPrecedente).getHeurePassagePrevue();
+	   for (int i=1; i<listeIntersection.size()-1;i++){
+		   heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
+		   nouvellesEtapes.add(new Etape(heureCourante, listeIntersection.get(i)));
+	   }
+	   itineraire.addAll(positionSuivante, nouvellesEtapes);
    }
    
    public GrapheLivraison getGrapheLivraison(){
