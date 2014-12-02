@@ -36,6 +36,7 @@ public class FeuilleDeRoute {
     public void clean(){
     	this.itineraire.clear();
     	this.plagesHoraires.clear();
+    	PlageHoraire.idPhs = 0;
     }
     
     //getters
@@ -56,11 +57,27 @@ public class FeuilleDeRoute {
     }
     
     public void ajouterPlageHoraire(PlageHoraire ph){
-    	this.plagesHoraires.add(ph);
+    	this.plagesHoraires.add(ph.getIdPlageHoraire(),ph);
     }
     
     public void renseignerEntrepot(Intersection entrepot){
     	this.entrepot = entrepot;
+    }
+    
+    public boolean checkHB(Date heureD){
+    	int index = plagesHoraires.size();
+    	if(index == 0){
+    		return true;
+    	}else if(this.plagesHoraires.get(index-1).getHeureFin().after(heureD)){
+    		System.err.println("Plages supperposées");
+    		return false;
+    	}else{
+    		return true;
+    	}
+    }
+    
+    public PlageHoraire rechercherPHParId(int id){
+    	return this.plagesHoraires.get(id);
     }
     
    public PlageHoraire rechercherPHParHD(Date hDeb){

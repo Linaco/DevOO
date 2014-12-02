@@ -89,7 +89,8 @@ public class Controleur {
 								// Vérification de la cohérence des heures fournies
 								if(heureDebut.getHours()>=0 && heureDebut.getHours()<=24
 								&& heureFin.getHours()>=0 && heureFin.getHours()<=24
-									&& heureDebut.getHours() < heureFin.getHours()){
+									&& heureDebut.getHours() < heureFin.getHours()
+									&& feuilledeRoute.checkHB(heureDebut)){
 									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
 									feuilledeRoute.ajouterPlageHoraire(ph);
 								}else{
@@ -97,6 +98,7 @@ public class Controleur {
 									return false;
 								}
 							}catch (Exception e){
+								e.printStackTrace();
 								System.err.println("Format d'heure invalide.");
 								return false;
 							}

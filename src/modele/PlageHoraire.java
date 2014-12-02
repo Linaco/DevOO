@@ -8,12 +8,15 @@ import java.util.List;
 
 public class PlageHoraire {
 	
+	protected static int idPhs = 0;
+	private int id;
 	private Date heureDebut;
 	private Date heureFin;
 	private List<Livraison> listeLivraisons;
 	
 	public PlageHoraire(Date heureDeb, Date heureFin){
-		listeLivraisons = new ArrayList<Livraison>();
+		this.id = idPhs++;
+		this.listeLivraisons = new ArrayList<Livraison>();
 		this.heureDebut = heureDeb;
 		this.heureFin = heureFin;
 				
@@ -23,6 +26,7 @@ public class PlageHoraire {
 	public Date getHeureDebut(){return this.heureDebut;}
 	public Date getHeureFin(){return this.heureFin;}
 	public List<Livraison> getListeLivraison(){return this.listeLivraisons;}
+	public int getIdPlageHoraire(){return this.id;}
 	
 	public void addLivraison(Livraison liv){
 		this.listeLivraisons.add(liv);

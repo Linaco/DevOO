@@ -57,6 +57,7 @@ public class GrapheRoutier {
     
     public void clean(){
     	this.listeIntersection.clear();
+    	Route.idRoutes = 0;
     }
     
     public void ajouterIntersection(Intersection inter){

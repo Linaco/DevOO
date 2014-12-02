@@ -5,7 +5,7 @@ import java.io.PrintStream;
 
 public class Route{
 	
-	private static int idRoutes =0;
+	protected static int idRoutes =0;
 	
 	private String name;
 	private double vitesse,longueur;
