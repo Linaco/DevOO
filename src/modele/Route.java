@@ -43,4 +43,14 @@ public class Route implements DisplayTest{
 		return true;		
 	}
 	
+	public String toString(){
+		return toStringXML();
+	}
+	
+	public String toStringXML(){
+		String res = "";
+		res += "<route id=\"" + this.id + "\" idDestination=\"" + this.inter.getId() + "\" "
+				+ "nom=\""+ this.name + "\" />";
+		return res;
+	}
 }
