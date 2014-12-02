@@ -44,16 +44,47 @@ function Vue(controleur, com){
     }
 
     //visibilité
+    this.nouvellesLivraisons = function(){
+        for(var i = 0; i < this.intersections.length; ++i){
+            this.intersections[i].razLivraison();
+            var routes = this.intersections[i].routes;
+            for(var j = 0; j < this.routes.length; ++j){
+                this.routes[j].razPassages();
+            }
+        }
+        com.appelService('modele/livraisons','',this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
+    };
+
+    /*<plage debut="8" fin="10">
+        <livraison id="2" idClient="546" idIntersection="" />
+    </plage>*/
+    this.nouvellesLivraisonsErr = function(msg) {
+        this.fermerChargement();
+        this.erreur(msg);
+    };
+    this.nouvellesLivraisonsOk = function(str) {
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(str,"text/xml");
+        console.log("livraisons",doc);
+
+        this.fermerChargement();
+    };
     this.nouveauPlan = function(){
         this.masquer();
         this.intersections = [];
         this.routes = [];
-        com.appelService('modele/plan','',this.retourModelePlan, true);
-    }
-    this.retourModelePlan = function(str){
-        this.info(str);
+        com.appelService('modele/plan','',this.retourModelePlanOk,this.retourModelePlanErr, true);
+    };
+    this.retourModelePlanErr = function(msg) {
+        this.fermerChargement();
+        this.erreur(msg);
+    };
+    this.retourModelePlanOk = function(str){
+        //this.info(str);
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
+
+        var xmin, xmax, ymin, ymax;
 
         var plan = doc.getElementsByTagName("plan")[0];
         //console.log("plan",plan);
@@ -63,6 +94,21 @@ function Vue(controleur, com){
             var id = it.getAttribute("id");
             var x = it.getAttribute("x")/500;
             var y = it.getAttribute("y")/500;
+            if( i == 0 ){
+                xmin = xmax = x;
+                ymin = ymax = y;
+            } else {
+                if( x < xmin){
+                    xmin = x;
+                } else if( x > xmax){
+                    xmax = x;
+                }
+                if( y < ymin){
+                    ymin = y;
+                } else if( y > ymax){
+                    ymax = y;
+                }
+            }
             this.ajouterIntersection([x,y],id);
         }
         for( var i = 0; i < its.length; ++i){
@@ -77,6 +123,10 @@ function Vue(controleur, com){
                 this.ajouterRoute(id1,id2);
             }
         }
+        var dw = (xmax - xmin)*0.25, dh = (ymax - ymin)*0.25;
+        map.setMaxBounds([[xmin-dw,ymin-dh],[xmax+dw,ymax+dh]]);
+        map.fitBounds([[xmin,ymin],[xmax,ymax]]);
+
         this.afficher();
         this.fermerChargement();
     }.bind(this);
@@ -149,6 +199,7 @@ function Vue(controleur, com){
     L.easyButton('fa-road', controleur.clicChargerPlan, 'Charger un plan', this.map).setPosition('bottomleft');
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
     L.easyButton('fa-cubes', controleur.clicChargerLivraisons, 'Charger les livraison', this.map).setPosition('bottomleft');
+    document.getElementById('charger-livraisons').addEventListener('change', controleur.chargerLivraisons, false);
     L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
     this.controlCalcul = L.easyButton('fa-refresh', controleur._clicCalcul, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
     //this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
@@ -194,6 +245,12 @@ function VueIntersection(pos, id){
         this.majEtat();
         return this;
     }
+
+    this.razLivraison = function() {
+        this.livraison = null;
+        this.cercle.unbindPopup();
+        this.majEtat();
+    };
 
     this.closePopup = function() {
         this.cercle.closePopup();
@@ -355,6 +412,13 @@ function VueRoute(intersec1, intersec2){
         return this;
     }
 
+    this.razPassages = function() {
+        for (var i = this.passages.length - 1; i >= 0; i--) {
+            map.removeLayer(this.passages[i]);
+        }
+        this.passages = [];
+    };
+
     // initialisation
     this.A.ajouterRouteSortante(this);
 
@@ -370,7 +434,7 @@ function VueRoute(intersec1, intersec2){
     this.decorateurSens = L.polylineDecorator(this.ligneBase, {
         patterns: [
             // define a pattern of 10px-wide dashes, repeated every 20px on the line 
-            {offset: "20px", repeat: '50px', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, headAngle:40, pathOptions: {opacity:0.5,fillOpacity:0.2,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
+            {offset: "50%", repeat: '100%', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, headAngle:40, pathOptions: {opacity:0.5,fillOpacity:0.2,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
         ]
     });
     return this;

@@ -7,7 +7,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     alert('Les APIs pour l\'ouverture des fichiers ne sont pas pris en charge');
 }
 
-
+$.fn.modal.Constructor.prototype.enforceFocus = function () {};
 ///////////////////////////////////////////////////
 // Class Controleur
 
@@ -28,16 +28,18 @@ function Controleur(){
     };
     this.clicChargerPlan = function(){
         document.getElementById('charger-plan').click();
-        //... récupérer fichier
-        //c.appelService("test", [50,20], function(reponse){alert(reponse);});
     };
     this._chargerPlanOk = function(msg){
         vue.nouveauPlan();
     }.bind(this);
+    this._chargerPlanErr = function(msg){
+        vue.fermerChargement();
+        vue.erreur(msg);
+    }.bind(this);
     this.chargerPlan = function(evt){
         vue.afficherChargement("Création du réseau routier...\n"
                 + "Merci de patienter quelques instants.");
-        com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk, true);
+        com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk,this._chargerLivraisonsErr, true);
     }.bind(this);
 
     // déclenche le clic sur l'élément 'input' de la page html
@@ -46,11 +48,17 @@ function Controleur(){
     };
     // Handler pour le retour du service charger-livraisons
     this._chargerLivraisonsOk = function(msg){
-        vue.info(msg);
+        vue.nouvellesLivraisons();
         // vue.creerPlan();
     };
+    this._chargerLivraisonsErr = function(msg){
+        vue.fermerChargement();
+        vue.erreur(msg);
+    }.bind(this);
     this.chargerLivraisons = function(evt){
-        com.envoyerXml(evt,'controleur/charger-livraisons',this._chargerLivraisonsOk);
+        vue.afficherChargement("Chargement des données de livraisons...\n"
+                + "Merci de patienter quelques instants.");
+        com.envoyerXml(evt,'controleur/charger-livraisons',this._chargerLivraisonsOk,this._chargerLivraisonsErr);
     }.bind(this);
 
     this.clicTelechargerInitineraire = function(){
@@ -91,7 +99,7 @@ var path2 = [[0.4,0.4],[0.6,0.5]];
 //var fg2 = L.rainbowLine([[0.6,0.5],[0.7,0.4]],["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"]).bindLabel("HEY").on("click",function(){alert("hey");}).addTo(map);
 var colors = ["#fff","#7a6bd9","#fe6a6d","#67e860","#ffe06a","#de252a"];
 
-
+/*
 var inter = [];
 ctrl.vue.ajouterIntersection([0.2,0.2],1).activerClic();
 ctrl.vue.ajouterIntersection([0.4,0.2],2).activerClic();
@@ -142,7 +150,7 @@ ctrl.vue.ajouterRoute(5,6).setNom("route")
 
 
 ctrl.vue.afficher();
-
+*/
 /*for( var i = 0; i < routes.length; ++i){
     routes[i].afficher();
 }
@@ -162,7 +170,7 @@ for( var i = 0; i < inter.length; ++i){
 
 function Com(){
 
-    this.appelService = function(nomService, params, fonctionRetour, async){
+    this.appelService = function(nomService, params, fctOk, fctErr, async){
         console.log("async",async);
         var asynchronous = async == null ? false : async;
         console.log(nomService, (asynchronous? "async" : "sync"));
@@ -177,32 +185,32 @@ function Com(){
                 msg += params[i];
             }
         }
+        if( fctErr == null)fctErr = ctrl.vue.erreur;
         if( !asynchronous ){
             xmlhttp.send(msg); // bloquant
-            if(fonctionRetour){
-                fonctionRetour(xmlhttp.responseText);
+            if(fctOk){
+                fctOk(xmlhttp.responseText);
             }
             return xmlhttp.responseText;
         } else {
-            var ctl = this;
             xmlhttp.onload = function (e) {
-            if (xmlhttp.readyState === 4) {
-                if (xmlhttp.status === 200) {
-                    fonctionRetour(xmlhttp.responseText);
-                } else {
-                    ctl.vue.erreur(xmlhttp.statusText);
+                if (xmlhttp.readyState === 4) {
+                    if (xmlhttp.status === 200) {
+                        fctOk(xmlhttp.responseText);
+                    } else {
+                        fctErr(xmlhttp.responseText);
+                    }
                 }
-            }
             };
             xmlhttp.onerror = function (e) {
-                ctl.vue.erreur(xmlhttp.statusText);
+                fctErr(xmlhttp.responseText);
             };
             xmlhttp.send(msg);
         }
         
     }
 
-    this.envoyerXml = function(fileEvt, nomService, fonctionRetour, async){
+    this.envoyerXml = function(fileEvt, nomService, fctOk, fctErr, async){
         var f = fileEvt.target.files[0];
         if(f){
             var extension = f.name.split('.').pop();
@@ -210,7 +218,7 @@ function Com(){
                 var reader = new FileReader();
                 
                 reader.onload = function(e){
-                    this.appelService(nomService,[e.target.result],fonctionRetour, async);
+                    this.appelService(nomService,[e.target.result],fctOk,fctErr, async);
                 }.bind(this);
                 reader.readAsText(f);
             } else {
