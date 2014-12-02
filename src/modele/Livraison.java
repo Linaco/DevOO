@@ -14,8 +14,8 @@ public class Livraison {
    
 	private static int idLivraison = 0;
 	private Date heureDePassageEffective;
-        private Etape etapePassagePrevue;
-        private Intersection PointDeLivraison;
+    private Etape etapePassagePrevue;
+    private Intersection PointDeLivraison;
 	private int id;
 	private int idInPH,idClient;
 	private PlageHoraire plageHoraire;
@@ -34,6 +34,7 @@ public class Livraison {
     public int getIdClient(){return this.idClient;}
     public PlageHoraire getPlageHoraire(){return this.plageHoraire;}
     public Date getHeureDePassage(){return this.heureDePassageEffective;}
+    public Etape getEtape(){return this.etapePassagePrevue;}
     
    
     public boolean isRealisable() {
@@ -55,6 +56,7 @@ public class Livraison {
     
     public void setEtapePassagePrevue(Etape etape){
         etapePassagePrevue = etape;
+        etape.setaLivraison();
     }
     
     public boolean display(PrintStream stream){

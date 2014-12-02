@@ -19,13 +19,11 @@ public class Controleur {
 	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
 	
 	private GrapheRoutier grapheRoutier;
-	private GrapheLivraison grapheLivraison;
 	private FeuilleDeRoute feuilledeRoute;
 	private List<Commande> listeCommande;
 
 	public Controleur(){
 		grapheRoutier = new GrapheRoutier();
-		grapheLivraison = new GrapheLivraison();
 		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
@@ -61,7 +59,7 @@ public class Controleur {
 		}
 		
 		//premier passage, creation des plages horaires
-		//TODO géré les heures casse couille
+		//TODO gï¿½rï¿½ les heures casse couille
 		for(int i =0;i<phNodeList.getLength();i++){
 			Node phNode = phNodeList.item(i);
 			if(phNode.getNodeType() == Node.ELEMENT_NODE){
@@ -119,7 +117,7 @@ public class Controleur {
 					Date hDebDate = HOUR_FORMAT.parse(hDeb);
 					phParentObj = feuilledeRoute.rechercherPHParHD(hDebDate);
 					if(phParentObj.equals(null)){
-						System.err.println("Plage Horaire Parente non trouvée");
+						System.err.println("Plage Horaire Parente non trouvï¿½e");
 						return false;
 					}
 					
@@ -163,7 +161,7 @@ public class Controleur {
 		grapheRoutier.clean();
 		
 		plan.getDocumentElement().normalize();
-		//premier passage et création des intersections
+		//premier passage et crï¿½ation des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
 		
 		if(intersections.getLength() == 0){
@@ -183,12 +181,12 @@ public class Controleur {
 						int id = Integer.parseInt(attr.getNamedItem("id").getTextContent());
 						int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 						if(x<0){
-							System.err.println("x inférieur à 0");
+							System.err.println("x infï¿½rieur ï¿½ 0");
 							return false;
 						}
 						int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
 						if(y<0){
-							System.err.println("y inférieur à 0");
+							System.err.println("y infï¿½rieur ï¿½ 0");
 							return false;
 						}
 						Intersection inter = new Intersection(id,x,y);
@@ -205,7 +203,7 @@ public class Controleur {
 			}
 		}
 		
-		//deuxième passage 
+		//deuxiï¿½me passage 
 		NodeList routes = plan.getElementsByTagName("LeTronconSortant");
 		if(routes.getLength()==0)
 			return false;
@@ -253,6 +251,5 @@ public class Controleur {
 	}
 
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
-	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }

@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 import modele.*;
 
 /**
@@ -11,6 +12,7 @@ import modele.*;
  */
 public class FeuilleDeRoute {
 	
+	private GrapheLivraison grapheLivraison;
 	private Intersection entrepot;
 	private List<PlageHoraire> plagesHoraires;
     private Date debutJournee;
@@ -20,9 +22,10 @@ public class FeuilleDeRoute {
     private ArrayList<Etape> itineraire;
 	
     public FeuilleDeRoute() {
+		grapheLivraison = new GrapheLivraison();
     	this.plagesHoraires= new ArrayList<>();
     	itineraire = new ArrayList<>();
-	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
+    	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
         try{
             debutJournee = formatHeure.parse("08:00:00");
             tempsMoyenLivraisonSecondes = 10*60;
@@ -68,9 +71,50 @@ public class FeuilleDeRoute {
 	   }
 	   return null;
    }
-
-   public void ajouterLivraison(Livraison l){
-	   PlageHoraire pH = l.getPlageHoraire();
+   /**
+    * Fonction permettant de retrouver la position dans itinéraire de la livraison suivante dans la liste des étapes
+    * @param livraison
+    * @return liste<Integer>
+    */
+   public List<Integer> trouverSuivant(Livraison livraison){
+	   List<Integer> listePosition = new ArrayList<Integer>();
+	   Etape etape = livraison.getEtape();
+	   int pos = itineraire.indexOf(etape);
+	   int nextLivraison = 0;
+	   nextLivraison+=pos;
+	   while(!itineraire.get(nextLivraison).getaLivraison()){
+		  nextLivraison++;
+	   }
+	   listePosition.add(pos);
+	   listePosition.add(nextLivraison);
+	   return listePosition;
+   }
+   /**
+    * Fonction permettant de retrouver la position dans itinéraire de la livraison précédente dans la liste des étapes
+    * @param livraison
+    * @return List<Integer>
+    */
+   public List<Integer> trouverPrecedent(Livraison livraison){
+	   List<Integer> listePosition = new ArrayList<Integer>();
+	   Etape etape = livraison.getEtape();
+	   int pos = itineraire.indexOf(etape);
+	   int previousLivraison = 0;
+	   previousLivraison += pos;
+	   while(!itineraire.get(previousLivraison).getaLivraison()){
+		   previousLivraison--;
+	   }
+	   listePosition.add(previousLivraison);
+	   listePosition.add(pos);
+	   return listePosition;
+   }
+   
+   /**
+    * Fonction permettant d'ajouter une nouvelle livraison à la feuile de route tout en modifiant la liste des étapes.
+    * @param nouvelleLivraison
+    * @param livraisonPrecedente
+    */
+   public void ajouterLivraison(Livraison nouvelleLivraison, Livraison livraisonPrecedente, GrapheRoutier carte){
+	   PlageHoraire pH = nouvelleLivraison.getPlageHoraire();
 	   Boolean b = false;
 	   int index = 0;
 	   for(int i=0; i<this.plagesHoraires.size();i++){
@@ -81,16 +125,48 @@ public class FeuilleDeRoute {
 		   }
 	   }
 	   if(!b){
-		   pH.addLivraison(l);
+		   pH.addLivraison(nouvelleLivraison);
 		   plagesHoraires.add(pH);
 	   }else{
-		   plagesHoraires.get(index).addLivraison(l);
+		   plagesHoraires.get(index).addLivraison(nouvelleLivraison);
 	   }
+	   List<Integer> posEtapes = trouverSuivant(livraisonPrecedente);
+	   //Retrait des etapes obsolètes
+	   for(int i=0; i<posEtapes.get(1)-posEtapes.get(0);i++){
+		   itineraire.remove(posEtapes.get(0)+1);
+	   }
+	   //ajout des nouvelles étapes de livraison précédente-->nouvelle livraison
+	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(livraisonPrecedente.getPointLivraison(), nouvelleLivraison.getPointLivraison());
+	   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
+	   List<Etape> nouvellesEtapes = new ArrayList<Etape>();
+	   Date heureCourante = itineraire.get(posEtapes.get(0)).getHeurePassagePrevue();
+	   for(int i=1; i<listeIntersection.size();i++){
+		   heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
+		   nouvellesEtapes.add(new Etape(heureCourante,listeIntersection.get(i)));
+	   }
+	   nouvellesEtapes.get(nouvellesEtapes.size()).setaLivraison();
+	   nouvelleLivraison.setEtapePassagePrevue(nouvellesEtapes.get(nouvellesEtapes.size()));
+	   itineraire.addAll(posEtapes.get(0)+1, nouvellesEtapes);
+	   int positionNouvelleLivraison = posEtapes.get(0)+nouvellesEtapes.size();
+	   //ajout des nouvelles étapes de nouvelle livraison-->livraison suivante
+	   Object[]resultatCalcul2 = carte.calculerPlusCourtChemin(nouvelleLivraison.getPointLivraison(), itineraire.get(positionNouvelleLivraison+1).getAdresse());
+	   
    }
    
-   public void supprimerLivraison(Livraison l){
+   public void supprimerLivraison(Livraison l, GrapheRoutier carte){
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
+	   int positionPrecedente = trouverPrecedent(l).get(0);
+	   int positionSuivante = trouverSuivant(l).get(1);
+	   //supression des etapes
+	   for(int i=0;i<positionSuivante-positionPrecedente;i++){
+		   itineraire.remove(positionPrecedente+1);
+	   }
+	   
+   }
+   
+   public GrapheLivraison getGrapheLivraison(){
+	   return this.grapheLivraison;
    }
 
    /**

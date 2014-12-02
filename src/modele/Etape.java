@@ -11,8 +11,9 @@ import java.util.*;
 public class Etape {
 	
 	private Date heureDePassage;
-        private int secondesAttenteAvantPassage;
+    private int secondesAttenteAvantPassage;
 	private Intersection adresse;
+	private boolean aLivraison;
 
     /**
      * 
@@ -23,8 +24,9 @@ public class Etape {
     public Etape(Date heurePassage, Intersection adresse){
     	this.adresse = adresse;
     	this.heureDePassage = heurePassage;
-	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");        
+    	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");        
         secondesAttenteAvantPassage=0;
+        aLivraison = false;
     }
 
     /**
@@ -47,6 +49,14 @@ public class Etape {
     public void setHeurePassagePrevue(Date nouvelleHeure) {
     	this.heureDePassage = nouvelleHeure;
         // TODO implement here
+    }
+    
+    public void setaLivraison(){
+    	this.aLivraison = true;
+    }
+    
+    public boolean getaLivraison(){
+    	return this.aLivraison;
     }
 
     public int getAttenteAvantPassage() {
