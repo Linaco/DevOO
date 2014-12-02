@@ -32,8 +32,8 @@ function Controleur(){
         //c.appelService("test", [50,20], function(reponse){alert(reponse);});
     };
     this._chargerPlanOk = function(msg){
-        vue.info(msg);
-        // vue.creerPlan();
+        //vue.info(msg);
+        vue.nouveauPlan(msg);
     }.bind(this);
     this.chargerPlan = function(evt){
         com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk);

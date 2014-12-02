@@ -42,6 +42,10 @@ function Vue(controleur){
     }
 
     //visibilité
+    this.nouveauPlan = function(xml){
+        this.info(xml);
+    }
+
     this.afficher = function() {
         for( var i = 0; i < this.routes.length; ++i ){
             this.routes[i].afficher();
