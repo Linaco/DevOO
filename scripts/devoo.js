@@ -32,8 +32,8 @@ function Controleur(){
         //c.appelService("test", [50,20], function(reponse){alert(reponse);});
     };
     this._chargerPlanOk = function(msg){
-        //vue.info(msg);
-        vue.nouveauPlan(msg);
+        vue.info(msg);
+        vue.nouveauPlan();
     }.bind(this);
     this.chargerPlan = function(evt){
         com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk);
@@ -167,11 +167,16 @@ function Com(){
         xmlhttp.overrideMimeType('text/xml');
 
         var msg = "";
-        for( var i = 0; i < params.length; ++i){
-            msg += params[i];
+        if(params){
+            for( var i = 0; i < params.length; ++i){
+                msg += params[i];
+            }
         }
         xmlhttp.send(msg); // bloquant
-        fonctionRetour(xmlhttp.responseText);
+        if(fonctionRetour){
+            fonctionRetour(xmlhttp.responseText);
+        }
+        return xmlhttp.responseText;
     }
 
     this.envoyerXml = function(fileEvt, nomService, fonctionRetour){
