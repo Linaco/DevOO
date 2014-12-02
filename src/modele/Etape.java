@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * 
  */
-public class Etape {
+public class Etape implements DisplayTest{
 	
 	private Date heureDePassage;
 	private Intersection adresse;

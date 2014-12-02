@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * 
  */
-public class GrapheRoutier {
+public class GrapheRoutier implements DisplayTest{
 	
     private List<Intersection> listeIntersection;
     private List<Object[]> listePlusCourtsChemins;

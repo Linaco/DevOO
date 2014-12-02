@@ -3,7 +3,7 @@ package modele;
 import java.io.PrintStream;
 
 
-public class Route {
+public class Route implements DisplayTest{
 	
 	private static int idRoutes =0;
 	

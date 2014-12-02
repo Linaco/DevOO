@@ -1,12 +1,13 @@
 package modele;
 
+import java.io.PrintStream;
 import java.util.*;
 import modele.*;
 
 /**
  * 
  */
-public class FeuilleDeRoute {
+public class FeuilleDeRoute implements DisplayTest{
 	
 	private Intersection entrepot;
 	private List<PlageHoraire> plagesHoraires;
@@ -23,6 +24,13 @@ public class FeuilleDeRoute {
     public List<PlageHoraire> getPlagesHoraires(){return this.plagesHoraires;}
     public Intersection getEntrepot(){return this.entrepot;}
     
+    public boolean display(PrintStream stream){
+    	entrepot.display(stream);
+    	for(int i = 0 ; i < plagesHoraires.size() ; i++ ){
+    		plagesHoraires.get(i).display(stream);
+    	}
+    	return true;
+    }
     
     public void ajouterPlageHoraire(PlageHoraire ph){
     	this.plagesHoraires.add(ph);
