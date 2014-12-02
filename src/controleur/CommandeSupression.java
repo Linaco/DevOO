@@ -23,10 +23,6 @@ public class CommandeSupression implements Commande {
 	@Override
 	public void executer() {
 		//this.fdr.supprimerLivraison(l);
-<<<<<<< HEAD
-		
-=======
->>>>>>> 0f6cc08e026357a268c43e66c4524753f45470fa
 	}
 
     
