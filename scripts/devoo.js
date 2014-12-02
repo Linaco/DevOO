@@ -102,9 +102,9 @@ ctrl.vue.ajouterIntersection([0.3,0.5],6).activerClic();
 ctrl.vue.ajouterIntersection([0.3,0.6],7).activerClic();
 ctrl.vue.ajouterIntersection([0.5,0.6],8).activerClic();
 ctrl.vue.ajouterIntersection([0.6,0.5],9).activerClic();
-ctrl.vue.getIntersection(4).setLivraison(0,45,'8-12h');
-ctrl.vue.getIntersection(5).setLivraison(1,65,'8-12h');
-ctrl.vue.getIntersection(6).setLivraison(2,12,'8-12h');
+ctrl.vue.getIntersection(4).setLivraison(0,45,'8h45');
+ctrl.vue.getIntersection(5).setLivraison(1,65,'9h12');
+ctrl.vue.getIntersection(6).setLivraison(2,12,'9h37');
 
 ctrl.vue.ajouterRoute(1,2).setNom("Rue de la paix")
     .ajouterPassage(0,colors[0]);

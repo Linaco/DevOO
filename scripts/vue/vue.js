@@ -1,6 +1,5 @@
 ///////////////////////////////////////////////////
 // Class Vue
-
 function Vue(controleur, com){
     // attributs
     this.com = com;
@@ -144,8 +143,8 @@ function Vue(controleur, com){
     // Ajout des controls (boutons)
     //console.log("ctrl : ");
     //console.log(controleur);
-    L.control.zoom({position:'topright'}).addTo(this.map);
-    L.easyButton('fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
+    L.control.zoom({position:'topright', zoomInTitle: "Zoomer"}).addTo(this.map);
+    L.easyButton('Heeey fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
     L.easyButton('fa-arrow-circle-right', controleur.retablir, 'Redo', this.map);
     L.easyButton('fa-road', controleur.clicChargerPlan, 'Charger un plan', this.map).setPosition('bottomleft');
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
@@ -180,16 +179,16 @@ function VueIntersection(pos, id){
     this.routesSortantes = [];
 
     // methodes
-    this.setLivraison = function(id, idClient, plage) {
+    this.setLivraison = function(id, idClient, hdp) {
         this.livraison = {
             id: id,
             idClient: idClient,
-            plage: plage
+            hdp: hdp
         };
         var div = document.getElementById('popup-livraison').cloneNode(true);
         console.log("div",div);
         div.getElementsByTagName("client")[0].textContent = this.livraison.idClient;
-        div.getElementsByTagName("plage")[0].textContent = this.livraison.plage;
+        div.getElementsByTagName("hdp")[0].textContent = this.livraison.hdp;
         div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._livraisonSupprimee("+this.livraison.id+","+this.id+");");
         this.cercle.bindPopup(div);
         this.majEtat();
