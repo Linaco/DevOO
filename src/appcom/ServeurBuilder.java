@@ -48,7 +48,7 @@ public class ServeurBuilder {
 						if (this.getControleur().chargerPlan(doc)) {
 							return Reponse.succes("Le plan a bien été chargé.");
 						} else {
-							return Reponse.succes("Le service de chargement du plan a échoué.");
+							return Reponse.erreur("Le service de chargement du plan a échoué.");
 						}
 						
 					} catch (SAXException e) {
@@ -76,11 +76,12 @@ public class ServeurBuilder {
 					try {
 						
 						Document doc = builder.parse(in);
-						//xml
-						if (this.getControleur().chargerLivraisons(doc))
-							return Reponse.succes("La communication s'est bien déroulée.");
-						else
-							return Reponse.succes("Le service de chargement des livraisons n'a pas abouti.");	
+			
+						if (this.getControleur().chargerLivraisons(doc)) {
+							return Reponse.succes("Les livraisons ont été chargées.");
+						} else {
+							return Reponse.erreur("Le service de chargement des livraisons a échoué.");	
+						}
 						
 					} catch (SAXException e) {
 						e.printStackTrace();
