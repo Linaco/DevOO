@@ -36,7 +36,7 @@ function Vue(controleur, com){
 
     this.afficherChargement = function(msg){
         document.getElementById("msg-chargement").textContent
-            = "Calcul de l'itinéraire en cours, veuillez patienter...";
+            = msg;
         $('#modalChargement').modal({backdrop: 'static', keyboard: false});
     }
 
@@ -46,10 +46,41 @@ function Vue(controleur, com){
 
     //visibilité
     this.nouveauPlan = function(){
-        var xml= com.appelService('modele/plan');
-        console.log("xml",xml);
-        this.info(xml);
+        this.masquer();
+        this.intersections = [];
+        this.routes = [];
+        com.appelService('modele/plan','',this.retourModelePlan, true);
     }
+    this.retourModelePlan = function(str){
+        this.info(str);
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(str,"text/xml");
+
+        var plan = doc.getElementsByTagName("plan")[0];
+        //console.log("plan",plan);
+        var its = doc.getElementsByTagName("intersection");
+        for( var i = 0; i < its.length; ++i){
+            var it = its[i];
+            var id = it.getAttribute("id");
+            var x = it.getAttribute("x")/500;
+            var y = it.getAttribute("y")/500;
+            this.ajouterIntersection([x,y],id);
+        }
+        for( var i = 0; i < its.length; ++i){
+            var it = its[i];
+            var id1 = it.getAttribute("id");
+            var routes = it.getElementsByTagName("route");
+            for( var j = 0; j < routes.length; ++j){
+                var route = routes[j];
+                var idRoute = route.getAttribute("id");
+                var id2 = route.getAttribute("idDestination");
+                var nom = route.getAttribute("nom");
+                this.ajouterRoute(id1,id2);
+            }
+        }
+        this.afficher();
+        this.fermerChargement();
+    }.bind(this);
 
     this.afficher = function() {
         for( var i = 0; i < this.routes.length; ++i ){
@@ -77,7 +108,7 @@ function Vue(controleur, com){
 
     this.ajouterRoute = function(i1,i2){
         var a = this.getIntersection(i1),
-            b = this.   getIntersection(i2);
+            b = this.getIntersection(i2);
         if ( a && b ) return this.routes[this.routes.length] 
             = new VueRoute(a,b);
         return null;
@@ -97,6 +128,15 @@ function Vue(controleur, com){
         }
         return null;
     }
+
+    this._livraisonSupprimee = function(idLivraison, idIntersection){
+        var it = this.getIntersection(idIntersection);
+        it.closePopup();
+        console.log(idLivraison, it);
+        this.info("Suppression prise en compte");
+    }
+
+
 
     //Constructeur
     // initialisation de la map
@@ -136,15 +176,29 @@ function VueIntersection(pos, id){
 
     this.cercle;
 
-    this.livraison = false;
+    this.livraison = null;
     this.routesSortantes = [];
 
     // methodes
-    this.setLivraison = function(bool) {
-        this.livraison = bool? true : false;
+    this.setLivraison = function(id, idClient, plage) {
+        this.livraison = {
+            id: id,
+            idClient: idClient,
+            plage: plage
+        };
+        var div = document.getElementById('popup-livraison').cloneNode(true);
+        console.log("div",div);
+        div.getElementsByTagName("client")[0].textContent = this.livraison.idClient;
+        div.getElementsByTagName("plage")[0].textContent = this.livraison.plage;
+        div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._livraisonSupprimee("+this.livraison.id+","+this.id+");");
+        this.cercle.bindPopup(div);
         this.majEtat();
         return this;
     }
+
+    this.closePopup = function() {
+        this.cercle.closePopup();
+    };
 
     this.majEtat = function(){
         switch(this.etat){
@@ -212,18 +266,21 @@ function VueIntersection(pos, id){
 
     this._clicSelectionnable = function() {
         console.log("clic selectionnable", this);
-        this.etatStandard();
+        //this.etatStandard();
     }
     this._clicStandard = function() {
         console.log("clic standard",this);
-        this.etatSelectionnable();
+        if(this.livraison){
+            this.cercle.openPopup();
+        }
+        //this.etatSelectionnable();
     }
 
     // Constructeur
-    this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)
+    this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)/*
             .bindPopup("Intersection "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
             .on("mouseover",function () {this.openPopup();})
-            .on("mouseout",function () {this.closePopup();});
+            .on("mouseout",function () {this.closePopup();})*/;
     return this;
 }
 
@@ -268,14 +325,13 @@ function VueRoute(intersec1, intersec2){
 
     this.masquer = function(){
         map.removeLayer(this.ligneBase);
-        this.A.masquer();
-        this.B.masquer();
+        map.removeLayer(this.decorateurSens);
         return this;
     }
 
     // events
     this._clic = function(){
-        //this.masquer();
+        console.log('clic',this);
     }.bind(this);
 
     this._mouseover = function() {

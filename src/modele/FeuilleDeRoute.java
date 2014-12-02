@@ -69,7 +69,7 @@ public class FeuilleDeRoute {
 	   }
 	   return null;
    }
-   
+
    public void ajouterLivraison(Livraison l){
 	   PlageHoraire pH = l.getPlageHoraire();
 	   Boolean b = false;
@@ -93,10 +93,10 @@ public class FeuilleDeRoute {
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
    }
-   
+
    /**
-    * Calcul le parcours pour les livraisons demandées et crée l'itinéraire
-    * @param carte Le Graphe Routier à utiliser pour calculer le parcours
+    * Calcul le parcours pour les livraisons demandees et cree l'itineraire
+    * @param carte Le Graphe Routier a utiliser pour calculer le parcours
     */
    public void calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
@@ -111,7 +111,9 @@ public class FeuilleDeRoute {
         for(PlageHoraire p: plagesHoraires){
             toutesLivraisons.addAll(p.getListeLivraison());
         }
-        //Calcul de tous les plus courts chemins adéquats
+        
+        //Calcul de tous les plus courts chemins adequats
+
         int[][] matriceAdjacence = new int[toutesLivraisons.size()+1][toutesLivraisons.size()+1];
         for(int i=0; i<toutesLivraisons.size()+1;i++){
             for(int j=0; j<toutesLivraisons.size()+1;j++){
@@ -169,7 +171,7 @@ public class FeuilleDeRoute {
         GrapheLivraison solveur = new GrapheLivraison(matriceAdjacence, toutesLivraisons);
         List<Livraison> livraisonsOrdonnees = solveur.calculerOrdreLivraisons();
         
-        //Mise Ã  jour de l'itinÃ©raire
+        //Mise a jour de l'itineraire
         Date heureCourante = debutJournee;
         Etape etapeCourante = new Etape(heureCourante, entrepot);
         Livraison livraisonCourante;
