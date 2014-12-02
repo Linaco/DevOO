@@ -40,8 +40,7 @@ public class FeuilleDeRoute {
 	   }
 	   return null;
    }
-   
-<<<<<<< HEAD
+ 
    public void ajouterLivraison(Livraison l){
 	   PlageHoraire pH = l.getPlageHoraire();
 	   Boolean b = false;
@@ -66,14 +65,11 @@ public class FeuilleDeRoute {
 	   pH.deleteLivraison(l);
    }
 
-    public void calculerParcours(GrapheRoutier carte) {
-=======
    /**
-    * Calcul le parcours pour les livraisons demandées et crée l'itinéraire
-    * @param carte Le Graphe Routier à utiliser pour calculer le parcours
+    * Calcul le parcours pour les livraisons demandees et cree l'itineraire
+    * @param carte Le Graphe Routier a utiliser pour calculer le parcours
     */
    public void calculerParcours(GrapheRoutier carte) {
->>>>>>> d277b7ac3e39e10023319e2bf63b98953fea03ec
         List<Livraison> livraisonsPlageCourante;
         List<Livraison> livraisonsPlageSuivante;
         List<Livraison> toutesLivraisons = new ArrayList<>();
@@ -140,13 +136,9 @@ public class FeuilleDeRoute {
         }
         GrapheLivraison solveur = new GrapheLivraison(matriceAdjacence, toutesLivraisons);
         List<Livraison> test = solveur.calculerOrdreLivraisons();
-<<<<<<< HEAD
         for(Livraison l : test){
             System.out.println(l.getIdInPH());
         }
-=======
-
->>>>>>> d277b7ac3e39e10023319e2bf63b98953fea03ec
     }
 
 }
