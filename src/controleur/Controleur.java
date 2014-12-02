@@ -4,33 +4,35 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-
-
-
-
-
 import org.w3c.dom.*;
-
 import modele.*;
 
 public class Controleur {
 	
+	/**
+	 * Attribut de classe DateFormat permettant le formatage de l'heure à partir d'une String
+	 */
 	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
 	
 	private GrapheRoutier grapheRoutier;
-	private GrapheLivraison grapheLivraison;
 	private FeuilleDeRoute feuilledeRoute;
 	private List<Commande> listeCommande;
 
+	/**
+	 * Constructeur de Controleur
+	 */
 	public Controleur(){
 		grapheRoutier = new GrapheRoutier();
-		grapheLivraison = new GrapheLivraison();
 		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
-	//deprec sur getHours
+	
 	/**
+	 * Génération de la FeuilleDeRoute à partir d'un document xml passé en paramètre
+	 * Le document est parsé 2 fois, une fois pour générer les PlagesHoraires,
+	 * une fois pour générer les Livraisons et les lier à la PlageHoraire parente
+	 * Si tout se passe bien, renvoie true
+	 * Sinon renvoie false avec affichage en console du type de problème
 	 * @param livDoc
 	 * @return boolean
 	 */
@@ -64,23 +66,26 @@ public class Controleur {
 		}
 		
 		//premier passage, creation des plages horaires
-		//TODO géré les heures casse couille
 		for(int i =0;i<phNodeList.getLength();i++){
 			Node phNode = phNodeList.item(i);
 			if(phNode.getNodeType() == Node.ELEMENT_NODE){
 				Element phElement = (Element)phNode;
 				if(phElement.hasAttributes()){
 					NamedNodeMap nnm = phElement.getAttributes();
+					/*
+					 * Vérification de l'intégrité des données pour les PlageHoraire
+					 */
 					try{
 						String heureDeb = nnm.getNamedItem("heureDebut").getTextContent();
 						String heureF = nnm.getNamedItem("heureFin").getTextContent();
-						if(heureDeb.equals(null) && heureF.equals(null)){
+						if(heureDeb == null || heureF==null){
 							System.err.println("Heure invalide");
 							return false;
 						}else{
 							try{
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
+								// Vérification de la cohérence des heures fournies
 								if(heureDebut.getHours()>=0 && heureDebut.getHours()<=24
 								&& heureFin.getHours()>=0 && heureFin.getHours()<=24
 									&& heureDebut.getHours() < heureFin.getHours()){
@@ -105,7 +110,11 @@ public class Controleur {
 				}
 			}
 		}
-			
+		
+		/* Deuxième passage avec création des Livraison et mise en relation avec la plage horaire 
+		 * correspondante.
+		 */
+		
 		NodeList livNodeList = livDoc.getElementsByTagName("Livraison");
 		if(livNodeList.getLength() ==0){
 			System.err.println("Aucune livraison");
@@ -114,6 +123,7 @@ public class Controleur {
 		for(int j=0; j<livNodeList.getLength(); j++){
 			Node livNode = livNodeList.item(j);
 			if(livNode.getNodeType() == Node.ELEMENT_NODE){
+				// Récupération de la PlageHoraire parente
 				Element livElement = (Element)livNode;
 				Element phParent = (Element)livElement.getParentNode().getParentNode();
 				String hDeb = phParent.getAttribute("heureDebut");
@@ -134,6 +144,7 @@ public class Controleur {
 				
 				if(livElement.hasAttributes()){
 					NamedNodeMap nnm = livElement.getAttributes();
+					// Vérification de l'intégrité des données pour les Livraisons
 					try{
 						int id = Integer.parseInt(nnm.getNamedItem("id").getTextContent());
 						int idClient = Integer.parseInt(nnm.getNamedItem("client").getTextContent());
@@ -161,12 +172,22 @@ public class Controleur {
 		return true;
 	}
 	
+	/**
+	 * Génération du GrapheRoutier à partir d'un document xml passé en paramètre
+	 * Le document est parsé 2 fois, une fois pour générer les Intersections,
+	 * une fois pour générer les Routes et les lier aux Intersections correspondantes
+	 * Si tout se passe bien, renvoie true
+	 * Sinon renvoie false avec affichage en console du type de problème
+	 * @param plan
+	 * @return boolean
+	 */
 	public boolean chargerPlan(Document plan){
 		
+		//remise à zéro du graphe routier
 		grapheRoutier.clean();
-		
 		plan.getDocumentElement().normalize();
-		//premier passage et création des intersections
+		
+		//premier passage avec création des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
 		
 		if(intersections.getLength() == 0){
@@ -182,8 +203,15 @@ public class Controleur {
 				Element elementNoeud = (Element) noeud;
 				if(elementNoeud.hasAttributes()){
 					NamedNodeMap attr= elementNoeud.getAttributes();
+					/* Vérification de l'intégrité des données fournies par le document pour les 
+					 * intersections
+					 */
 					try{
 						int id = Integer.parseInt(attr.getNamedItem("id").getTextContent());
+						if(grapheRoutier.interExiste(id)){
+							System.err.println("Intersection déjà existante");
+							return false;
+						}
 						int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 						if(x<0){
 							System.err.println("x inférieur à 0");
@@ -208,7 +236,7 @@ public class Controleur {
 			}
 		}
 		
-		//deuxième passage 
+		//deuxième passage avec création des Routes
 		NodeList routes = plan.getElementsByTagName("LeTronconSortant");
 		if(routes.getLength()==0)
 			return false;
@@ -217,6 +245,8 @@ public class Controleur {
 			if(routeNode.getNodeType() == Node.ELEMENT_NODE){
 				Element elementRoute = (Element) routeNode;
 				if(elementRoute.hasAttributes()){
+					/* Vérification de l'intégrité des données fournies par le xml
+					 */
 					try{
 						NamedNodeMap attr = elementRoute.getAttributes();
 						String nom = attr.getNamedItem("nomRue").getTextContent();
@@ -230,6 +260,9 @@ public class Controleur {
 							System.err.println("longueur <0");
 							return false;
 						}
+						/* Vérification de l'existence de la destination
+						 * Récupération de l'intersection de provenance pour lui ajouter la nouvelle route
+						 */
 						int idInter = Integer.parseInt(attr.getNamedItem("idNoeudDestination").getTextContent());
 						if(grapheRoutier.interExiste(idInter)){
 							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
@@ -238,7 +271,7 @@ public class Controleur {
 							Intersection parent = grapheRoutier.rechercherInterParId(idParent);
 							parent.addTroncSortant(routeObj);
 						}else{
-							System.err.println("Erreur sur route");
+							System.err.println("Erreur sur destination");
 							return false;
 						}
 					}catch(Exception e){
@@ -255,7 +288,13 @@ public class Controleur {
 		return true;
 	}
 
+	/**
+	 * getter du graphe Routier contenant les Intersections
+	 * @return GrapheRoutier
+	 */
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
-	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
+	/** getter de la feuille de route contenant les PlageHoraire de livraisons
+	 * @return FeuilleDeRoute
+	 */
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }
