@@ -21,9 +21,8 @@ public class CommandeSupression implements Commande {
     }
 
 	@Override
-	public void executer(Livraison l) {
-		this.fdr.supprimerLivraison(l);
-		
+	public void executer() {
+		//this.fdr.supprimerLivraison(l);
 	}
 
     

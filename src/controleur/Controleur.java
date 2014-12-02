@@ -10,6 +10,8 @@ import java.util.List;
 
 
 
+import java.util.Stack;
+
 import org.w3c.dom.*;
 
 import modele.*;
@@ -21,8 +23,9 @@ public class Controleur {
 	private GrapheRoutier grapheRoutier;
 	private GrapheLivraison grapheLivraison;
 	private FeuilleDeRoute feuilledeRoute;
-	private List<Commande> listeCommande;
-
+	private Stack<Commande> listeFaits;
+	private Stack<Commande> listeAnnules;
+	
 	public Controleur(){
 		grapheRoutier = new GrapheRoutier();
 		grapheLivraison = new GrapheLivraison();
@@ -258,4 +261,12 @@ public class Controleur {
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
+	
+	public void annuler() {
+		this.listeFaits.pop().annuler();
+	}
+	
+	public void retablir() {
+		this.listeAnnules.pop().executer();
+	}
 }
