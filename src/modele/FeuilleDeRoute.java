@@ -1,6 +1,8 @@
 package modele;
 
 import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import modele.*;
 
@@ -11,18 +13,30 @@ public class FeuilleDeRoute implements DisplayTest{
 	
 	private Intersection entrepot;
 	private List<PlageHoraire> plagesHoraires;
-
+        private Date debutJournee;
+        private int tempsMoyenLivraisonSecondes;
    
 	 private ArrayList<Etape> itineraire;
 	
     public FeuilleDeRoute() {
-    	this.plagesHoraires= new ArrayList<PlageHoraire>();
-    	itineraire = new ArrayList<Etape>();
+    	this.plagesHoraires= new ArrayList<>();
+    	itineraire = new ArrayList<>();
+	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
+        try{
+            debutJournee = formatHeure.parse("08:00:00");
+            tempsMoyenLivraisonSecondes = 10*60;
+        }
+        catch(Exception e){}
     }
     
     //getters
     public List<PlageHoraire> getPlagesHoraires(){return this.plagesHoraires;}
     public Intersection getEntrepot(){return this.entrepot;}
+
+    public ArrayList<Etape> getItineraire() {
+        return itineraire;
+    }
+    
     
     public boolean display(PrintStream stream){
     	entrepot.display(stream);
@@ -84,11 +98,13 @@ public class FeuilleDeRoute implements DisplayTest{
         Livraison departCourant;
         Livraison arriveeCourante;
         Object[] cheminCourant;
+        List<Intersection> morceauItineraireCourant;
         
+
         for(PlageHoraire p: plagesHoraires){
             toutesLivraisons.addAll(p.getListeLivraison());
         }
-        
+        //Calcul de tous les plus courts chemins adéquats
         int[][] matriceAdjacence = new int[toutesLivraisons.size()+1][toutesLivraisons.size()+1];
         for(int i=0; i<toutesLivraisons.size()+1;i++){
             for(int j=0; j<toutesLivraisons.size()+1;j++){
@@ -142,9 +158,57 @@ public class FeuilleDeRoute implements DisplayTest{
                 }
             }
         }
+        
         GrapheLivraison solveur = new GrapheLivraison(matriceAdjacence, toutesLivraisons);
-        List<Livraison> test = solveur.calculerOrdreLivraisons();
-
-    }
-
+        List<Livraison> livraisonsOrdonnees = solveur.calculerOrdreLivraisons();
+        
+        //Mise à jour de l'itinéraire
+        Date heureCourante = debutJournee;
+        Etape etapeCourante = new Etape(heureCourante, entrepot);
+        Livraison livraisonCourante;
+        int attenteCourante = 0;
+        DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
+        itineraire.clear();
+        itineraire.add(etapeCourante);
+        cheminCourant=carte.calculerPlusCourtChemin(entrepot,livraisonsOrdonnees.get(0).getPointLivraison());
+        morceauItineraireCourant = (List) cheminCourant[0];
+        for(int i=0; i<morceauItineraireCourant.size()-1;i++){
+            heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(morceauItineraireCourant.get(i),morceauItineraireCourant.get(i+1)).getTempsParcours()*1000));
+            etapeCourante = new Etape(heureCourante,morceauItineraireCourant.get(i+1));
+            itineraire.add(etapeCourante);
+        }
+        itineraire.remove(itineraire.size()-1);
+        
+        for(int i=0; i<livraisonsOrdonnees.size();i++){
+            livraisonCourante = livraisonsOrdonnees.get(i);
+            if(livraisonCourante.getPlageHoraire().getHeureDebut().after(heureCourante)){
+                attenteCourante=(int) (livraisonCourante.getPlageHoraire().getHeureDebut().getTime()-heureCourante.getTime());
+                heureCourante = livraisonCourante.getPlageHoraire().getHeureDebut();
+            }
+            else{      
+                attenteCourante=0;
+            }
+            etapeCourante = new Etape(heureCourante,livraisonCourante.getPointLivraison());
+            etapeCourante.setAttenteAvantPassage(attenteCourante);
+            livraisonCourante.setEtapePassagePrevue(etapeCourante);
+            itineraire.add(etapeCourante);
+            heureCourante=new Date(heureCourante.getTime()+tempsMoyenLivraisonSecondes*1000);
+                    
+            if(i<livraisonsOrdonnees.size()-1) {
+                cheminCourant=carte.calculerPlusCourtChemin(livraisonsOrdonnees.get(i).getPointLivraison(),livraisonsOrdonnees.get(i+1).getPointLivraison());
+            }
+            else{
+                cheminCourant=carte.calculerPlusCourtChemin(livraisonsOrdonnees.get(i).getPointLivraison(), entrepot);
+            }
+            morceauItineraireCourant = (List) cheminCourant[0];
+            for(int j=0; j<morceauItineraireCourant.size()-1;j++){
+                heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(morceauItineraireCourant.get(j),morceauItineraireCourant.get(j+1)).getTempsParcours()*1000));
+                etapeCourante = new Etape(heureCourante,morceauItineraireCourant.get(j+1));
+                itineraire.add(etapeCourante);
+            }
+            if(i<livraisonsOrdonnees.size()-1) {
+                itineraire.remove(itineraire.size()-1);
+            }
+        }
+   }
 }
