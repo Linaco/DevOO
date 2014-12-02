@@ -142,5 +142,16 @@ public class GrapheRoutier implements DisplayTest{
         }
         
     }
+     
+     public String getPlanXML(){
+    	String res = "";
+ 		res += "<plan>";
+ 		Iterator<Intersection> it = this.listeIntersection.iterator();
+ 		while( it.hasNext() ){
+ 			res += it.next().toStringXML();
+ 		}
+ 		res += "</plan>";
+ 		return res;
+     }
 
 }
