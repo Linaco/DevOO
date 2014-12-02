@@ -32,11 +32,12 @@ function Controleur(){
         //c.appelService("test", [50,20], function(reponse){alert(reponse);});
     };
     this._chargerPlanOk = function(msg){
-        vue.info(msg);
         vue.nouveauPlan();
     }.bind(this);
     this.chargerPlan = function(evt){
-        com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk);
+        vue.afficherChargement("Création du réseau routier...\n"
+                + "Merci de patienter quelques instants.");
+        com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk, true);
     }.bind(this);
 
     // déclenche le clic sur l'élément 'input' de la page html
@@ -101,9 +102,9 @@ ctrl.vue.ajouterIntersection([0.3,0.5],6).activerClic();
 ctrl.vue.ajouterIntersection([0.3,0.6],7).activerClic();
 ctrl.vue.ajouterIntersection([0.5,0.6],8).activerClic();
 ctrl.vue.ajouterIntersection([0.6,0.5],9).activerClic();
-ctrl.vue.getIntersection(4).setLivraison(true);
-ctrl.vue.getIntersection(5).setLivraison(true);
-ctrl.vue.getIntersection(6).setLivraison(true);
+ctrl.vue.getIntersection(4).setLivraison(0,45,'8-12h');
+ctrl.vue.getIntersection(5).setLivraison(1,65,'8-12h');
+ctrl.vue.getIntersection(6).setLivraison(2,12,'8-12h');
 
 ctrl.vue.ajouterRoute(1,2).setNom("Rue de la paix")
     .ajouterPassage(0,colors[0]);
@@ -141,6 +142,7 @@ ctrl.vue.ajouterRoute(5,6).setNom("route")
 
 
 ctrl.vue.afficher();
+
 /*for( var i = 0; i < routes.length; ++i){
     routes[i].afficher();
 }
@@ -160,9 +162,12 @@ for( var i = 0; i < inter.length; ++i){
 
 function Com(){
 
-    this.appelService = function(nomService, params, fonctionRetour){
+    this.appelService = function(nomService, params, fonctionRetour, async){
+        console.log("async",async);
+        var asynchronous = async == null ? false : async;
+        console.log(nomService, (asynchronous? "async" : "sync"));
         var xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("POST","http://localhost:4500/"+nomService,false);
+        xmlhttp.open("POST","http://localhost:4500/"+nomService,asynchronous);
         //xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
         xmlhttp.overrideMimeType('text/xml');
 
@@ -172,14 +177,32 @@ function Com(){
                 msg += params[i];
             }
         }
-        xmlhttp.send(msg); // bloquant
-        if(fonctionRetour){
-            fonctionRetour(xmlhttp.responseText);
+        if( !asynchronous ){
+            xmlhttp.send(msg); // bloquant
+            if(fonctionRetour){
+                fonctionRetour(xmlhttp.responseText);
+            }
+            return xmlhttp.responseText;
+        } else {
+            var ctl = this;
+            xmlhttp.onload = function (e) {
+            if (xmlhttp.readyState === 4) {
+                if (xmlhttp.status === 200) {
+                    fonctionRetour(xmlhttp.responseText);
+                } else {
+                    ctl.vue.erreur(xmlhttp.statusText);
+                }
+            }
+            };
+            xmlhttp.onerror = function (e) {
+                ctl.vue.erreur(xmlhttp.statusText);
+            };
+            xmlhttp.send(msg);
         }
-        return xmlhttp.responseText;
+        
     }
 
-    this.envoyerXml = function(fileEvt, nomService, fonctionRetour){
+    this.envoyerXml = function(fileEvt, nomService, fonctionRetour, async){
         var f = fileEvt.target.files[0];
         if(f){
             var extension = f.name.split('.').pop();
@@ -187,7 +210,7 @@ function Com(){
                 var reader = new FileReader();
                 
                 reader.onload = function(e){
-                    this.appelService(nomService,[e.target.result],fonctionRetour);
+                    this.appelService(nomService,[e.target.result],fonctionRetour, async);
                 }.bind(this);
                 reader.readAsText(f);
             } else {
