@@ -36,7 +36,7 @@ function Controleur(){
         // vue.creerPlan();
     }.bind(this);
     this.chargerPlan = function(evt){
-        com.envoyerXml(evt,'charger-plan',this._chargerPlanOk);
+        com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk);
     }.bind(this);
 
     // déclenche le clic sur l'élément 'input' de la page html
@@ -49,7 +49,7 @@ function Controleur(){
         // vue.creerPlan();
     };
     this.chargerLivraisons = function(evt){
-        com.envoyerXml(evt,'charger-livraisons',this._chargerLivraisonsOk);
+        com.envoyerXml(evt,'controleur/charger-livraisons',this._chargerLivraisonsOk);
     }.bind(this);
 
     this.clicTelechargerInitineraire = function(){
