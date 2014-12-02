@@ -3,7 +3,7 @@ package modele;
 import java.io.PrintStream;
 
 
-public class Route {
+public class Route{
 	
 	private static int idRoutes =0;
 	
@@ -38,9 +38,19 @@ public class Route {
 
 
 	public boolean display(PrintStream stream) {
-		stream.println(name+" "+id +" "+vitesse+" "+longueur+ " -> " + inter);
+		stream.println(name+" id : "+id +" vitesse : "+vitesse+" long : "+longueur+ " -> " + inter);
 
 		return true;		
 	}
 	
+	public String toString(){
+		return toStringXML();
+	}
+	
+	public String toStringXML(){
+		String res = "";
+		res += "<route id=\"" + this.id + "\" idDestination=\"" + this.inter.getId() + "\" "
+				+ "nom=\""+ this.name + "\" />";
+		return res;
+	}
 }

@@ -7,7 +7,7 @@ public class ServiceControleur extends ServiceHandler {
 	private Controleur controleur;
 	
 	public ServiceControleur(Controleur controleur, String nomService, ServeurLivraison serveur) {
-		super(nomService, serveur);
+		super("controleur/"+nomService, serveur);
 		this.controleur = controleur;
 	}
 	

@@ -55,6 +55,10 @@ public class GrapheRoutier {
         listePlusCourtsChemins = new ArrayList<>();        
     }
     
+    public void clean(){
+    	this.listeIntersection.clear();
+    }
+    
     public void ajouterIntersection(Intersection inter){
     	this.listeIntersection.add(inter.getId(),inter);
     }
@@ -77,6 +81,21 @@ public class GrapheRoutier {
     		listeIntersection.get(i).display(stream);
     	}
     	return true;
+    }
+    
+    /**
+     * 
+     * @param depart L'interserction dont on veut connaitre la route sortante
+     * @param arrivee L'intersection dont on veut connaitre la route entrante
+     * @return La route allant de depart à arrivée
+     */
+    public Route getRoute(Intersection depart, Intersection arrivee){
+        for(Route r:depart.getTroncsSortants()){
+            if(r.getInter().equals(arrivee)){
+                return r;
+            }
+        }
+        return null;
     }
     
    /**
@@ -142,5 +161,16 @@ public class GrapheRoutier {
         }
         
     }
+     
+     public String getPlanXML(){
+    	String res = "";
+ 		res += "<plan>";
+ 		Iterator<Intersection> it = this.listeIntersection.iterator();
+ 		while( it.hasNext() ){
+ 			res += it.next().toStringXML();
+ 		}
+ 		res += "</plan>";
+ 		return res;
+     }
 
 }

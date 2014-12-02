@@ -9,6 +9,7 @@ import java.util.List;
 
 
 
+
 import org.w3c.dom.*;
 
 import modele.*;
@@ -32,7 +33,7 @@ public class Controleur {
 	@SuppressWarnings("deprecation")
 	public boolean chargerLivraisons(Document livDoc){
 		
-	
+		feuilledeRoute.clean();
 		//Generation du document
 		livDoc.getDocumentElement().normalize();
 
@@ -159,6 +160,8 @@ public class Controleur {
 	
 	public boolean chargerPlan(Document plan){
 		
+		grapheRoutier.clean();
+		
 		plan.getDocumentElement().normalize();
 		//premier passage et création des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
@@ -228,7 +231,9 @@ public class Controleur {
 						if(grapheRoutier.interExiste(idInter)){
 							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
 							Route routeObj = new Route(nom,vitesse,longueur,inter);
-							inter.addTroncSortant(routeObj);
+							int  idParent = Integer.parseInt(elementRoute.getParentNode().getAttributes().getNamedItem("id").getTextContent());
+							Intersection parent = grapheRoutier.rechercherInterParId(idParent);
+							parent.addTroncSortant(routeObj);
 						}else{
 							System.err.println("Erreur sur route");
 							return false;

@@ -7,7 +7,7 @@ public class ServiceModele extends ServiceHandler {
 	private Controleur controleur;
 	
 	public ServiceModele(Controleur controleur, String nomService, ServeurLivraison serveur) {
-		super(nomService, serveur);
+		super("modele/"+nomService, serveur);
 		this.controleur = controleur;
 	}
 	

@@ -2,6 +2,7 @@ package modele;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Intersection {
@@ -65,5 +66,20 @@ public class Intersection {
     		troncSortants.get(i).display(stream);
     	}
 		return true;
+	}
+	
+	public String toString(){
+		return toStringXML();
+	}
+	
+	public String toStringXML(){
+		String res = "";
+		res += "<intersection id=\""+this.id+"\" x=\""+this.x+"\" y=\""+this.y+"\" >";
+		Iterator<Route> it = this.troncSortants.iterator();
+		while( it.hasNext() ){
+			res += it.next().toStringXML();
+		}
+		res += "</intersection>";
+		return res;
 	}
 }

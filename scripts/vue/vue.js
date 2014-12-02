@@ -1,8 +1,11 @@
 ///////////////////////////////////////////////////
 // Class Vue
 
-function Vue(controleur){
+function Vue(controleur, com){
     // attributs
+    this.com = com;
+    var com = this.com;
+
     this.intersections = [];
     this.routes = [];
     this.itineraire;
@@ -42,6 +45,12 @@ function Vue(controleur){
     }
 
     //visibilité
+    this.nouveauPlan = function(){
+        var xml= com.appelService('modele/plan');
+        console.log("xml",xml);
+        this.info(xml);
+    }
+
     this.afficher = function() {
         for( var i = 0; i < this.routes.length; ++i ){
             this.routes[i].afficher();
