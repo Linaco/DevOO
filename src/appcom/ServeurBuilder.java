@@ -45,10 +45,11 @@ public class ServeurBuilder {
 						
 						Document doc = builder.parse(in);
 						
-						if (this.getControleur().chargerPlan(doc))
+						if (this.getControleur().chargerPlan(doc)) {
 							return Reponse.succes("La communication s'est bien déroulée.");
-						else
-							return Reponse.succes("Le service de chargement du plan n'a pas abouti.");
+						} else {
+							return Reponse.succes("Le service de chargement du plan a échoué.");
+						}
 						
 					} catch (SAXException e) {
 						e.printStackTrace();

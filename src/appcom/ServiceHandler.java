@@ -61,7 +61,7 @@ public class ServiceHandler implements HttpHandler {
 	public void handle(HttpExchange t) throws IOException {
         
         Headers responseHeaders= t.getResponseHeaders();
-        responseHeaders.set("Content-Type","text/plain; utf-8");
+        responseHeaders.set("Content-Type","text/plain;  charset=cp850");
         responseHeaders.set("Access-Control-Allow-Origin", "*");
         
         Reponse rep = getReponse(t.getRequestBody());
