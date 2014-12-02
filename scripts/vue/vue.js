@@ -4,7 +4,8 @@
 function Vue(controleur, com){
     // attributs
     this.com = com;
-    
+    var com = this.com;
+
     this.intersections = [];
     this.routes = [];
     this.itineraire;
