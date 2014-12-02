@@ -121,7 +121,7 @@ public class Controleur {
 				try{
 					Date hDebDate = HOUR_FORMAT.parse(hDeb);
 					phParentObj = feuilledeRoute.rechercherPHParHD(hDebDate);
-					if(phParentObj.equals(null)){
+					if(phParentObj == null ){
 						System.err.println("Plage Horaire Parente non trouvée");
 						return false;
 					}
