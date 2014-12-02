@@ -219,31 +219,8 @@ public class ServeurBuilder {
 		
 		new ServiceControleur(c,"calculer-itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//a changer
-						//this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
-				}
+				this.getControleur().getFeuilleDeRoute().calculerParcours(this.getControleur().getGrapheRoutier());
+				return Reponse.succes("Itineraire calculé !");			
 			}
 		};
 		
@@ -252,7 +229,7 @@ public class ServeurBuilder {
 	
 	
 	/**
-	 * Services pas complets memes raisons qu'en haut
+	 * itineraire toString pas complet dans Etape
 	 * @param c
 	 * @return
 	 */
@@ -260,31 +237,8 @@ public class ServeurBuilder {
 		
 		new ServiceModele(c,"itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//route
-						//this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
-				}
+				String res = this.getControleur().getFeuilleDeRoute().toStringXML();
+				return Reponse.succes(res);
 			}
 		};
 		

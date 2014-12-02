@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 import modele.*;
 
 /**
@@ -22,7 +23,7 @@ public class FeuilleDeRoute {
     public FeuilleDeRoute() {
     	this.plagesHoraires= new ArrayList<>();
     	itineraire = new ArrayList<>();
-	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
+    	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
         try{
             debutJournee = formatHeure.parse("08:00:00");
             tempsMoyenLivraisonSecondes = 10*60;
@@ -94,8 +95,8 @@ public class FeuilleDeRoute {
    }
    
    /**
-    * Calcul le parcours pour les livraisons demandÃ©es et crÃ©e l'itinÃ©raire
-    * @param carte Le Graphe Routier Ã  utiliser pour calculer le parcours
+    * Calcul le parcours pour les livraisons demandées et crée l'itinéraire
+    * @param carte Le Graphe Routier à utiliser pour calculer le parcours
     */
    public void calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
@@ -110,7 +111,7 @@ public class FeuilleDeRoute {
         for(PlageHoraire p: plagesHoraires){
             toutesLivraisons.addAll(p.getListeLivraison());
         }
-        //Calcul de tous les plus courts chemins adÃ©quats
+        //Calcul de tous les plus courts chemins adéquats
         int[][] matriceAdjacence = new int[toutesLivraisons.size()+1][toutesLivraisons.size()+1];
         for(int i=0; i<toutesLivraisons.size()+1;i++){
             for(int j=0; j<toutesLivraisons.size()+1;j++){
@@ -217,4 +218,15 @@ public class FeuilleDeRoute {
             }
         }
    }
+   
+	public String toStringXML(){
+		String res = "";
+		res += "<feuilleDeRoute>";
+		Iterator<Etape> it = this.itineraire.iterator();
+		while( it.hasNext() ){
+			res += it.next().toStringXML();
+		}
+		res += "</feuilleDeRoute>";
+		return res;
+	}
 }

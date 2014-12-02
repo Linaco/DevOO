@@ -11,7 +11,7 @@ import java.util.*;
 public class Etape {
 	
 	private Date heureDePassage;
-        private int secondesAttenteAvantPassage;
+    private int secondesAttenteAvantPassage;
 	private Intersection adresse;
 
     /**
@@ -61,5 +61,19 @@ public class Etape {
     	stream.println(heureDePassage.toString());
     	return true;
     }
-
+    
+    /**
+     * Pas complet car il manque le lien avec la livraison
+     * @return String
+     */
+	public String toStringXML(){
+		String res = "";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		String date = simpleDateFormat.format(heureDePassage);
+		
+		res += "<etape heurePassage=\""+date+"\" secondesAttente=\""+ 
+				this.secondesAttenteAvantPassage +"\" intersectionId=\"" +
+				adresse.getId() + "\" />";
+		return res;
+	}
 }
