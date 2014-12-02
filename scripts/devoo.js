@@ -81,10 +81,19 @@ function Controleur(){
         //... récupérer fichier
     };
 
+    this._clicCalculOk = function(msg) {
+        vue.nouvelItineraire();
+    }.bind(this);
+    this._clicCalculErr = function(msg) {
+        vue.fermerChargement();
+        vue.erreur(msg);
+    }.bind(this);
     this._clicCalcul = function () {
         vue.afficherChargement("Calcul en cours, veuillez patienter...");
-    }
-
+        com.appelService('controleur/calculer-itineraire','',
+                        this._clicCalculOk,
+                        this._clicCalculErr, true);
+    }.bind(this);
     
 
     // init

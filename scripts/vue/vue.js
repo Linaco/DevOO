@@ -44,6 +44,41 @@ function Vue(controleur, com){
     }
 
     //visibilité
+    this.nouvelItineraire = function() {
+        for(var i = 0; i < this.intersections.length; ++i){
+            var routes = this.intersections[i].routes;
+            for(var j = 0; j < this.routes.length; ++j){
+                this.routes[j].razPassages();
+            }
+        }
+        com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
+    };
+    this.nouvelItineraireErr = function(msg) {
+        this.fermerChargement();
+        this.erreur(msg);
+    }.bind(this);
+    this.nouvelItineraireOk = function(str) {
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(str,"text/xml");
+        console.log("itineraire",doc);
+
+        var fdr = doc.getElementsByTagName("feuilleDeRoute")[0];
+        var etapes = fdr.getElementsByTagName("etape");
+        var id1 = etapes[0].getAttribute("idIntersection");
+        for(var i = 1; i < etapes.length; ++i){
+            var id2 = etapes[i].getAttribute("idIntersection");
+            var route = this.getRoute(id1, id2);
+            if(route){
+                console.log("route", route);
+                route.ajouterPassage(0,'red');
+            }
+            id1 = id2;
+        }
+        this.fermerChargement();
+        this.masquer();
+        this.afficher();
+    }.bind(this);
+
     this.nouvellesLivraisons = function(){
         for(var i = 0; i < this.intersections.length; ++i){
             this.intersections[i].razLivraison();
@@ -64,9 +99,25 @@ function Vue(controleur, com){
     }.bind(this);
     this.nouvellesLivraisonsOk = function(str) {
         var parser=new DOMParser();
-        console.log("livraisons",str);
         var doc=parser.parseFromString(str,"text/xml");
         console.log("livraisons",doc);
+
+        var plages = doc.getElementsByTagName("plage");
+        for(var i = 0; i < plages.length; ++i){
+            var plageTxt = plages[i].getAttribute("debut")
+                    + "-" + plages[i].getAttribute("fin") + "h";
+            var livs = plages[i].getElementsByTagName("livraison");
+            for(var j = 0; j < livs.length; ++j){
+                var idIntersection = livs[j].getAttribute("idIntersection");
+                var it = this.getIntersection(idIntersection);
+                if(it){
+                    it.setLivraison(livs[j].getAttribute("id"),
+                                    livs[j].getAttribute("idClient"),
+                                    plageTxt,
+                                    null);
+                }
+            }
+        }
 
         this.fermerChargement();
     }.bind(this);
@@ -164,11 +215,11 @@ function Vue(controleur, com){
         return null;
     }
 
-    this.ajouterLivraison = function(idIntersection) {
+    /*this.ajouterLivraison = function(idIntersection) {
         var i = getIntersection(idIntersection);
         if(i) i.setLivraison(true);
         return this;
-    }
+    }*/
 
     this.getIntersection = function(id) {
         for( var i = 0; i < this.intersections.length; ++i ){
@@ -178,6 +229,14 @@ function Vue(controleur, com){
         }
         return null;
     }
+
+    this.getRoute = function(id1,id2) {
+        var it1 = this.getIntersection(id1);
+        if(it1){
+            return it1.getRouteIntersection(id2);
+        }
+        return null;
+    };
 
     this._livraisonSupprimee = function(idLivraison, idIntersection){
         var it = this.getIntersection(idIntersection);
@@ -218,10 +277,12 @@ function VueIntersection(pos, id){
     this.id = id;
 
     this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
-    this.paramLivraison = {color: '#f0f', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
+    this.paramLivraison = {color: '#0f0', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
     this.paramSelec = {color: 'red', opacity: 0.8, fillColor: 'yellow', fillOpacity: 0.8};
     this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
     this.rayonDefaut = 520;
+    this.rayonLivraison = 1000;
+    this.rayon = this.rayonDefaut;
 
     this.etat = "standard";
 
@@ -231,16 +292,19 @@ function VueIntersection(pos, id){
     this.routesSortantes = [];
 
     // methodes
-    this.setLivraison = function(id, idClient, hdp) {
+    this.setLivraison = function(id, idClient, plage, hdp) {
         this.livraison = {
             id: id,
             idClient: idClient,
+            plage: plage,
             hdp: hdp
         };
+        this.setRayon(this.rayonLivraison);
         var div = document.getElementById('popup-livraison').cloneNode(true);
         console.log("div",div);
         div.getElementsByTagName("client")[0].textContent = this.livraison.idClient;
-        div.getElementsByTagName("hdp")[0].textContent = this.livraison.hdp;
+        if(hdp)div.getElementsByTagName("hdp")[0].textContent = this.livraison.hdp;
+        div.getElementsByTagName("plage")[0].textContent = plage;
         div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._livraisonSupprimee("+this.livraison.id+","+this.id+");");
         this.cercle.bindPopup(div);
         this.majEtat();
@@ -249,9 +313,24 @@ function VueIntersection(pos, id){
 
     this.razLivraison = function() {
         this.livraison = null;
+        this.setRayon(this.rayonDefaut);
         this.cercle.unbindPopup();
         this.majEtat();
     };
+
+    this.getRouteIntersection = function(idIntersection) {
+        for(var i = 0; i < this.routesSortantes.length; ++i){
+            if(this.routesSortantes[i].B.id == idIntersection){
+                return this.routesSortantes[i];
+            }
+        }
+        return null;
+    };
+
+    this.setRayon = function(r){
+        this.rayon = r;
+        this.cercle.setRadius(r);
+    }
 
     this.closePopup = function() {
         this.cercle.closePopup();
