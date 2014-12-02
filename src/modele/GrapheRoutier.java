@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * 
  */
-public class GrapheRoutier implements DisplayTest{
+public class GrapheRoutier {
 	
     private List<Intersection> listeIntersection;
     private List<Object[]> listePlusCourtsChemins;
@@ -53,6 +53,10 @@ public class GrapheRoutier implements DisplayTest{
     public GrapheRoutier() {
     	this.listeIntersection = new ArrayList<Intersection>();
         listePlusCourtsChemins = new ArrayList<>();        
+    }
+    
+    public void clean(){
+    	this.listeIntersection.clear();
     }
     
     public void ajouterIntersection(Intersection inter){

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Intersection implements DisplayTest{
+public class Intersection {
 	
 	
 	private int id,x,y;

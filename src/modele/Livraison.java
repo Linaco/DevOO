@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * 
  */
-public class Livraison implements DisplayTest{
+public class Livraison {
 	
 	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
    

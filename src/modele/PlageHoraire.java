@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlageHoraire implements DisplayTest{
+public class PlageHoraire {
 	
 	private Date heureDebut;
 	private Date heureFin;

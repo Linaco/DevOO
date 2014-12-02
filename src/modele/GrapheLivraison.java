@@ -9,7 +9,7 @@ import tsp.TSP;
 /**
  * 
  */
-public class GrapheLivraison implements Graph, DisplayTest {
+public class GrapheLivraison implements Graph {
 
 	int maxArcCost;
 	int minArcCost;

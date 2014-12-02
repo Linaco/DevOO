@@ -7,17 +7,20 @@ import modele.*;
 /**
  * 
  */
-public class FeuilleDeRoute implements DisplayTest{
+public class FeuilleDeRoute {
 	
 	private Intersection entrepot;
-	private List<PlageHoraire> plagesHoraires;
-
-   
+	private List<PlageHoraire> plagesHoraires;   
 	 private ArrayList<Etape> itineraire;
 	
     public FeuilleDeRoute() {
     	this.plagesHoraires= new ArrayList<PlageHoraire>();
     	itineraire = new ArrayList<Etape>();
+    }
+    
+    public void clean(){
+    	this.itineraire.clear();
+    	this.plagesHoraires.clear();
     }
     
     //getters
