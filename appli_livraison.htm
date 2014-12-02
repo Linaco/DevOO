@@ -4,13 +4,8 @@
         <link rel="stylesheet" href="css/leaflet.label.css" />
         <!--<link rel="stylesheet" href="font-awesome.css" />-->
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-		<style>
-			.fa-lg {
-			  font-size: 1.33333333em;
-			  line-height: 26px;
-			  vertical-align: -15%;
-			}
-		</style>
+        <link href="scripts/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="css/h4104.css" />
         <script src="scripts/libs/jquery-2.1.1.min.js"></script>
         <script src="scripts/libs/leaflet.js"></script>
         <script src="scripts/libs/leaflet.label.js"></script>
@@ -20,9 +15,6 @@
         <script src="scripts/libs/jspdf.plugin.split_text_to_size.js"></script>
         <script src="scripts/libs/jspdf.plugin.standard_fonts_metrics.js"></script>
         <script src="scripts/libs/leaflet.polylineDecorator.min.js"></script>
-        <style type="text/css">
-            #map { width: 100%; height: 100%; }
-        </style>
     </head>
     <body>
         	<div id="map"></div>
@@ -37,7 +29,42 @@
         			<p>Tournez à droite</p>
         		</div>
         	</div>
+    	<div id="modalChargement" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<!--<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">Modal header</h3>
+			</div>-->
+			<div class="modal-body">
+				<div class="chargement-container">
+					<div class="span6"><i class="chargement-logo fa-refresh fa fa-lg fa-spin"></i></div>
+					<div class="span6"><p id="msg-chargement"></p></div>
+				</div>
+			</div>
+			<!--<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button class="btn btn-primary">Save changes</button>
+			</div>-->
+		</div>
+		<div id="modal-info" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-body">
+				
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<p id="msg-info"></p>
+				
+				</tr>
+			</div>
+		</div>
+		<div id="modal-erreur" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-body">
+				
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<p id="msg-erreur"></p>
+				
+				</tr>
+			</div>
+		</div>
     </body>
+    <script src="scripts/libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="scripts/util/arcMaker.js"></script>
     <script src="scripts/vue/vue.js"></script>
     <script src="scripts/devoo.js"></script>

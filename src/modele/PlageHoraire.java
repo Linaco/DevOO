@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlageHoraire implements DisplayTest{
+public class PlageHoraire{
 	
 	private Date heureDebut;
 	private Date heureFin;
@@ -26,14 +26,23 @@ public class PlageHoraire implements DisplayTest{
 	public void addLivraison(Livraison liv){
 		this.listeLivraisons.add(liv);
 	}
+	
+	public void deleteLivraison(Livraison liv){
+		this.listeLivraisons.remove(liv);
+	}
 
 	public boolean display(PrintStream stream) {
 		stream.print(heureDebut+ " "+ heureFin);
 		for(int i = 0; i<listeLivraisons.size(); i++){
     		listeLivraisons.get(i).display(stream);
-    	}
+                }
 		return true;
 	}
 
+        @Override
+        public boolean equals(Object o){
+            PlageHoraire p = (PlageHoraire)o;
+            return(this.heureDebut.equals(p.heureDebut)&&this.heureFin.equals(p.heureFin));
+        }
 
 }

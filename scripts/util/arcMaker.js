@@ -74,7 +74,7 @@ function ArcPathMaker(){
 		var ca = this.vectSeg(c,a);
 		var cb = this.vectSeg(c,b);
 		var maxAngle = this.maxAngle(ca,cb,r);
-		console.log(maxAngle);
+		//console.log(maxAngle);
 		var alp = maxAngle/lineCount;
 		var result = [];
 		result[0] = a;
@@ -96,7 +96,7 @@ function ArcPathMaker(){
 		if(boolInvert){
 			invertArc ^= true;
 		}
-		console.log(invertArc);
+		//console.log(invertArc);
 		invert = invertArc ? -1 : 1;
 
 		var norm = this.norm(a,b);

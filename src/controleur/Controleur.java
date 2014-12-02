@@ -1,12 +1,13 @@
-              package controleur;
+package controleur;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
+
+
 
 import org.w3c.dom.*;
 
@@ -27,20 +28,12 @@ public class Controleur {
 		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
-	public boolean chargerLivraisons(String path){
+	//deprec sur getHours
+	@SuppressWarnings("deprecation")
+	public boolean chargerLivraisons(Document livDoc){
+		
 	
 		//Generation du document
-		Document livDoc;		
-		try{
-			File fXmlFile = new File(path);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			livDoc = dBuilder.parse(fXmlFile);
-		}catch(Exception e){
-			System.err.println("Erreur à la création de doc");
-			e.printStackTrace();
-			return false;
-		}
 		livDoc.getDocumentElement().normalize();
 
 		Node entrepotNode = livDoc.getElementsByTagName("Entrepot").item(0);
@@ -84,8 +77,15 @@ public class Controleur {
 							try{
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
-								PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
-								feuilledeRoute.ajouterPlageHoraire(ph);
+								if(heureDebut.getHours()<0 && heureDebut.getHours()>24
+								&& heureFin.getHours()<0 && heureFin.getHours()>24
+									&& heureDebut.getHours() > heureFin.getHours()){
+									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
+									feuilledeRoute.ajouterPlageHoraire(ph);
+								}else{
+									System.err.println("Format d'heure invalide.");
+									return false;
+								}
 							}catch (Exception e){
 								System.err.println("Format d'heure invalide.");
 								return false;
@@ -157,18 +157,8 @@ public class Controleur {
 		return true;
 	}
 	
-	public boolean chargerPlan(String path){
-		Document plan;
-		try{
-			File fXmlFile = new File(path);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			plan = dBuilder.parse(fXmlFile);
-		}catch(Exception e){
-			System.err.println("Erreur à la création de doc");
-			e.printStackTrace();
-			return false;
-		}
+	public boolean chargerPlan(Document plan){
+		
 		plan.getDocumentElement().normalize();
 		//premier passage et création des intersections
 		NodeList intersections = plan.getElementsByTagName("Noeud");
@@ -259,5 +249,5 @@ public class Controleur {
 
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
 	public GrapheLivraison getGrapheLivraison(){return this.grapheLivraison;}
-	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilleDeRoute;}
+	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 }
