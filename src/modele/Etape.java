@@ -79,10 +79,12 @@ public class Etape {
 	public String toStringXML(){
 		String res = "";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-		String date = simpleDateFormat.format(heureDePassage);
+		String minutes = String.format("%02d", this.heureDePassage.getMinutes());
+		String heure = heureDePassage.getHours() + "h" + minutes ;
 		
-		res += "<etape heurePassage=\""+date+"\" secondesAttente=\""+ 
-				this.secondesAttenteAvantPassage +"\" intersectionId=\"" +
+		
+		res += "<etape heurePassage=\""+heure+"\" secondesAttente=\""+ 
+				this.secondesAttenteAvantPassage +"\" idIntersection=\"" +
 				adresse.getId() + "\" />";
 		return res;
 	}
