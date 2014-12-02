@@ -1,8 +1,10 @@
 ///////////////////////////////////////////////////
 // Class Vue
 
-function Vue(controleur){
+function Vue(controleur, com){
     // attributs
+    this.com = com;
+    
     this.intersections = [];
     this.routes = [];
     this.itineraire;

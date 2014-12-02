@@ -79,7 +79,7 @@ function Controleur(){
     
 
     // init
-    this.vue = vue = new Vue(this);
+    this.vue = vue = new Vue(this, com);
 
 }
 
