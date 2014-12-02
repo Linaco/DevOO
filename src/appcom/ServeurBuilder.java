@@ -46,7 +46,7 @@ public class ServeurBuilder {
 						Document doc = builder.parse(in);
 						
 						if (this.getControleur().chargerPlan(doc)) {
-							return Reponse.succes("La communication s'est bien déroulée.");
+							return Reponse.succes("Le plan a bien été chargé.");
 						} else {
 							return Reponse.succes("Le service de chargement du plan a échoué.");
 						}
