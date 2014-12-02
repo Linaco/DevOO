@@ -87,7 +87,7 @@ public class GrapheRoutier {
      * 
      * @param depart L'interserction dont on veut connaitre la route sortante
      * @param arrivee L'intersection dont on veut connaitre la route entrante
-     * @return La route allant de depart à arrivée
+     * @return La route allant de depart �� arriv��e
      */
     public Route getRoute(Intersection depart, Intersection arrivee){
         for(Route r:depart.getTroncsSortants()){
@@ -96,13 +96,13 @@ public class GrapheRoutier {
             }
         }
         return null;
-    }
+    } 
     
    /**
-    * Calcul le plus court chemin entre le depart et l'arrivée donnés
-    * @param depart Intersection correspondant au point de départ du chemin calculé
-    * @param arrivee Intersection correspondant au point d'arrivée du chemin calculé
-    * @return Tableau contenant la liste ordonnée des routes à suivre pour atteindre le l'arrivée depuis le départ avec un cout minimal et le cout de la solution, null si aucune solution
+    * Calcul le plus court chemin entre le depart et l'arriv��e donn��s
+    * @param depart Intersection correspondant au point de d��part du chemin calcul��
+    * @param arrivee Intersection correspondant au point d'arriv��e du chemin calcul��
+    * @return Tableau contenant la liste ordonn��e des routes �� suivre pour atteindre le l'arriv��e depuis le d��part avec un cout minimal et le cout de la solution, null si aucune solution
     */
      public Object[] calculerPlusCourtChemin(Intersection depart, Intersection arrivee) {
 

@@ -9,9 +9,15 @@ import modele.*;
 public class CommandeAjout implements Commande {
 
 	private FeuilleDeRoute fdr;
+	private GrapheRoutier gR;
+	private Livraison l;
+	private Livraison lP;
 	
-    public CommandeAjout(FeuilleDeRoute feuilleDeRoute) {
+    public CommandeAjout(Livraison nouvelleLivraison, Livraison livraisonPrecedente, FeuilleDeRoute feuilleDeRoute, GrapheRoutier grapheRoutier) {
     	fdr = feuilleDeRoute;
+    	gR = grapheRoutier;
+    	l = nouvelleLivraison;
+    	lP = livraisonPrecedente;
     }
     
 
@@ -21,8 +27,8 @@ public class CommandeAjout implements Commande {
     }
 
 	@Override
-	public void executer(Livraison l) {
-		this.fdr.ajouterLivraison(l);
+	public void executer() {
+		this.fdr.ajouterLivraison(l,lP,gR);
 	}
 
 }

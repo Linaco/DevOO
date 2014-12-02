@@ -11,7 +11,7 @@ public interface Commande {
     /**
      * 
      */
-    public void executer(Livraison l);
+    public void executer();
 
     /**
      * 

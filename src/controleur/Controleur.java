@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 import org.w3c.dom.*;
 import modele.*;
 
@@ -16,12 +17,12 @@ public class Controleur {
 	
 	private GrapheRoutier grapheRoutier;
 	private FeuilleDeRoute feuilledeRoute;
-	private List<Commande> listeCommande;
-
+	private Stack<Commande> listeFaits;
+	private Stack<Commande> listeAnnules;
 	/**
 	 * Constructeur de Controleur
 	 */
-	public Controleur(){
+	 public Controleur(){
 		grapheRoutier = new GrapheRoutier();
 		feuilledeRoute = new FeuilleDeRoute();
 	}
@@ -131,6 +132,7 @@ public class Controleur {
 				try{
 					Date hDebDate = HOUR_FORMAT.parse(hDeb);
 					phParentObj = feuilledeRoute.rechercherPHParHD(hDebDate);
+
 					if(phParentObj == null ){
 						System.err.println("Plage Horaire Parente non trouvée");
 						return false;
@@ -214,12 +216,12 @@ public class Controleur {
 						}
 						int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 						if(x<0){
-							System.err.println("x inférieur à 0");
+							System.err.println("x < 0");
 							return false;
 						}
 						int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
 						if(y<0){
-							System.err.println("y inférieur à 0");
+							System.err.println("y < 0");
 							return false;
 						}
 						Intersection inter = new Intersection(id,x,y);
@@ -235,7 +237,7 @@ public class Controleur {
 				}
 			}
 		}
-		
+
 		//deuxième passage avec création des Routes
 		NodeList routes = plan.getElementsByTagName("LeTronconSortant");
 		if(routes.getLength()==0)
@@ -297,4 +299,12 @@ public class Controleur {
 	 * @return FeuilleDeRoute
 	 */
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
+	
+	public void annuler() {
+		this.listeFaits.pop().annuler();
+	}
+	
+	public void retablir() {
+		this.listeAnnules.pop().executer();
+	}
 }
