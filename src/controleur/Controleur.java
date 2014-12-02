@@ -30,9 +30,12 @@ public class Controleur {
 	}
 	
 	//deprec sur getHours
+	/**
+	 * @param livDoc
+	 * @return boolean
+	 */
 	@SuppressWarnings("deprecation")
 	public boolean chargerLivraisons(Document livDoc){
-		
 		feuilledeRoute.clean();
 		//Generation du document
 		livDoc.getDocumentElement().normalize();
@@ -78,9 +81,9 @@ public class Controleur {
 							try{
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
-								if(heureDebut.getHours()<0 && heureDebut.getHours()>24
-								&& heureFin.getHours()<0 && heureFin.getHours()>24
-									&& heureDebut.getHours() > heureFin.getHours()){
+								if(heureDebut.getHours()>=0 && heureDebut.getHours()<=24
+								&& heureFin.getHours()>=0 && heureFin.getHours()<=24
+									&& heureDebut.getHours() < heureFin.getHours()){
 									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
 									feuilledeRoute.ajouterPlageHoraire(ph);
 								}else{
