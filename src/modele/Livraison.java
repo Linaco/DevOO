@@ -14,8 +14,8 @@ public class Livraison {
    
 	private static int idLivraison = 0;
 	private Date heureDePassageEffective;
-        private Etape etapePassagePrevue;
-        private Intersection PointDeLivraison;
+    private Etape etapePassagePrevue;
+    private Intersection PointDeLivraison;
 	private int id;
 	private int idInPH,idClient;
 	private PlageHoraire plageHoraire;
@@ -67,6 +67,13 @@ public class Livraison {
     @Override
     public boolean equals(Object o){
         return((Livraison)o).id==this.id;
+    }
+    
+    public String toStringXML() {
+    	String res = "";
+    	res += "<livraison id=\"" + this.id + "\" idClient=\"" + this.idClient + 
+    			"\" idIntersection=\"" + this.PointDeLivraison.getId() + "\" />";
+    	return res;
     }
 
 }

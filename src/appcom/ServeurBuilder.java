@@ -238,8 +238,8 @@ public class ServeurBuilder {
 		
 		new ServiceModele(c,"itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
-				String res = this.getControleur().getFeuilleDeRoute().toStringXML();
-				return Reponse.succes(res);
+				String itineraire = this.getControleur().getFeuilleDeRoute().getItineraireXML();
+				return Reponse.succes(itineraire);
 			}
 		};
 		
@@ -247,6 +247,13 @@ public class ServeurBuilder {
 			protected Reponse getReponse(InputStream in){
 				String plan = this.getControleur().getGrapheRoutier().getPlanXML();
 				return Reponse.succes(plan);
+			}  
+		};
+		
+		new ServiceModele(c,"livraisons",this.serveur){
+			protected Reponse getReponse(InputStream in){
+				String livraisons = this.getControleur().getFeuilleDeRoute().getLivraisonsXML();
+				return Reponse.succes(livraisons);
 			}  
 		};
 		

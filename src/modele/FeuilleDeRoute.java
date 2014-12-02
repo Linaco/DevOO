@@ -221,7 +221,7 @@ public class FeuilleDeRoute {
         }
    }
    
-	public String toStringXML(){
+	public String getItineraireXML(){
 		String res = "";
 		res += "<feuilleDeRoute>";
 		Iterator<Etape> it = this.itineraire.iterator();
@@ -229,6 +229,17 @@ public class FeuilleDeRoute {
 			res += it.next().toStringXML();
 		}
 		res += "</feuilleDeRoute>";
+		return res;
+	}
+	
+	public String getLivraisonsXML(){
+		String res = "";
+		res += "<livraisons>";
+		Iterator<PlageHoraire> it = this.plagesHoraires.iterator();
+		while( it.hasNext() ){
+			res += it.next().toStringXML();
+		}
+		res += "</livraisons>";
 		return res;
 	}
 }
