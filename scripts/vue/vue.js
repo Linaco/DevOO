@@ -44,6 +44,7 @@ function Vue(controleur){
     //visibilité
     this.nouveauPlan = function(){
         var xml= com.appelService('modele/plan');
+        console.log("xml",xml);
         this.info(xml);
     }
 
