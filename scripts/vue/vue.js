@@ -61,14 +61,15 @@ function Vue(controleur, com){
     this.nouvellesLivraisonsErr = function(msg) {
         this.fermerChargement();
         this.erreur(msg);
-    };
+    }.bind(this);
     this.nouvellesLivraisonsOk = function(str) {
         var parser=new DOMParser();
+        console.log("livraisons",str);
         var doc=parser.parseFromString(str,"text/xml");
         console.log("livraisons",doc);
 
         this.fermerChargement();
-    };
+    }.bind(this);
     this.nouveauPlan = function(){
         this.masquer();
         this.intersections = [];
