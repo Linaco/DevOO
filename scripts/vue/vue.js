@@ -1,6 +1,5 @@
 ///////////////////////////////////////////////////
 // Class Vue
-
 function Vue(controleur, com){
     // attributs
     this.com = com;
@@ -36,7 +35,7 @@ function Vue(controleur, com){
 
     this.afficherChargement = function(msg){
         document.getElementById("msg-chargement").textContent
-            = "Calcul de l'itinéraire en cours, veuillez patienter...";
+            = msg;
         $('#modalChargement').modal({backdrop: 'static', keyboard: false});
     }
 
@@ -45,11 +44,93 @@ function Vue(controleur, com){
     }
 
     //visibilité
+    this.nouvellesLivraisons = function(){
+        for(var i = 0; i < this.intersections.length; ++i){
+            this.intersections[i].razLivraison();
+            var routes = this.intersections[i].routes;
+            for(var j = 0; j < this.routes.length; ++j){
+                this.routes[j].razPassages();
+            }
+        }
+        com.appelService('modele/livraisons','',this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
+    };
+
+    /*<plage debut="8" fin="10">
+        <livraison id="2" idClient="546" idIntersection="" />
+    </plage>*/
+    this.nouvellesLivraisonsErr = function(msg) {
+        this.fermerChargement();
+        this.erreur(msg);
+    }.bind(this);
+    this.nouvellesLivraisonsOk = function(str) {
+        var parser=new DOMParser();
+        console.log("livraisons",str);
+        var doc=parser.parseFromString(str,"text/xml");
+        console.log("livraisons",doc);
+
+        this.fermerChargement();
+    }.bind(this);
     this.nouveauPlan = function(){
-        var xml= com.appelService('modele/plan');
-        console.log("xml",xml);
-        this.info(xml);
-    }
+        this.masquer();
+        this.intersections = [];
+        this.routes = [];
+        com.appelService('modele/plan','',this.retourModelePlanOk,this.retourModelePlanErr, true);
+    };
+    this.retourModelePlanErr = function(msg) {
+        this.fermerChargement();
+        this.erreur(msg);
+    };
+    this.retourModelePlanOk = function(str){
+        //this.info(str);
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(str,"text/xml");
+
+        var xmin, xmax, ymin, ymax;
+
+        var plan = doc.getElementsByTagName("plan")[0];
+        //console.log("plan",plan);
+        var its = doc.getElementsByTagName("intersection");
+        for( var i = 0; i < its.length; ++i){
+            var it = its[i];
+            var id = it.getAttribute("id");
+            var x = it.getAttribute("x")/500;
+            var y = it.getAttribute("y")/500;
+            if( i == 0 ){
+                xmin = xmax = x;
+                ymin = ymax = y;
+            } else {
+                if( x < xmin){
+                    xmin = x;
+                } else if( x > xmax){
+                    xmax = x;
+                }
+                if( y < ymin){
+                    ymin = y;
+                } else if( y > ymax){
+                    ymax = y;
+                }
+            }
+            this.ajouterIntersection([x,y],id);
+        }
+        for( var i = 0; i < its.length; ++i){
+            var it = its[i];
+            var id1 = it.getAttribute("id");
+            var routes = it.getElementsByTagName("route");
+            for( var j = 0; j < routes.length; ++j){
+                var route = routes[j];
+                var idRoute = route.getAttribute("id");
+                var id2 = route.getAttribute("idDestination");
+                var nom = route.getAttribute("nom");
+                this.ajouterRoute(id1,id2);
+            }
+        }
+        var dw = (xmax - xmin)*0.25, dh = (ymax - ymin)*0.25;
+        map.setMaxBounds([[xmin-dw,ymin-dh],[xmax+dw,ymax+dh]]);
+        map.fitBounds([[xmin,ymin],[xmax,ymax]]);
+
+        this.afficher();
+        this.fermerChargement();
+    }.bind(this);
 
     this.afficher = function() {
         for( var i = 0; i < this.routes.length; ++i ){
@@ -77,7 +158,7 @@ function Vue(controleur, com){
 
     this.ajouterRoute = function(i1,i2){
         var a = this.getIntersection(i1),
-            b = this.   getIntersection(i2);
+            b = this.getIntersection(i2);
         if ( a && b ) return this.routes[this.routes.length] 
             = new VueRoute(a,b);
         return null;
@@ -98,18 +179,28 @@ function Vue(controleur, com){
         return null;
     }
 
+    this._livraisonSupprimee = function(idLivraison, idIntersection){
+        var it = this.getIntersection(idIntersection);
+        it.closePopup();
+        console.log(idLivraison, it);
+        this.info("Suppression prise en compte");
+    }
+
+
+
     //Constructeur
     // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
     // Ajout des controls (boutons)
     //console.log("ctrl : ");
     //console.log(controleur);
-    L.control.zoom({position:'topright'}).addTo(this.map);
-    L.easyButton('fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
+    L.control.zoom({position:'topright', zoomInTitle: "Zoomer"}).addTo(this.map);
+    L.easyButton('Heeey fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
     L.easyButton('fa-arrow-circle-right', controleur.retablir, 'Redo', this.map);
     L.easyButton('fa-road', controleur.clicChargerPlan, 'Charger un plan', this.map).setPosition('bottomleft');
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
     L.easyButton('fa-cubes', controleur.clicChargerLivraisons, 'Charger les livraison', this.map).setPosition('bottomleft');
+    document.getElementById('charger-livraisons').addEventListener('change', controleur.chargerLivraisons, false);
     L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
     this.controlCalcul = L.easyButton('fa-refresh', controleur._clicCalcul, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
     //this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
@@ -136,15 +227,35 @@ function VueIntersection(pos, id){
 
     this.cercle;
 
-    this.livraison = false;
+    this.livraison = null;
     this.routesSortantes = [];
 
     // methodes
-    this.setLivraison = function(bool) {
-        this.livraison = bool? true : false;
+    this.setLivraison = function(id, idClient, hdp) {
+        this.livraison = {
+            id: id,
+            idClient: idClient,
+            hdp: hdp
+        };
+        var div = document.getElementById('popup-livraison').cloneNode(true);
+        console.log("div",div);
+        div.getElementsByTagName("client")[0].textContent = this.livraison.idClient;
+        div.getElementsByTagName("hdp")[0].textContent = this.livraison.hdp;
+        div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._livraisonSupprimee("+this.livraison.id+","+this.id+");");
+        this.cercle.bindPopup(div);
         this.majEtat();
         return this;
     }
+
+    this.razLivraison = function() {
+        this.livraison = null;
+        this.cercle.unbindPopup();
+        this.majEtat();
+    };
+
+    this.closePopup = function() {
+        this.cercle.closePopup();
+    };
 
     this.majEtat = function(){
         switch(this.etat){
@@ -212,18 +323,21 @@ function VueIntersection(pos, id){
 
     this._clicSelectionnable = function() {
         console.log("clic selectionnable", this);
-        this.etatStandard();
+        //this.etatStandard();
     }
     this._clicStandard = function() {
         console.log("clic standard",this);
-        this.etatSelectionnable();
+        if(this.livraison){
+            this.cercle.openPopup();
+        }
+        //this.etatSelectionnable();
     }
 
     // Constructeur
-    this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)
+    this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)/*
             .bindPopup("Intersection "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
             .on("mouseover",function () {this.openPopup();})
-            .on("mouseout",function () {this.closePopup();});
+            .on("mouseout",function () {this.closePopup();})*/;
     return this;
 }
 
@@ -268,14 +382,13 @@ function VueRoute(intersec1, intersec2){
 
     this.masquer = function(){
         map.removeLayer(this.ligneBase);
-        this.A.masquer();
-        this.B.masquer();
+        map.removeLayer(this.decorateurSens);
         return this;
     }
 
     // events
     this._clic = function(){
-        //this.masquer();
+        console.log('clic',this);
     }.bind(this);
 
     this._mouseover = function() {
@@ -300,6 +413,13 @@ function VueRoute(intersec1, intersec2){
         return this;
     }
 
+    this.razPassages = function() {
+        for (var i = this.passages.length - 1; i >= 0; i--) {
+            map.removeLayer(this.passages[i]);
+        }
+        this.passages = [];
+    };
+
     // initialisation
     this.A.ajouterRouteSortante(this);
 
@@ -315,7 +435,7 @@ function VueRoute(intersec1, intersec2){
     this.decorateurSens = L.polylineDecorator(this.ligneBase, {
         patterns: [
             // define a pattern of 10px-wide dashes, repeated every 20px on the line 
-            {offset: "20px", repeat: '50px', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, headAngle:40, pathOptions: {opacity:0.5,fillOpacity:0.2,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
+            {offset: "50%", repeat: '100%', symbol: new L.Symbol.ArrowHead ({pixelSize: 10, headAngle:40, pathOptions: {opacity:0.5,fillOpacity:0.2,weight:1,color: "black",fillColor:"yellow",fillOpacity:0.8}})}
         ]
     });
     return this;

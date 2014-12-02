@@ -17,18 +17,24 @@
         <script src="scripts/libs/leaflet.polylineDecorator.min.js"></script>
     </head>
     <body>
-        	<div id="map"></div>
-        	<div id="input_container" style="width: 0px; height: 0px; overflow: hidden">
-        		<input type="file" id="charger-plan" accept=".xml"/>
-        		<input type="file" id="charger-livraisons" accept=".xml"/>
+    	<div id="map"></div>
+    	<div id="input_container" style="width: 0px; height: 0px; overflow: hidden">
+    		<input type="file" id="charger-plan" accept=".xml"/>
+    		<input type="file" id="charger-livraisons" accept=".xml"/>
 
-        		<div id="FDR">
-        			<h1>Feuille de Route</h1>
-        			<p>Tournez à gauche</p>
-        			<p>Livrez</p>
-        			<p>Tournez à droite</p>
-        		</div>
-        	</div>
+    		<div id="FDR">
+    			<h1>Feuille de Route</h1>
+    			<p>Tournez à gauche</p>
+    			<p>Livrez</p>
+    			<p>Tournez à droite</p>
+    		</div>
+    	</div>
+    	<div id="popup-livraison">
+    		<h3>Livraison</h3>
+    		<p>Client : <client></client></p>
+    		<p>Heure de passage : <hdp></hdp></p>
+			<button type="button" class="btn btn-danger">Supprimer</button>
+    	</div>
     	<div id="modalChargement" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<!--<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

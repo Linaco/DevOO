@@ -186,7 +186,9 @@ public class FeuilleDeRoute {
         for(PlageHoraire p: plagesHoraires){
             toutesLivraisons.addAll(p.getListeLivraison());
         }
+        
         //Calcul de tous les plus courts chemins adequats
+
         int[][] matriceAdjacence = new int[toutesLivraisons.size()+1][toutesLivraisons.size()+1];
         for(int i=0; i<toutesLivraisons.size()+1;i++){
             for(int j=0; j<toutesLivraisons.size()+1;j++){
@@ -293,4 +295,26 @@ public class FeuilleDeRoute {
             }
         }
    }
+   
+	public String getItineraireXML(){
+		String res = "";
+		res += "<feuilleDeRoute>";
+		Iterator<Etape> it = this.itineraire.iterator();
+		while( it.hasNext() ){
+			res += it.next().toStringXML();
+		}
+		res += "</feuilleDeRoute>";
+		return res;
+	}
+	
+	public String getLivraisonsXML(){
+		String res = "";
+		res += "<livraisons>";
+		Iterator<PlageHoraire> it = this.plagesHoraires.iterator();
+		while( it.hasNext() ){
+			res += it.next().toStringXML();
+		}
+		res += "</livraisons>";
+		return res;
+	}
 }

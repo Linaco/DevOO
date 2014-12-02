@@ -3,6 +3,7 @@ package modele;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class PlageHoraire {
@@ -40,10 +41,24 @@ public class PlageHoraire {
 		return true;
 	}
 
-        @Override
-        public boolean equals(Object o){
-            PlageHoraire p = (PlageHoraire)o;
-            return(this.heureDebut.equals(p.heureDebut)&&this.heureFin.equals(p.heureFin));
-        }
-
+    @Override
+    public boolean equals(Object o){
+    	PlageHoraire p = (PlageHoraire)o;    
+    	return(this.heureDebut.equals(p.heureDebut)&&this.heureFin.equals(p.heureFin));    
+    }
+    
+    public String toStringXML() {
+    	String res = "";
+    	int debut = this.heureDebut.getHours();
+    	int fin = this.heureFin.getHours();
+    	
+    	res += "<plage debut=\"" + debut + "\" fin=\"" + fin + "\" >";
+    	Iterator<Livraison> it = this.listeLivraisons.iterator();
+    	while( it.hasNext() ){
+			res += it.next().toStringXML();
+		}
+    	res += "</plage>";
+    	return res;
+    }
+        
 }

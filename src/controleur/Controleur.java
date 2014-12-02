@@ -10,6 +10,8 @@ import java.util.List;
 
 
 
+import java.util.Stack;
+
 import org.w3c.dom.*;
 
 import modele.*;
@@ -20,17 +22,21 @@ public class Controleur {
 	
 	private GrapheRoutier grapheRoutier;
 	private FeuilleDeRoute feuilledeRoute;
-	private List<Commande> listeCommande;
-
+	private Stack<Commande> listeFaits;
+	private Stack<Commande> listeAnnules;
+	
 	public Controleur(){
 		grapheRoutier = new GrapheRoutier();
 		feuilledeRoute = new FeuilleDeRoute();
 	}
 	
 	//deprec sur getHours
+	/**
+	 * @param livDoc
+	 * @return boolean
+	 */
 	@SuppressWarnings("deprecation")
 	public boolean chargerLivraisons(Document livDoc){
-		
 		feuilledeRoute.clean();
 		//Generation du document
 		livDoc.getDocumentElement().normalize();
@@ -76,9 +82,9 @@ public class Controleur {
 							try{
 								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
 								Date heureFin = HOUR_FORMAT.parse(heureF);
-								if(heureDebut.getHours()<0 && heureDebut.getHours()>24
-								&& heureFin.getHours()<0 && heureFin.getHours()>24
-									&& heureDebut.getHours() > heureFin.getHours()){
+								if(heureDebut.getHours()>=0 && heureDebut.getHours()<=24
+								&& heureFin.getHours()>=0 && heureFin.getHours()<=24
+									&& heureDebut.getHours() < heureFin.getHours()){
 									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
 									feuilledeRoute.ajouterPlageHoraire(ph);
 								}else{
@@ -116,8 +122,13 @@ public class Controleur {
 				try{
 					Date hDebDate = HOUR_FORMAT.parse(hDeb);
 					phParentObj = feuilledeRoute.rechercherPHParHD(hDebDate);
+<<<<<<< HEAD
 					if(phParentObj.equals(null)){
 						System.err.println("Plage Horaire Parente non trouvï¿½e");
+=======
+					if(phParentObj == null ){
+						System.err.println("Plage Horaire Parente non trouvée");
+>>>>>>> 0f6cc08e026357a268c43e66c4524753f45470fa
 						return false;
 					}
 					
@@ -252,4 +263,12 @@ public class Controleur {
 
 	public GrapheRoutier getGrapheRoutier(){return this.grapheRoutier;}
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
+	
+	public void annuler() {
+		this.listeFaits.pop().annuler();
+	}
+	
+	public void retablir() {
+		this.listeAnnules.pop().executer();
+	}
 }

@@ -70,5 +70,12 @@ public class Livraison {
     public boolean equals(Object o){
         return((Livraison)o).id==this.id;
     }
+    
+    public String toStringXML() {
+    	String res = "";
+    	res += "<livraison id=\"" + this.id + "\" idClient=\"" + this.idClient + 
+    			"\" idIntersection=\"" + this.PointDeLivraison.getId() + "\" />";
+    	return res;
+    }
 
 }
