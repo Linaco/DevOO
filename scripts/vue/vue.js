@@ -5,6 +5,8 @@ function Vue(controleur, com){
     this.com = com;
     var com = this.com;
 
+    this.couleurPlages = ['red','green','white','yellow','pink'];
+
     this.intersections = [];
     this.routes = [];
     this.itineraire;
@@ -69,8 +71,12 @@ function Vue(controleur, com){
             var id2 = etapes[i].getAttribute("idIntersection");
             var route = this.getRoute(id1, id2);
             if(route){
+                var idPlage = etapes[i].getAttribute("idPlageHoraire");
                 console.log("route", route);
-                route.ajouterPassage(0,'red');
+                console.log("plage", idPlage,this.couleurPlages[idPlage]);
+                var couleur = this.couleurPlages[idPlage];
+                if(couleur == null)couleur = "red";
+                route.ajouterPassage(0,  couleur );
             }
             id1 = id2;
         }
