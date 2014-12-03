@@ -177,5 +177,17 @@ public class GrapheRoutier {
  		res += "</plan>";
  		return res;
      }
+     
+     public Intersection getIntersection(int idIntersection) {
+    	 Iterator<Intersection> it = this.listeIntersection.iterator();
+    	 while (it.hasNext()) {
+    		 Intersection inter = it.next();
+    		 if (idIntersection == inter.getId()) {
+    			 return inter;
+    		 }
+    	 }
+    	 
+    	 return null;
+     }
 
 }

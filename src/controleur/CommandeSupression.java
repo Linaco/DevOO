@@ -1,6 +1,7 @@
 package controleur;
 
 import java.util.*;
+
 import modele.*;
 
 /**
@@ -8,10 +9,14 @@ import modele.*;
  */
 public class CommandeSupression implements Commande {
 
-	private FeuilleDeRoute fdr;
+	private FeuilleDeRoute feuilleDeRoute;
+	private Livraison livraison;
+	private GrapheRoutier grapheRoutier;
     
-    public CommandeSupression(FeuilleDeRoute feuilleDeRoute) {
-    	this.fdr = feuilleDeRoute;
+    public CommandeSupression(Livraison l, GrapheRoutier gR, FeuilleDeRoute fdr) {
+    	this.feuilleDeRoute = fdr;
+    	this.livraison = l;
+    	this.grapheRoutier = gR;
     }
 
     
@@ -22,7 +27,7 @@ public class CommandeSupression implements Commande {
 
 	@Override
 	public void executer() {
-		//this.fdr.supprimerLivraison(l);
+		this.feuilleDeRoute.supprimerLivraison(this.livraison, this.grapheRoutier);
 	}
 
     

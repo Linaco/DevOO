@@ -1,6 +1,5 @@
 package controleur;
 
-import java.util.*;
 import modele.*;
 
 /**
@@ -8,16 +7,16 @@ import modele.*;
  */
 public class CommandeAjout implements Commande {
 
-	private FeuilleDeRoute fdr;
-	private GrapheRoutier gR;
-	private Livraison l;
-	private Livraison lP;
+	private FeuilleDeRoute feuilleDeRoute;
+	private GrapheRoutier grapheRoutier;
+	private Livraison livraison;
+	private Livraison livraisonPrec;
 	
-    public CommandeAjout(Livraison nouvelleLivraison, Livraison livraisonPrecedente, FeuilleDeRoute feuilleDeRoute, GrapheRoutier grapheRoutier) {
-    	fdr = feuilleDeRoute;
-    	gR = grapheRoutier;
-    	l = nouvelleLivraison;
-    	lP = livraisonPrecedente;
+    public CommandeAjout(Livraison l, Livraison lp, FeuilleDeRoute fdr, GrapheRoutier gR) {
+    	this.feuilleDeRoute = fdr;
+    	this.grapheRoutier = gR;
+    	this.livraison = l;
+    	this.livraisonPrec = lp;
     }
     
 
@@ -28,7 +27,7 @@ public class CommandeAjout implements Commande {
 
 	@Override
 	public void executer() {
-		this.fdr.ajouterLivraison(l,lP,gR);
+		this.feuilleDeRoute.ajouterLivraison(this.livraison,this.livraisonPrec, this.grapheRoutier);
 	}
 
 }
