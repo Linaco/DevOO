@@ -266,6 +266,8 @@ function Vue(controleur, com){
     //Constructeur
     // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
+    //this.map.attributionControl.setPosition('bottomleft');
+    L.control.attribution({prefix: 'Projet DevOO - INSA de Lyon - H4104 - 2014', position: 'topleft'}).addTo(this.map);
     // Ajout des controls (boutons)
     //console.log("ctrl : ");
     //console.log(controleur);
