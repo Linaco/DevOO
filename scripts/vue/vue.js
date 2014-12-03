@@ -80,13 +80,7 @@ function Vue(controleur, com){
     }.bind(this);
 
     this.nouvellesLivraisons = function(){
-        for(var i = 0; i < this.intersections.length; ++i){
-            this.intersections[i].razLivraison();
-            var routes = this.intersections[i].routes;
-            for(var j = 0; j < this.routes.length; ++j){
-                this.routes[j].razPassages();
-            }
-        }
+        this.razLivraison();
         com.appelService('modele/livraisons','',this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
     };
 
@@ -101,6 +95,10 @@ function Vue(controleur, com){
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
         console.log("livraisons",doc);
+
+        var entrepot = doc.getElementsByTagName("livraisons")[0].getAttribute("idEntrepot");
+        var itEntrepot  = this.getIntersection(entrepot);
+        if(itEntrepot)itEntrepot.setEntrepot(true);
 
         var plages = doc.getElementsByTagName("plage");
         for(var i = 0; i < plages.length; ++i){
@@ -202,6 +200,16 @@ function Vue(controleur, com){
     };
 
     //métier
+    this.razLivraison = function() {
+        for(var i = 0; i < this.intersections.length; ++i){
+            this.intersections[i].razLivraison();
+            var routes = this.intersections[i].routes;
+            for(var j = 0; j < this.routes.length; ++j){
+                this.routes[j].razPassages();
+            }
+        }
+    };
+
     this.ajouterIntersection = function(pos, id) {
         return this.intersections[this.intersections.length]
             = new VueIntersection(pos,id);
@@ -278,10 +286,12 @@ function VueIntersection(pos, id){
 
     this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
     this.paramLivraison = {color: '#0f0', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
+    this.paramEntrepot = {color: '#0ff', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
     this.paramSelec = {color: 'red', opacity: 0.8, fillColor: 'yellow', fillOpacity: 0.8};
     this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
     this.rayonDefaut = 520;
     this.rayonLivraison = 1000;
+    this.rayonEntrepot = 1500;
     this.rayon = this.rayonDefaut;
 
     this.etat = "standard";
@@ -289,6 +299,7 @@ function VueIntersection(pos, id){
     this.cercle;
 
     this.livraison = null;
+    this.entrepot = false;
     this.routesSortantes = [];
 
     // methodes
@@ -311,8 +322,17 @@ function VueIntersection(pos, id){
         return this;
     }
 
+    this.setEntrepot = function(bool) {
+        this.entrepot = bool ? true : false;
+        if(this.entrepot){
+            this.setRayon(this.rayonEntrepot);
+            this.majEtat();
+        }
+    };
+
     this.razLivraison = function() {
         this.livraison = null;
+        this.entrepot = false;
         this.setRayon(this.rayonDefaut);
         this.cercle.unbindPopup();
         this.majEtat();
@@ -364,7 +384,8 @@ function VueIntersection(pos, id){
     }
 
     this.etatStandard = function(){
-        this.cercle.setStyle(this.livraison ? this.paramLivraison : this.paramDefaut);
+        this.cercle.setStyle(this.livraison ? this.paramLivraison :
+                            (this.entrepot ? this.paramEntrepot : this.paramDefaut));
         this.etat = "standard";
         //this._clic = this._clicStandard;
         this.activerClic(this._clicStandard);
@@ -424,7 +445,7 @@ function VueRoute(intersec1, intersec2){
     // attributs
     this.defaut = {
         ecartArc: 0.05,
-        ecartSuivant : 0.02,
+        ecartSuivant : 0.03,
         nbLigne: 20,
         couleur: '#5f5f5f'
     }
@@ -462,6 +483,9 @@ function VueRoute(intersec1, intersec2){
     this.masquer = function(){
         map.removeLayer(this.ligneBase);
         map.removeLayer(this.decorateurSens);
+        for( var i=0; i < this.passages.length; ++i){
+            map.removeLayer(this.passages[i]);
+        }
         return this;
     }
 
@@ -488,7 +512,10 @@ function VueRoute(intersec1, intersec2){
         opt.opacity = 0.7;
         opt.idLivraison = idLivraison;
         //console.log(opt);
-        this.passages[this.passages.length] = L.polyline(path, opt);
+        var ligne = L.polyline(path, opt);
+        ligne.on('mouseover', this._mouseover, this);
+        ligne.on('mouseout', this._mouseout, this);
+        this.passages[this.passages.length] = ligne;
         return this;
     }
 
