@@ -98,7 +98,7 @@ public class FeuilleDeRoute {
 	   Etape etape = livraison.getEtape();
 	   int pos = itineraire.indexOf(etape);
 	   int nextLivraison = 0;
-	   nextLivraison+=pos;
+	   nextLivraison+=pos+1;
 	   while(!itineraire.get(nextLivraison).getaLivraison()){
 		  nextLivraison++;
 	   }
@@ -116,7 +116,7 @@ public class FeuilleDeRoute {
 	   Etape etape = livraison.getEtape();
 	   int pos = itineraire.indexOf(etape);
 	   int previousLivraison = 0;
-	   previousLivraison += pos;
+	   previousLivraison += pos-1;
 	   while(!itineraire.get(previousLivraison).getaLivraison()){
 		   previousLivraison--;
 	   }

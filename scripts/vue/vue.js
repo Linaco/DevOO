@@ -284,6 +284,10 @@ function Vue(controleur, com){
     $('#modal-erreur').modal({backdrop: false, show: false});
 }
 
+function VueLegende(){
+
+}
+
 function VueIntersection(pos, id){
 
     // attributs
