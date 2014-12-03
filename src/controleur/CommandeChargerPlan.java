@@ -1,5 +1,7 @@
 package controleur;
 
+import javax.print.Doc;
+
 import modele.GrapheRoutier;
 import modele.Intersection;
 import modele.Route;
@@ -28,17 +30,31 @@ public class CommandeChargerPlan {
 	 */
 	public static GrapheRoutier chargerPlan(Document plan){
 		
-		//remise à zéro du graphe routier
+		
 		gr = new GrapheRoutier();
 		plan.getDocumentElement().normalize();
 		
 		//premier passage avec création des intersections
+		if(!genererIntersection(plan)){
+			gr.clean();
+			return gr;
+		}
+
+		//deuxième passage avec création des Routes
+		if(!genererRoutes(plan)){
+			gr.clean();
+			return gr;
+		}
+		
+		return gr;
+	}
+	
+	public static boolean genererIntersection(Document plan ){
 		NodeList intersections = plan.getElementsByTagName("Noeud");
 		
 		if(intersections.getLength() == 0){
 			System.err.println("Aucune intersections");
-			gr.clean();
-			return gr;
+			return false;
 		}
 			
 		
@@ -56,42 +72,38 @@ public class CommandeChargerPlan {
 						int id = Integer.parseInt(attr.getNamedItem("id").getTextContent());
 						if(gr.interExiste(id)){
 							System.err.println("Intersection déjà existante");
-							gr.clean();
-							return gr;
+							return false;
 						}
 						int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
 						if(x<0){
 							System.err.println("x < 0");
-							gr.clean();
-							return gr;
+							return false;
 						}
 						int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
 						if(y<0){
 							System.err.println("y < 0");
-							gr.clean();
-							return gr;
+							return false;
 						}
 						Intersection inter = new Intersection(id,x,y);
 						gr.ajouterIntersection(inter);
 						}
 					catch(Exception e){
 						e.printStackTrace();
-						gr.clean();
-						return gr;
+						return false;
 					}
 				}else{
 					System.err.println("hasAttribute...");
-					gr.clean();
-					return gr;
+					return false;
 				}
 			}
 		}
+		return true;
+	}
 
-		//deuxième passage avec création des Routes
+	public static boolean genererRoutes(Document plan){
 		NodeList routes = plan.getElementsByTagName("LeTronconSortant");
 		if(routes.getLength()==0){
-			gr.clean();
-			return gr;
+			return false;
 		}
 		for(int j = 0 ; j<routes.getLength() ; j++){
 			Node routeNode = routes.item(j);
@@ -106,14 +118,12 @@ public class CommandeChargerPlan {
 						double vitesse = Double.parseDouble(attr.getNamedItem("vitesse").getTextContent().replace(",", "."));
 						if(vitesse<0){
 							System.err.println("Vitesse <0");
-							gr.clean();
-							return gr;
+							return false;
 						}
 						double longueur = Double.parseDouble(attr.getNamedItem("longueur").getTextContent().replace(",", "."));
 						if(longueur<0){
 							System.err.println("longueur <0");
-							gr.clean();
-							return gr;
+							return false;
 						}
 						/* Vérification de l'existence de la destination
 						 * Récupération de l'intersection de provenance pour lui ajouter la nouvelle route
@@ -127,24 +137,20 @@ public class CommandeChargerPlan {
 							parent.addTroncSortant(routeObj);
 						}else{
 							System.err.println("Erreur sur destination");
-							gr.clean();
-							return gr;
+							return false;
 						}
 					}catch(Exception e){
 						e.printStackTrace();
-						gr.clean();
-						return gr;
+						return false;
 					}
 					
 				}else{
-					gr.clean();
-					return gr;
+					return false;
 				}
 			}
+			
 		}
-		
-		return gr;
+		return true;
 	}
-
 	
 }

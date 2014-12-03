@@ -1,9 +1,4 @@
 package controleur;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
@@ -16,7 +11,7 @@ public class Controleur {
 	/**
 	 * Attribut de classe DateFormat permettant le formatage de l'heure à partir d'une String
 	 */
-	private static final DateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
+	
 	
 	private GrapheRoutier grapheRoutier;
 	private FeuilleDeRoute feuilledeRoute;
@@ -40,7 +35,6 @@ public class Controleur {
 	 * @param livDoc
 	 * @return boolean
 	 */
-	@SuppressWarnings("deprecation")
 	public boolean chargerLivraisons(Document livDoc){
 		
 		feuilledeRoute.clean();
@@ -106,7 +100,7 @@ public class Controleur {
 		
 		
 		//creation de la commandeAjout
-		Livraison nouvelle = new Livraison(inter,lI.size() , idClient);
+		Livraison nouvelle = new Livraison(inter, lI.size()+1 , idClient);
 		nouvelle.setPlageHoraire(precedente.getPlageHoraire());
 		CommandeAjout c = new CommandeAjout(nouvelle, precedente, this.getFeuilleDeRoute(), this.grapheRoutier);
 		
