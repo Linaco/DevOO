@@ -90,13 +90,12 @@ public class Etape {
 	}
 	
 	public int getPlage(List<PlageHoraire> plages) {
-		int heure = this.heureDePassage.getHours();
-		Iterator<PlageHoraire> it = plages.iterator();
-		while (it.hasNext()) {
-			PlageHoraire h = it.next();
-			if (heure >= h.getHeureDebut().getHours() && heure <= h.getHeureFin().getHours()) {
-				return h.getIdPlageHoraire();
-			}
+		for (PlageHoraire p: plages) {
+                    if((heureDePassage.equals(p.getHeureDebut())||heureDePassage.after(p.getHeureDebut()))
+                            &&heureDePassage.before(p.getHeureFin())){
+                        return p.getIdPlageHoraire();
+                    }
+                        
 		}
 		return -1;
 	}
