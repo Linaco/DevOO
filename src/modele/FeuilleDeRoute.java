@@ -336,10 +336,21 @@ public class FeuilleDeRoute {
 	public String getItineraireXML(){
 		String res = "";
 		res += "<feuilleDeRoute>";
+		res += "<itineraire>";
 		Iterator<Etape> it = this.itineraire.iterator();
 		while( it.hasNext() ){
 			res += it.next().toStringXML(this.plagesHoraires);
 		}
+		res +="</itineraire>";
+		res += "<livraisonsImpossibles>";
+		for(PlageHoraire p : plagesHoraires){
+			for(Livraison l : p.getListeLivraison()){
+				if(!l.isRealisable()){
+					res+=l.toStringXML();
+				}
+			}
+		}
+		res += "</livraisonsImpossibles>";
 		res += "</feuilleDeRoute>";
 		return res;
 	}
