@@ -321,7 +321,6 @@ function VueLegende(com, vue){
         lateral.appendChild(listePlages);
         var titre = document.createElement('h3');
         titre.innerHTML = 'Liste plages horaires';
-        titre.style.color = 'white';
         listePlages.appendChild(titre);
 
         for (var i=0; i < liste.length; i++) {
