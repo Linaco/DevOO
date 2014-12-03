@@ -64,8 +64,11 @@ function Vue(controleur, com){
      };
     this.livraisonPuisItineraireOk = function(str) {
         this.nouvellesLivraisonsOk(str);
-        this.afficherChargement("Récupération du nouvel itinéraire");
-        com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
+        console.log("PuisOK");
+        //this.fermerChargement();
+        //this.afficherChargement("Récupération du nouvel itinéraire");
+        //com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
+        this.nouvelItineraire(false);
     }.bind(this);
     this.nouvelItineraireErr = function(msg) {
         this.fermerChargement();
@@ -93,6 +96,7 @@ function Vue(controleur, com){
             }
             id1 = id2;
         }
+        console.log("fermer");
         this.fermerChargement();
         this.masquer();
         this.afficher();
