@@ -5,7 +5,7 @@ function Vue(controleur, com){
     this.com = com;
     var com = this.com;
 
-    this.couleurPlages = ['red','green','white','yellow','pink'];
+    this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
 
     this.intersections = [];
     this.routes = [];
@@ -69,11 +69,12 @@ function Vue(controleur, com){
         var fdr = doc.getElementsByTagName("feuilleDeRoute")[0];
         var etapes = fdr.getElementsByTagName("etape");
         var id1 = etapes[0].getAttribute("idIntersection");
+
         for(var i = 1; i < etapes.length; ++i){
             var id2 = etapes[i].getAttribute("idIntersection");
             var route = this.getRoute(id1, id2);
             if(route){
-                var idPlage = etapes[i].getAttribute("idPlageHoraire");
+                var idPlage = etapes[i-1].getAttribute("idPlageHoraire");
                 //console.log("route", route);
                 //console.log("plage", idPlage,this.couleurPlages[idPlage]);
                 var couleur = this.couleurPlages[idPlage];
@@ -268,11 +269,13 @@ function Vue(controleur, com){
     //Constructeur
     // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
+    //this.map.attributionControl.setPosition('bottomleft');
+    L.control.attribution({prefix: 'Projet DevOO - INSA de Lyon - H4104 - 2014', position: 'topleft'}).addTo(this.map);
     // Ajout des controls (boutons)
     //console.log("ctrl : ");
     //console.log(controleur);
     L.control.zoom({position:'topright', zoomInTitle: "Zoomer"}).addTo(this.map);
-    L.easyButton('Heeey fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
+    L.easyButton('fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
     L.easyButton('fa-arrow-circle-right', controleur.retablir, 'Redo', this.map);
     L.easyButton('fa-road', controleur.clicChargerPlan, 'Charger un plan', this.map).setPosition('bottomleft');
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
@@ -490,7 +493,7 @@ function VueRoute(intersec1, intersec2){
     // attributs
     this.defaut = {
         ecartArc: 0.05,
-        ecartSuivant : 0.03,
+        ecartSuivant : 0.06,
         nbLigne: 20,
         couleur: '#5f5f5f'
     }
@@ -554,7 +557,7 @@ function VueRoute(intersec1, intersec2){
                 this.defaut.nbLigne);
         var opt = this.paramDefaut;
         opt.color = couleur;
-        opt.opacity = 0.7;
+        opt.opacity = 0.9;
         opt.idLivraison = idLivraison;
         //console.log(opt);
         var ligne = L.polyline(path, opt);

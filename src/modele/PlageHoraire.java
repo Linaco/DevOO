@@ -52,6 +52,7 @@ public class PlageHoraire {
     	return(this.heureDebut.equals(p.heureDebut)&&this.heureFin.equals(p.heureFin));    
     }
     
+    @SuppressWarnings("deprecation")
     public String toStringXML() {
     	String res = "";
     	
