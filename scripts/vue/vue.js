@@ -62,7 +62,6 @@ function Vue(controleur, com){
             com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);   
         }
      };
-
     this.livraisonPuisItineraireOk = function(str) {
         this.nouvellesLivraisonsOk(str);
         console.log("PuisOK");
@@ -314,7 +313,6 @@ function VueLegende(com, vue){
     this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
 
     this.displayPlagesHoraires = function() {
-        this.raz();
         this.com.appelService('modele/plagesHoraires', '', this._plageOk, this._plageErr, true);
     };
 
