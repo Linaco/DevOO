@@ -270,7 +270,7 @@ function Vue(controleur, com){
     this._livraisonSupprimee = function(idLivraison, idIntersection){
         var it = this.getIntersection(idIntersection);
         it.closePopup();
-        //console.log(idLivraison, it);
+        console.log("livraison supprimée",idLivraison, it);
         this.ctrl.demandeDeSuppression(idLivraison);
     }
 

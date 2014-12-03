@@ -98,7 +98,7 @@ function Controleur(){
 
     this.demandeDeSuppression = function(id) {
         vue.afficherChargement("Suppression en cours, veuillez patienter...");
-        com.appelService('controleur/supprimer-livraison',id,this._suppressionOk, this._suppressionErr, true);
+        com.appelService('controleur/supprimer-livraison',""+id,this._suppressionOk, this._suppressionErr, true);
     };   
     this._suppressionOk = function(rep) {
         vue.afficherChargement("Actualisation des données...");
