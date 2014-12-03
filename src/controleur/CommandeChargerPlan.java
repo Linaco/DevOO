@@ -130,10 +130,10 @@ public class CommandeChargerPlan {
 						 */
 						int idInter = Integer.parseInt(attr.getNamedItem("idNoeudDestination").getTextContent());
 						if(gr.interExiste(idInter)){
-							Intersection inter = gr.rechercherInterParId(idInter);
+							Intersection inter = gr.getIntersection(idInter);
 							Route routeObj = new Route(nom,vitesse,longueur,inter);
 							int  idParent = Integer.parseInt(elementRoute.getParentNode().getAttributes().getNamedItem("id").getTextContent());
-							Intersection parent = gr.rechercherInterParId(idParent);
+							Intersection parent = gr.getIntersection(idParent);
 							parent.addTroncSortant(routeObj);
 						}else{
 							System.err.println("Erreur sur destination");
