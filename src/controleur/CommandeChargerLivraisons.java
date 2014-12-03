@@ -149,6 +149,7 @@ public class CommandeChargerLivraisons {
 							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
 							Livraison liv = new Livraison(inter,id, idClient);
 							phParentObj.addLivraison(liv);
+							liv.setPlageHoraire(phParentObj);
 						}
 					}catch(Exception e){
 						System.err.println("Format de livraion invalide");
