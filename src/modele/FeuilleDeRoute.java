@@ -94,13 +94,18 @@ public class FeuilleDeRoute {
     * @return liste<Integer>
     */
    public List<Integer> trouverSuivant(Livraison livraison){
+	   System.out.println("Suivant");
 	   List<Integer> listePosition = new ArrayList<Integer>();
 	   Etape etape = livraison.getEtape();
-	   int pos = itineraire.indexOf(etape);
+	   int pos = this.itineraire.indexOf(etape);
 	   int nextLivraison = 0;
 	   nextLivraison+=pos+1;
-	   while(!itineraire.get(nextLivraison).getaLivraison()){
+	   while(!this.itineraire.get(nextLivraison).getaLivraison()){
 		  nextLivraison++;
+		  if(nextLivraison==this.itineraire.size()){
+			  nextLivraison=this.itineraire.size()-1;
+			  break;
+		  }
 	   }
 	   listePosition.add(pos);
 	   listePosition.add(nextLivraison);
@@ -114,11 +119,15 @@ public class FeuilleDeRoute {
    public List<Integer> trouverPrecedent(Livraison livraison){
 	   List<Integer> listePosition = new ArrayList<Integer>();
 	   Etape etape = livraison.getEtape();
-	   int pos = itineraire.indexOf(etape);
+	   int pos = this.itineraire.indexOf(etape);
 	   int previousLivraison = 0;
 	   previousLivraison += pos-1;
-	   while(!itineraire.get(previousLivraison).getaLivraison()){
+	   while(!this.itineraire.get(previousLivraison).getaLivraison()){
 		   previousLivraison--;
+		   if(previousLivraison==-1){
+			   previousLivraison=0;
+			   break;
+		   }
 	   }
 	   listePosition.add(previousLivraison);
 	   listePosition.add(pos);
@@ -131,13 +140,15 @@ public class FeuilleDeRoute {
     * @param grapheRoutier
     */
    public void majHeureDePassage(Etape etape, GrapheRoutier carte){
+	   System.out.println("Debut majheureDePassage");
 	   int posEtape = this.getItineraire().indexOf(etape);
 	   for(int i=posEtape+1; i<this.getItineraire().size();i++){
 		   Object[]resultatCalcul = carte.calculerPlusCourtChemin(this.getItineraire().get(i-1).getAdresse(), this.getItineraire().get(i).getAdresse());
 		   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
-		   Date heureCourante=new Date(etape.getHeurePassagePrevue().getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
+		   Date heureCourante=new Date(itineraire.get(i-1).getHeurePassagePrevue().getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(0),listeIntersection.get(1)).getTempsParcours()*1000));
 		   this.getItineraire().get(i).setHeurePassagePrevue(heureCourante);
 	   }
+	   System.out.println("fin majHeureDePassage");
    }
    
    /**
