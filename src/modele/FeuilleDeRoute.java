@@ -354,4 +354,15 @@ public class FeuilleDeRoute {
 		res += "</livraisons>";
 		return res;
 	}
+	
+	public String getPlagesHorairesToXML() {
+		String res = "<plagesHoraires>";
+		Iterator<PlageHoraire> it = this.plagesHoraires.iterator();
+		while(it.hasNext()) {
+			PlageHoraire pH = it.next();
+			res += pH.getPlageXML();
+		}
+		res += "</plagesHoraires>";
+		return res;
+	}
 }

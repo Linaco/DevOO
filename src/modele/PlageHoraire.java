@@ -1,6 +1,7 @@
 package modele;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -53,15 +54,32 @@ public class PlageHoraire {
     
     public String toStringXML() {
     	String res = "";
-    	int debut = this.heureDebut.getHours();
-    	int fin = this.heureFin.getHours();
     	
-    	res += "<plage debut=\"" + debut + "\" fin=\"" + fin + "\" >";
+    	String minutes = String.format("%02d", this.heureDebut.getMinutes());
+		String heureDebut = this.heureDebut.getHours() + "h" + minutes ;
+		
+		minutes = String.format("%02d", this.heureFin.getMinutes());
+		String heureFin = this.heureFin.getHours() + "h" + minutes ;
+    	
+    	res += "<plage debut=\"" + heureDebut + "\" fin=\"" + heureFin + "\" >";
     	Iterator<Livraison> it = this.listeLivraisons.iterator();
     	while( it.hasNext() ){
 			res += it.next().toStringXML();
 		}
     	res += "</plage>";
+    	return res;
+    }
+    
+    public String getPlageXML() {
+    	String res = "";
+    	
+    	String minutes = String.format("%02d", this.heureDebut.getMinutes());
+		String heureDebut = this.heureDebut.getHours() + "h" + minutes ;
+		
+		minutes = String.format("%02d", this.heureFin.getMinutes());
+		String heureFin = this.heureFin.getHours() + "h" + minutes ;
+    	
+    	res += "<plage debut=\"" + heureDebut + "\" fin=\"" + heureFin + "\" />";
     	return res;
     }
         

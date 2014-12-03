@@ -11,6 +11,8 @@ function Vue(controleur, com){
     this.routes = [];
     this.itineraire;
 
+    this.vueLegende = new VueLegende(com, this);
+
     // functions
     this.enableRedo = function(){
         console.log("Vue.enableRedo");
@@ -87,6 +89,7 @@ function Vue(controleur, com){
 
     this.nouvellesLivraisons = function(){
         this.razLivraison();
+        this.vueLegende.raz();
         com.appelService('modele/livraisons','',this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
     };
 
@@ -123,6 +126,7 @@ function Vue(controleur, com){
             }
         }
 
+        this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
         this.fermerChargement();
     }.bind(this);
     this.nouveauPlan = function(){
@@ -284,8 +288,39 @@ function Vue(controleur, com){
     $('#modal-erreur').modal({backdrop: false, show: false});
 }
 
-function VueLegende(){
+function VueLegende(com, vue){
+    this.vue = vue;
+    this.com = com;
+    this.lateral = document.getElementById('lateral');
 
+    this.displayPlagesHoraires = function() {
+        this.com.appelService('modele/plagesHoraires', '', this._plageOk, this._plageErr, true);
+    };
+
+    this._plageOk = function(reponse){
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(reponse,"text/xml");
+        console.log(doc);
+        var listePlages = document.createElement('div');
+        listePlages.id = "listePlages";
+        lateral.appendChild(listePlages);
+        for (plage in reponse.children) {
+            console.log(plage);
+        }
+    }.bind(this);
+
+    this._plageErr = function(msgErreur) {
+        var msg = document.createElement('p');
+        msg.value = 'Erreur de chargement des plages horaires.';
+        msg.id = 'errorListePlages';
+        this.lateral.appendChild(msg);
+    }.bind(this);
+
+    this.raz = function() {
+        while (this.lateral.firstChild) {
+            this.lateral.removeChild(this.lateral.firstChild);
+        }
+    };
 }
 
 function VueIntersection(pos, id){

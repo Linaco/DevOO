@@ -78,7 +78,6 @@ public class Etape {
      */
 	public String toStringXML(List<PlageHoraire> plages){
 		String res = "";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		String minutes = String.format("%02d", this.heureDePassage.getMinutes());
 		String heure = heureDePassage.getHours() + "h" + minutes ;
 		
