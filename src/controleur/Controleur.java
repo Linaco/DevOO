@@ -39,6 +39,7 @@ public class Controleur {
 	@SuppressWarnings("deprecation")
 	public boolean chargerLivraisons(Document livDoc){
 		
+		feuilledeRoute.clean();
 		feuilledeRoute = CommandeChargerLivraisons.chargerLivraisons(livDoc, grapheRoutier);
 		if(feuilledeRoute.getPlagesHoraires().size() == 0){
 			return false;
@@ -57,110 +58,13 @@ public class Controleur {
 	 * @return boolean
 	 */
 	public boolean chargerPlan(Document plan){
-		
-		//remise à zéro du graphe routier
 		grapheRoutier.clean();
-		plan.getDocumentElement().normalize();
-		
-		//premier passage avec création des intersections
-		NodeList intersections = plan.getElementsByTagName("Noeud");
-		
-		if(intersections.getLength() == 0){
-			System.err.println("Aucune intersections");
+		grapheRoutier = CommandeChargerPlan.chargerPlan(plan);
+		if(grapheRoutier.getListeIntersections().size() == 0){
 			return false;
+		}else{
+			return true;
 		}
-			
-		
-		for (int i = 0; i<intersections.getLength();i++){
-			Node noeud = intersections.item(i);
-			if(noeud.getNodeType() == Node.ELEMENT_NODE){
-				
-				Element elementNoeud = (Element) noeud;
-				if(elementNoeud.hasAttributes()){
-					NamedNodeMap attr= elementNoeud.getAttributes();
-					/* Vérification de l'intégrité des données fournies par le document pour les 
-					 * intersections
-					 */
-					try{
-						int id = Integer.parseInt(attr.getNamedItem("id").getTextContent());
-						if(grapheRoutier.interExiste(id)){
-							System.err.println("Intersection déjà existante");
-							return false;
-						}
-						int x = Integer.parseInt(attr.getNamedItem("x").getTextContent());
-						if(x<0){
-							System.err.println("x < 0");
-							return false;
-						}
-						int y = Integer.parseInt(attr.getNamedItem("y").getTextContent());
-						if(y<0){
-							System.err.println("y < 0");
-							return false;
-						}
-						Intersection inter = new Intersection(id,x,y);
-						grapheRoutier.ajouterIntersection(inter);
-						}
-					catch(Exception e){
-						e.printStackTrace();
-						return false;
-					}
-				}else{
-					System.err.println("hasAttribute...");
-					return false;
-				}
-			}
-		}
-
-		//deuxième passage avec création des Routes
-		NodeList routes = plan.getElementsByTagName("LeTronconSortant");
-		if(routes.getLength()==0)
-			return false;
-		for(int j = 0 ; j<routes.getLength() ; j++){
-			Node routeNode = routes.item(j);
-			if(routeNode.getNodeType() == Node.ELEMENT_NODE){
-				Element elementRoute = (Element) routeNode;
-				if(elementRoute.hasAttributes()){
-					/* Vérification de l'intégrité des données fournies par le xml
-					 */
-					try{
-						NamedNodeMap attr = elementRoute.getAttributes();
-						String nom = attr.getNamedItem("nomRue").getTextContent();
-						double vitesse = Double.parseDouble(attr.getNamedItem("vitesse").getTextContent().replace(",", "."));
-						if(vitesse<0){
-							System.err.println("Vitesse <0");
-							return false;
-						}
-						double longueur = Double.parseDouble(attr.getNamedItem("longueur").getTextContent().replace(",", "."));
-						if(longueur<0){
-							System.err.println("longueur <0");
-							return false;
-						}
-						/* Vérification de l'existence de la destination
-						 * Récupération de l'intersection de provenance pour lui ajouter la nouvelle route
-						 */
-						int idInter = Integer.parseInt(attr.getNamedItem("idNoeudDestination").getTextContent());
-						if(grapheRoutier.interExiste(idInter)){
-							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
-							Route routeObj = new Route(nom,vitesse,longueur,inter);
-							int  idParent = Integer.parseInt(elementRoute.getParentNode().getAttributes().getNamedItem("id").getTextContent());
-							Intersection parent = grapheRoutier.rechercherInterParId(idParent);
-							parent.addTroncSortant(routeObj);
-						}else{
-							System.err.println("Erreur sur destination");
-							return false;
-						}
-					}catch(Exception e){
-						e.printStackTrace();
-						return false;
-					}
-					
-				}else{
-					return false;
-				}
-			}
-		}
-		
-		return true;
 	}
 
 	

@@ -31,7 +31,6 @@ public class CommandeChargerLivraisons {
 	 * @param livDoc
 	 * @return boolean
 	 */
-	@SuppressWarnings("deprecation")
 	public static FeuilleDeRoute chargerLivraisons(Document livDoc, GrapheRoutier grapheRoutier){
 		fdr = new FeuilleDeRoute();
 		livDoc.getDocumentElement().normalize();
@@ -73,7 +72,7 @@ public class CommandeChargerLivraisons {
 								// Vérification de la cohérence des heures fournies
 								if(heureDebut.getHours()>=0 && heureDebut.getHours()<=24
 								&& heureFin.getHours()>=0 && heureFin.getHours()<=24
-									&& heureDebut.getHours() < heureFin.getHours()
+									&& heureDebut.before(heureFin)
 									&& fdr.checkHB(heureDebut)){
 									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
 									fdr.ajouterPlageHoraire(ph);
@@ -192,4 +191,61 @@ public class CommandeChargerLivraisons {
 		
 	}
 
+	@SuppressWarnings("deprecation")
+	public static boolean genererPlageHoraire(Document livDoc){
+		NodeList phNodeList = livDoc.getElementsByTagName("Plage");
+		if(phNodeList.getLength()==0){
+			System.err.println("Aucune plage horaire ");
+			return false;
+		}
+		
+		//premier passage, creation des plages horaires
+		for(int i =0;i<phNodeList.getLength();i++){
+			Node phNode = phNodeList.item(i);
+			if(phNode.getNodeType() == Node.ELEMENT_NODE){
+				Element phElement = (Element)phNode;
+				if(phElement.hasAttributes()){
+					NamedNodeMap nnm = phElement.getAttributes();
+					/*
+					 * Vérification de l'intégrité des données pour les PlageHoraire
+					 */
+					try{
+						String heureDeb = nnm.getNamedItem("heureDebut").getTextContent();
+						String heureF = nnm.getNamedItem("heureFin").getTextContent();
+						if(heureDeb == null || heureF==null){
+							System.err.println("Heure invalide");
+							return false;
+						}else{
+							try{
+								Date heureDebut = HOUR_FORMAT.parse(heureDeb);
+								Date heureFin = HOUR_FORMAT.parse(heureF);
+								// Vérification de la cohérence des heures fournies
+								if(heureDebut.getHours()>=0 && heureDebut.getHours()<=24
+								&& heureFin.getHours()>=0 && heureFin.getHours()<=24
+									&& heureDebut.before(heureFin)
+									&& fdr.checkHB(heureDebut)){
+									PlageHoraire ph = new PlageHoraire(heureDebut,heureFin);
+									fdr.ajouterPlageHoraire(ph);
+								}else{
+									System.err.println("Format d'heure invalide.");
+									return false;
+								}
+							}catch (Exception e){
+								e.printStackTrace();
+								System.err.println("Format d'heure invalide.");
+								return false;
+							}
+						}
+					}catch(Exception e){
+						System.err.println("Format Plage horaire invalide.");
+						return false;
+					}
+				}else{
+					System.err.println("HasAttributes.");
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }
