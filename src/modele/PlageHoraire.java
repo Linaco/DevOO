@@ -80,7 +80,8 @@ public class PlageHoraire {
 		minutes = String.format("%02d", this.heureFin.getMinutes());
 		String heureFin = this.heureFin.getHours() + "h" + minutes ;
     	
-    	res += "<plage debut=\"" + heureDebut + "\" fin=\"" + heureFin + "\" />";
+    	res += "<plage id=\"" + this.getIdPlageHoraire() + "\" debut=\"" + heureDebut + 
+    			"\" fin=\"" + heureFin + "\" />";
     	return res;
     }
         
