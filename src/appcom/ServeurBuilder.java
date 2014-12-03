@@ -129,32 +129,10 @@ public class ServeurBuilder {
 		};
 		
 		new ServiceControleur(c,"supprimer-livraison",this.serveur){
-			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//a changer
-						//this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien déroulée.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
-				}
+			protected Reponse getReponse(String in){
+				int idLivraison = Integer.parseInt(in);
+				this.getControleur().supprimerLivraison(idLivraison);
+				return Reponse.succes("Suppression terminée.");
 			}
 		};
 		
