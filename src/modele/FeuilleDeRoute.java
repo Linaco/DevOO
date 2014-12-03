@@ -346,7 +346,7 @@ public class FeuilleDeRoute {
 	
 	public String getLivraisonsXML(){
 		String res = "";
-		res += "<livraisons>";
+		res += "<livraisons idEntrepot=\"" + this.entrepot.getId() + "\">";
 		Iterator<PlageHoraire> it = this.plagesHoraires.iterator();
 		while( it.hasNext() ){
 			res += it.next().toStringXML();

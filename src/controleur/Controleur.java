@@ -302,6 +302,14 @@ public class Controleur {
 	 */
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 	
+	public void ajouterLivraison() {
+		
+	}
+	
+	public void supprimerLivraison() {
+		
+	}
+	
 	public void annuler() {
 		this.listeFaits.pop().annuler();
 	}
