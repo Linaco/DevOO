@@ -2,9 +2,13 @@ package controleur;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Stack;
+
 import org.w3c.dom.*;
+
 import modele.*;
 
 public class Controleur {
@@ -97,10 +101,13 @@ public class Controleur {
 	public void ajouterLivraison(int idIntersection, int idClient, int idLivraisonPrecedente) {
 		Livraison precedente = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraisonPrecedente);
 		Intersection inter = this.grapheRoutier.getIntersection(idIntersection);
-		int idPlageHoraire = precedente.getPlageHoraire().getIdPlageHoraire();
+		List<Livraison> lI = precedente.getPlageHoraire().getListeLivraison();
+		
+		
 		
 		//creation de la commandeAjout
-		Livraison nouvelle = new Livraison(inter, idPlageHoraire, idClient);
+		Livraison nouvelle = new Livraison(inter,lI.size() , idClient);
+		nouvelle.setPlageHoraire(precedente.getPlageHoraire());
 		CommandeAjout c = new CommandeAjout(nouvelle, precedente, this.getFeuilleDeRoute(), this.grapheRoutier);
 		
 		c.executer();
