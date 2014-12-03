@@ -130,10 +130,8 @@ public class ServeurBuilder {
 		
 		new ServiceControleur(c,"supprimer-livraison",this.serveur){
 			protected Reponse getReponse(String in){
-				System.err.println("Supp : "+in);
 				int idLivraison = Integer.parseInt(in);
-				this.getControleur().supprimerLivraison(idLivraison);
-				System.err.println("Supp ok");
+				//this.getControleur().supprimerLivraison(idLivraison);
 				return Reponse.succes("Suppression terminée.");
 			}
 		};

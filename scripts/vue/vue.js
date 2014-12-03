@@ -66,7 +66,7 @@ function Vue(controleur, com){
         this.nouvellesLivraisonsOk(str);
         this.afficherChargement("Récupération du nouvel itinéraire");
         com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
-    }
+    }.bind(this);
     this.nouvelItineraireErr = function(msg) {
         this.fermerChargement();
         this.erreur(msg);
