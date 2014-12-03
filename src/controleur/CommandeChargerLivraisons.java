@@ -68,7 +68,7 @@ public class CommandeChargerLivraisons {
 			try{
 				int idInter = Integer.parseInt(entreElement.getAttribute("adresse"));
 				if(grapheRoutier.interExiste(idInter)){
-					fdr.renseignerEntrepot(grapheRoutier.rechercherInterParId(idInter));
+					fdr.renseignerEntrepot(grapheRoutier.getIntersection((idInter)));
 					return true;
 				}else{
 					System.err.println("Entrepot invalide");
@@ -182,7 +182,7 @@ public class CommandeChargerLivraisons {
 						
 						
 						if(grapheRoutier.interExiste(idInter)){
-							Intersection inter = grapheRoutier.rechercherInterParId(idInter);
+							Intersection inter = grapheRoutier.getIntersection(idInter);
 							Livraison liv = new Livraison(inter,id, idClient);
 							phParentObj.addLivraison(liv);
 							liv.setPlageHoraire(phParentObj);
