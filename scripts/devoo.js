@@ -1,5 +1,6 @@
 var ctrl = new Controleur();
 var map = ctrl.vue.map;
+
 //////////////////////////////////////////////////////////////////////////////////
 if (window.File && window.FileReader && window.FileList && window.Blob) {
     // Great success! All the File APIs are supported.
