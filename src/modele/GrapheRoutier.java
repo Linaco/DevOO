@@ -55,6 +55,10 @@ public class GrapheRoutier {
         listePlusCourtsChemins = new ArrayList<>();        
     }
     
+    public List<Intersection> getListeIntersections(){
+    	return this.listeIntersection;
+    }
+    
     public void clean(){
     	this.listeIntersection.clear();
     	Route.idRoutes = 0;
