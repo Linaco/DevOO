@@ -9,7 +9,7 @@ import modele.*;
 public class Controleur {
 	
 	/**
-	 * Attribut de classe DateFormat permettant le formatage de l'heure à partir d'une String
+	 * Attribut de classe DateFormat permettant le formatage de l'heure ï¿½ partir d'une String
 	 */
 	
 	
@@ -23,15 +23,17 @@ public class Controleur {
 	 public Controleur(){
 		grapheRoutier = new GrapheRoutier();
 		feuilledeRoute = new FeuilleDeRoute();
+		listeFaits = new Stack<Commande>();
+		listeAnnules = new Stack<Commande>();
 	}
 	
 	
 	/**
-	 * Génération de la FeuilleDeRoute à partir d'un document xml passé en paramètre
-	 * Le document est parsé 2 fois, une fois pour générer les PlagesHoraires,
-	 * une fois pour générer les Livraisons et les lier à la PlageHoraire parente
+	 * Gï¿½nï¿½ration de la FeuilleDeRoute ï¿½ partir d'un document xml passï¿½ en paramï¿½tre
+	 * Le document est parsï¿½ 2 fois, une fois pour gï¿½nï¿½rer les PlagesHoraires,
+	 * une fois pour gï¿½nï¿½rer les Livraisons et les lier ï¿½ la PlageHoraire parente
 	 * Si tout se passe bien, renvoie true
-	 * Sinon renvoie false avec affichage en console du type de problème
+	 * Sinon renvoie false avec affichage en console du type de problï¿½me
 	 * @param livDoc
 	 * @return boolean
 	 */
@@ -47,11 +49,11 @@ public class Controleur {
 	}
 	
 	/**
-	 * Génération du GrapheRoutier à partir d'un document xml passé en paramètre
-	 * Le document est parsé 2 fois, une fois pour générer les Intersections,
-	 * une fois pour générer les Routes et les lier aux Intersections correspondantes
+	 * Gï¿½nï¿½ration du GrapheRoutier ï¿½ partir d'un document xml passï¿½ en paramï¿½tre
+	 * Le document est parsï¿½ 2 fois, une fois pour gï¿½nï¿½rer les Intersections,
+	 * une fois pour gï¿½nï¿½rer les Routes et les lier aux Intersections correspondantes
 	 * Si tout se passe bien, renvoie true
-	 * Sinon renvoie false avec affichage en console du type de problème
+	 * Sinon renvoie false avec affichage en console du type de problï¿½me
 	 * @param plan
 	 * @return boolean
 	 */
@@ -115,8 +117,14 @@ public class Controleur {
 	 */
 	public void supprimerLivraison(int idLivraison) {
 		Livraison livraison = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraison);
+		for(PlageHoraire pH : this.feuilledeRoute.getPlagesHoraires()){
+			for(Livraison l : pH.getListeLivraison()){
+				if(l.getIdLiv()==idLivraison){
+					livraison=l;
+				}
+			}
+		}
 		CommandeSupression c = new CommandeSupression(livraison, this.grapheRoutier, this.feuilledeRoute);
-		
 		c.executer();
 		this.listeFaits.push(c);
 		this.listeAnnules.clear(); // supprime les actions annulees

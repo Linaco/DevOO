@@ -28,7 +28,7 @@ public class ServeurBuilder {
 	}
 	
 	/**
-	 * methodes pas à jour car format de sortie non specifie
+	 * methodes pas ï¿½ jour car format de sortie non specifie
 	 * @param c
 	 * @return
 	 */
@@ -46,14 +46,14 @@ public class ServeurBuilder {
 						Document doc = builder.parse(in);
 						
 						if (this.getControleur().chargerPlan(doc)) {
-							return Reponse.succes("Le plan a bien été chargé.");
+							return Reponse.succes("Le plan a bien ï¿½tï¿½ chargï¿½.");
 						} else {
-							return Reponse.erreur("Le service de chargement du plan a échoué.");
+							return Reponse.erreur("Le service de chargement du plan a ï¿½chouï¿½.");
 						}
 						
 					} catch (SAXException e) {
 						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
+						return Reponse.erreur("Woops,\nnous n'avons pas pu interprï¿½ter le fichier transmis.\n"
 								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -61,7 +61,7 @@ public class ServeurBuilder {
 					}
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
+					return Reponse.erreur("Problï¿½me d'initialisation dans la gestion du service");
 				}
 			}
 		};
@@ -78,14 +78,14 @@ public class ServeurBuilder {
 						Document doc = builder.parse(in);
 			
 						if (this.getControleur().chargerLivraisons(doc)) {
-							return Reponse.succes("Les livraisons ont été chargées.");
+							return Reponse.succes("Les livraisons ont ï¿½tï¿½ chargï¿½es.");
 						} else {
-							return Reponse.erreur("Le service de chargement des livraisons a échoué.");	
+							return Reponse.erreur("Le service de chargement des livraisons a ï¿½chouï¿½.");	
 						}
 						
 					} catch (SAXException e) {
 						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
+						return Reponse.erreur("Woops,\nnous n'avons pas pu interprï¿½ter le fichier transmis.\n"
 								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -93,7 +93,7 @@ public class ServeurBuilder {
 					}
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
+					return Reponse.erreur("Problï¿½me d'initialisation dans la gestion du service");
 				}
 			}
 		};
@@ -111,11 +111,11 @@ public class ServeurBuilder {
 						//a changer
 						//this.getControleur().chargerPlan(doc);
 						
-						return Reponse.succes("La communication s'est bien déroulée.");
+						return Reponse.succes("La communication s'est bien dï¿½roulï¿½e.");
 						
 					} catch (SAXException e) {
 						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interpréter le fichier transmis.\n"
+						return Reponse.erreur("Woops,\nnous n'avons pas pu interprï¿½ter le fichier transmis.\n"
 								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -123,7 +123,7 @@ public class ServeurBuilder {
 					}
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
-					return Reponse.erreur("Problème d'initialisation dans la gestion du service");
+					return Reponse.erreur("Problï¿½me d'initialisation dans la gestion du service");
 				}
 			}
 		};
@@ -131,29 +131,29 @@ public class ServeurBuilder {
 		new ServiceControleur(c,"supprimer-livraison",this.serveur){
 			protected Reponse getReponse(String in){
 				int idLivraison = Integer.parseInt(in);
-				//this.getControleur().supprimerLivraison(idLivraison);
-				return Reponse.succes("Suppression terminée.");
+				this.getControleur().supprimerLivraison(idLivraison);
+				return Reponse.succes("Suppression terminï¿½e.");
 			}
 		};
 		
 		new ServiceControleur(c,"annuler",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				this.getControleur().annuler();
-				return Reponse.succes("Annulation terminée.");
+				return Reponse.succes("Annulation terminï¿½e.");
 			}
 		};
 		
 		new ServiceControleur(c,"retablir",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				this.getControleur().retablir();
-				return Reponse.succes("Annulation rétablie");
+				return Reponse.succes("Annulation rï¿½tablie");
 			}
 		};
 		
 		new ServiceControleur(c,"calculer-itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				this.getControleur().getFeuilleDeRoute().calculerParcours(this.getControleur().getGrapheRoutier());
-				return Reponse.succes("Itineraire calculé !");			
+				return Reponse.succes("Itineraire calculï¿½ !");			
 			}
 		};
 		

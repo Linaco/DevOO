@@ -206,7 +206,6 @@ public class FeuilleDeRoute {
     * @param grapheroutier
     */
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
-	   System.out.println("DEBUT supprimer");
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
 	   int positionPrecedente = trouverPrecedent(l).get(0);
@@ -226,7 +225,6 @@ public class FeuilleDeRoute {
 	   }
 	   itineraire.addAll(positionSuivante, nouvellesEtapes);
 	   this.majHeureDePassage(itineraire.get(positionPrecedente+nouvellesEtapes.size()), carte);
-	   System.out.println("FIN supprimer");
    }
    
    public GrapheLivraison getGrapheLivraison(){
