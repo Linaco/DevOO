@@ -76,16 +76,28 @@ public class Etape {
      * Pas complet car il manque le lien avec la livraison
      * @return String
      */
-	public String toStringXML(){
+	public String toStringXML(List<PlageHoraire> plages){
 		String res = "";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		String minutes = String.format("%02d", this.heureDePassage.getMinutes());
 		String heure = heureDePassage.getHours() + "h" + minutes ;
 		
-		
 		res += "<etape heurePassage=\""+heure+"\" secondesAttente=\""+ 
 				this.secondesAttenteAvantPassage +"\" idIntersection=\"" +
-				adresse.getId() + "\" />";
+				adresse.getId() + "\" idPlageHoraire=\"" + 
+				getPlage(plages) + "\"/>";
 		return res;
+	}
+	
+	public int getPlage(List<PlageHoraire> plages) {
+		int heure = this.heureDePassage.getHours();
+		Iterator<PlageHoraire> it = plages.iterator();
+		while (it.hasNext()) {
+			PlageHoraire h = it.next();
+			if (heure >= h.getHeureDebut().getHours() && heure <= h.getHeureFin().getHours()) {
+				return h.getIdPlageHoraire();
+			}
+		}
+		return -1;
 	}
 }

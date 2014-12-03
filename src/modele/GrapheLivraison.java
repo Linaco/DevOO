@@ -155,5 +155,16 @@ public class GrapheLivraison implements Graph {
 		return true;
 	}
 
+	public Livraison getLivraison(int idLivraison) {
+		Livraison l = null;
+		Iterator<Livraison> it = this.livraisons.iterator();
+		while (it.hasNext()) {
+			l = it.next();
+			if (l.getIdLiv() == idLivraison) {
+				break;
+			}
+		}
+		return l;
+	}
     
 }

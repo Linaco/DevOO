@@ -205,8 +205,10 @@ public class Controleur {
 	 */
 	public FeuilleDeRoute getFeuilleDeRoute(){return this.feuilledeRoute;}
 	
-	public void ajouterLivraison() {
-		
+	public void ajouterLivraison(int idIntersection, int idClient, int idLivraisonPrecedente) {
+		Livraison precedente = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraisonPrecedente);
+		Livraison nouvelle = new Livraison();
+		CommandeAjout c = new CommandeAjout(nouvelle, precedente, this.getFeuilleDeRoute());
 	}
 	
 	public void supprimerLivraison() {

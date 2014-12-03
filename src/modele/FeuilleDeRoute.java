@@ -338,7 +338,7 @@ public class FeuilleDeRoute {
 		res += "<feuilleDeRoute>";
 		Iterator<Etape> it = this.itineraire.iterator();
 		while( it.hasNext() ){
-			res += it.next().toStringXML();
+			res += it.next().toStringXML(this.plagesHoraires);
 		}
 		res += "</feuilleDeRoute>";
 		return res;
