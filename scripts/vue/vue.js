@@ -72,8 +72,8 @@ function Vue(controleur, com){
             var route = this.getRoute(id1, id2);
             if(route){
                 var idPlage = etapes[i].getAttribute("idPlageHoraire");
-                console.log("route", route);
-                console.log("plage", idPlage,this.couleurPlages[idPlage]);
+                //console.log("route", route);
+                //console.log("plage", idPlage,this.couleurPlages[idPlage]);
                 var couleur = this.couleurPlages[idPlage];
                 if(couleur == null)couleur = "red";
                 route.ajouterPassage(0,  couleur );
@@ -255,7 +255,7 @@ function Vue(controleur, com){
     this._livraisonSupprimee = function(idLivraison, idIntersection){
         var it = this.getIntersection(idIntersection);
         it.closePopup();
-        console.log(idLivraison, it);
+        //console.log(idLivraison, it);
         this.info("Suppression prise en compte");
     }
 
@@ -318,7 +318,7 @@ function VueIntersection(pos, id){
         };
         this.setRayon(this.rayonLivraison);
         var div = document.getElementById('popup-livraison').cloneNode(true);
-        console.log("div",div);
+        //console.log("div",div);
         div.getElementsByTagName("client")[0].textContent = this.livraison.idClient;
         if(hdp)div.getElementsByTagName("hdp")[0].textContent = this.livraison.hdp;
         div.getElementsByTagName("plage")[0].textContent = plage;
