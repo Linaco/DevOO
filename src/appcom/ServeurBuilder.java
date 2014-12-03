@@ -153,7 +153,6 @@ public class ServeurBuilder {
 		new ServiceControleur(c,"calculer-itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				this.getControleur().getFeuilleDeRoute().calculerParcours(this.getControleur().getGrapheRoutier());
-				System.err.println("aaaa");
 				return Reponse.succes("Itineraire calculé !");			
 			}
 		};
@@ -193,7 +192,6 @@ public class ServeurBuilder {
 		new ServiceModele(c,"plagesHoraires",this.serveur){
 			protected Reponse getReponse(InputStream in){
 				String plagesHoraires = this.getControleur().getFeuilleDeRoute().getPlagesHorairesToXML();
-				System.err.println(plagesHoraires);
 				return Reponse.succes(plagesHoraires);
 			}  
 		};

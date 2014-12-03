@@ -295,6 +295,7 @@ function VueLegende(com, vue){
     this.vue = vue;
     this.com = com;
     this.lateral = document.getElementById('lateral');
+    this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
 
     this.displayPlagesHoraires = function() {
         this.com.appelService('modele/plagesHoraires', '', this._plageOk, this._plageErr, true);
@@ -303,12 +304,24 @@ function VueLegende(com, vue){
     this._plageOk = function(reponse){
         var parser=new DOMParser();
         var doc=parser.parseFromString(reponse,"text/xml");
-        console.log(doc);
+        var liste = doc.getElementsByTagName('plage');
+
         var listePlages = document.createElement('div');
         listePlages.id = "listePlages";
         lateral.appendChild(listePlages);
-        for (plage in reponse.children) {
-            console.log(plage);
+        var titre = document.createElement('h3');
+        titre.innerHTML = 'Liste plages horaires';
+        titre.style.color = 'white';
+        listePlages.appendChild(titre);
+
+        for (var i=0; i < liste.length; i++) {
+            var p = document.createElement('p');
+            p.innerHTML = liste[i].getAttribute('debut') + ' - ';
+            p.innerHTML += liste[i].getAttribute('fin');
+            listePlages.appendChild(p);
+
+            var colorId = liste[i].getAttribute('id');
+            p.style.color = this.couleurPlages[colorId];
         }
     }.bind(this);
 
