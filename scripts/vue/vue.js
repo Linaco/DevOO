@@ -138,6 +138,7 @@ function Vue(controleur, com){
         }
 
         this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
+        this.vueLegende.displayLivraisons();
         this.fermerChargement();
     }.bind(this);
     this.nouveauPlan = function(){
@@ -319,6 +320,7 @@ function VueLegende(com, vue){
         var listePlages = document.createElement('div');
         listePlages.id = "listePlages";
         lateral.appendChild(listePlages);
+
         var titre = document.createElement('h3');
         titre.innerHTML = 'Liste plages horaires';
         listePlages.appendChild(titre);
@@ -338,6 +340,47 @@ function VueLegende(com, vue){
         var msg = document.createElement('p');
         msg.value = 'Erreur de chargement des plages horaires.';
         msg.id = 'errorListePlages';
+        this.lateral.appendChild(msg);
+    }.bind(this);
+
+    this.displayLivraisons = function() {
+        this.com.appelService('modele/livraisons', '', this._livraisonsOk, this._livraisonsErr, true);
+    };
+
+    this._livraisonsOk = function(reponse) {
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(reponse,"text/xml");
+        var liste = doc.getElementsByTagName('plage');
+
+        var listeLivraisons = document.createElement('div');
+        listeLivraisons.id = "listeLivraisons";
+        lateral.appendChild(listeLivraisons);
+
+        var titre = document.createElement('h3');
+        titre.innerHTML = 'Liste des livraisons';
+        listeLivraisons.appendChild(titre);;
+        for (var i=0; i < liste.length; i++) {
+            var p = document.createElement('p');
+            p.innerHTML = liste[i].getAttribute('debut') + ' - ';
+            p.innerHTML += liste[i].getAttribute('fin') + ' : <br />';
+            var sous_liste = liste[i].getElementsByTagName('livraison');
+
+            for(var j=0; j < sous_liste.length; j++) {
+                p.innerHTML += 'Client : ' + sous_liste[j].getAttribute('idClient') + ' -- ';
+                p.innerHTML += 'Adresse : ' + sous_liste[j].getAttribute('idIntersection');
+                p.innerHTML += '<br />';
+            }
+            p.innerHTML += '<br />';
+            
+            listeLivraisons.appendChild(p);
+        }
+
+    }.bind(this);
+
+    this._livraisonsErr = function(msgErreur) {
+        var msg = document.createElement('p');
+        msg.value = 'Erreur de chargement des livraisons.';
+        msg.id = 'errorListeLivraisons';
         this.lateral.appendChild(msg);
     }.bind(this);
 
