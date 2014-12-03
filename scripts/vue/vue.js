@@ -41,11 +41,16 @@ function Vue(controleur, com){
     this.afficherChargement = function(msg){
         document.getElementById("msg-chargement").textContent
             = msg;
-        $('#modalChargement').modal({backdrop: 'static', keyboard: false});
+            console.log("ouvrir");
+        //$('#modalChargement').modal({backdrop: 'static', keyboard: false});
+        $('#modalChargement').modal('show');
     }
 
     this.fermerChargement = function(){
+        console.log("fermer");
+        //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
         $('#modalChargement').modal('hide');
+        //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
     }
 
     //visibilité
@@ -63,10 +68,10 @@ function Vue(controleur, com){
         }
      };
     this.livraisonPuisItineraireOk = function(str) {
-        this.nouvellesLivraisonsOk(str);
+        this.nouvellesLivraisonsOk(str, true);
         console.log("PuisOK");
         //this.fermerChargement();
-        //this.afficherChargement("Récupération du nouvel itinéraire");
+        this.afficherChargement("Récupération du nouvel itinéraire");
         //com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
         this.nouvelItineraire(false);
     }.bind(this);
@@ -74,7 +79,7 @@ function Vue(controleur, com){
         this.fermerChargement();
         this.erreur(msg);
     }.bind(this);
-    this.nouvelItineraireOk = function(str) {
+    this.nouvelItineraireOk = function(str, laisserChargement) {
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
         console.log("itineraire",doc);
@@ -96,8 +101,7 @@ function Vue(controleur, com){
             }
             id1 = id2;
         }
-        console.log("fermer");
-        this.fermerChargement();
+        if(!laisserChargement) this.fermerChargement();
         this.masquer();
         this.afficher();
     }.bind(this);
@@ -141,8 +145,8 @@ function Vue(controleur, com){
             }
         }
 
-        this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
-        this.vueLegende.displayLivraisons();
+        //this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
+        //this.vueLegende.displayLivraisons();
         this.fermerChargement();
     }.bind(this);
     this.nouveauPlan = function(){
@@ -196,7 +200,7 @@ function Vue(controleur, com){
                 var idRoute = route.getAttribute("id");
                 var id2 = route.getAttribute("idDestination");
                 var nom = route.getAttribute("nom");
-                this.ajouterRoute(id1,id2);
+                this.ajouterRoute(id1,id2,nom);
             }
         }
         var dw = (xmax - xmin)*0.25, dh = (ymax - ymin)*0.25;
@@ -241,11 +245,11 @@ function Vue(controleur, com){
             = new VueIntersection(pos,id);
     }
 
-    this.ajouterRoute = function(i1,i2){
+    this.ajouterRoute = function(i1,i2,nom){
         var a = this.getIntersection(i1),
             b = this.getIntersection(i2);
         if ( a && b ) return this.routes[this.routes.length] 
-            = new VueRoute(a,b);
+            = new VueRoute(a,b,nom);
         return null;
     }
 
@@ -302,6 +306,7 @@ function Vue(controleur, com){
     //console.log(this.controlCalcul.getContainer().className);
     var controlFDR = L.easyButton('fa-file-text', controleur.clicTelechargerInitineraire, "Télécharger la feuille de route", this.map).setPosition('bottomright');
 
+    $('#modalChargement').modal({backdrop: 'static', keyboard: false, show:false});
     $('#modal-info').modal({backdrop: false, show: false});
     $('#modal-erreur').modal({backdrop: false, show: false});
 }
@@ -558,7 +563,7 @@ function VueIntersection(pos, id){
     return this;
 }
 
-function VueRoute(intersec1, intersec2){
+function VueRoute(intersec1, intersec2, nom){
     // attributs
     this.defaut = {
         ecartArc: 0.05,
@@ -569,7 +574,7 @@ function VueRoute(intersec1, intersec2){
 
     this.A = intersec1;
     this.B = intersec2;
-    this.nom = "route sans nom";
+    this.nom = nom;
 
 
     this.paramDefaut = {weight:5,color: this.defaut.couleur ,opacity:0.8};
