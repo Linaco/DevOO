@@ -94,7 +94,6 @@ public class FeuilleDeRoute {
     * @return liste<Integer>
     */
    public List<Integer> trouverSuivant(Livraison livraison){
-	   System.out.println("Suivant");
 	   List<Integer> listePosition = new ArrayList<Integer>();
 	   Etape etape = livraison.getEtape();
 	   int pos = this.itineraire.indexOf(etape);
@@ -140,7 +139,6 @@ public class FeuilleDeRoute {
     * @param grapheRoutier
     */
    public void majHeureDePassage(Etape etape, GrapheRoutier carte){
-	   System.out.println("Debut majheureDePassage");
 	   int posEtape = this.getItineraire().indexOf(etape);
 	   for(int i=posEtape+1; i<this.getItineraire().size();i++){
 		   Object[]resultatCalcul = carte.calculerPlusCourtChemin(this.getItineraire().get(i-1).getAdresse(), this.getItineraire().get(i).getAdresse());
@@ -148,7 +146,6 @@ public class FeuilleDeRoute {
 		   Date heureCourante=new Date(itineraire.get(i-1).getHeurePassagePrevue().getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(0),listeIntersection.get(1)).getTempsParcours()*1000));
 		   this.getItineraire().get(i).setHeurePassagePrevue(heureCourante);
 	   }
-	   System.out.println("fin majHeureDePassage");
    }
    
    /**
@@ -209,6 +206,7 @@ public class FeuilleDeRoute {
     * @param grapheroutier
     */
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
+	   System.out.println("DEBUT supprimer");
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
 	   int positionPrecedente = trouverPrecedent(l).get(0);
@@ -228,6 +226,7 @@ public class FeuilleDeRoute {
 	   }
 	   itineraire.addAll(positionSuivante, nouvellesEtapes);
 	   this.majHeureDePassage(itineraire.get(positionPrecedente+nouvellesEtapes.size()), carte);
+	   System.out.println("FIN supprimer");
    }
    
    public GrapheLivraison getGrapheLivraison(){
