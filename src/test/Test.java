@@ -46,11 +46,28 @@ public class Test {
 			} else {
 				System.out.println("X - Création étape");
 			}
+			if(ConstrucLivraison(inter,1,2)){
+				System.out.println("V - Livraison - Construc");
+			} else {
+				System.out.println("X - Livraison - Construc");
+			}
 			
 		} else {
 			System.out.println("X - Création d'une intersection");
 		}
 		
+	}
+
+	private static boolean ConstrucLivraison(Intersection inter, int i, int j) {
+		Livraison liv = new Livraison(inter, i, j);
+		if( (inter == liv.getPointLivraison()) &&
+				(i == liv.getIdLiv()) &&
+				(j == liv.getIdClient())
+				){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static boolean ConstrucIntersection(int id, int x, int y){
