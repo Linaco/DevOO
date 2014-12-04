@@ -208,13 +208,9 @@ public class FeuilleDeRoute {
     * @param livraison
     * @param grapheroutier
     */
-<<<<<<< HEAD
-   public void supprimerLivraison(Livraison l, GrapheRoutier carte){
-	   System.out.println("Debut");
-=======
+
    @SuppressWarnings("unchecked")
-public void supprimerLivraison(Livraison l, GrapheRoutier carte){
->>>>>>> 33ab8f89435c37bfa9f3d4fc35ab3afa9134cc09
+   public void supprimerLivraison(Livraison l, GrapheRoutier carte){
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
 	   this.getGrapheLivraison().getLivraisons().remove(l);
@@ -222,7 +218,7 @@ public void supprimerLivraison(Livraison l, GrapheRoutier carte){
 	   int positionSuivante = trouverSuivant(l).get(1);
 	   System.out.println("Apr√®s les trouver");
 	   //supression des etapes
-	   for(int i=0;i<positionSuivante-positionPrecedente;i++){
+	   for(int i=0;i<positionSuivante-positionPrecedente-1;i++){
 		   itineraire.remove(positionPrecedente+1);
 		   System.out.println("Delete");
 	   }
@@ -374,9 +370,9 @@ public void supprimerLivraison(Livraison l, GrapheRoutier carte){
    }
    
 	/**
-	 * GÈnËre une String au format xml 
-	 * Cette derniËre contient l'ensemble des livraisons rÈparties en 2 sous ensembles :
-	 * itineraire qui contient les livraisons rÈalisable et livraisonsImpossibles
+	 * GÔøΩnÔøΩre une String au format xml 
+	 * Cette derniÔøΩre contient l'ensemble des livraisons rÔøΩparties en 2 sous ensembles :
+	 * itineraire qui contient les livraisons rÔøΩalisable et livraisonsImpossibles
 	 * @return string
 	 */
 	public String getItineraireXML(){
