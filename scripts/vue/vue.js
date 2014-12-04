@@ -322,6 +322,9 @@ function VueLegende(com, vue){
     };
 
     this._plageOk = function(reponse){
+
+        this.raz();
+
         var parser=new DOMParser();
         var doc=parser.parseFromString(reponse,"text/xml");
         var liste = doc.getElementsByTagName('plage');
@@ -357,6 +360,7 @@ function VueLegende(com, vue){
     };
 
     this._livraisonsOk = function(reponse) {
+
         var parser=new DOMParser();
         var doc=parser.parseFromString(reponse,"text/xml");
         var liste = doc.getElementsByTagName('plage');
