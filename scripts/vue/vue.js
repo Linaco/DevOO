@@ -145,8 +145,8 @@ function Vue(controleur, com){
             }
         }
 
-        //this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
-        //this.vueLegende.displayLivraisons();
+        this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
+        this.vueLegende.displayLivraisons();
         this.fermerChargement();
     }.bind(this);
     this.nouveauPlan = function(){
