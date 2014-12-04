@@ -299,6 +299,12 @@ function Vue(controleur, com){
     }
 
     this._ajoutLivraison = function(idIntersection) {
+        var value = document.getElementById("input-client").value;
+        if(!value){
+            this.erreur("Veuillez rentrer un id client avant de pouvoir ajouter votre livraison.");
+            return;
+        }
+
         var it = this.getIntersection(idIntersection);
         it.closePopup();
         this.info("Veuillez sélectionner la livraison après laquelle votre nouvelle livraison sera effectuée.");
@@ -310,16 +316,16 @@ function Vue(controleur, com){
                 it.etatSelectionnable();
                 var liv = it.livraison;
                 it.activerClic(function() {
-                    ctrl.vue._livraisonPrecedenteOk(idIntersection, liv);
+                    ctrl.vue._livraisonPrecedenteOk(idIntersection, liv, value);
                 });
             }
         }
     };
 
-    this._livraisonPrecedenteOk = function(idIntersection, livraison){
+    this._livraisonPrecedenteOk = function(idIntersection, livraison, client){
         console.log("ok",idIntersection,livraison);
         // Pas besoin de tout remettre, on va réafficher
-        this.ctrl.ajouterLivraison(idIntersection,livraison.id,0);
+        this.ctrl.ajouterLivraison(idIntersection,livraison.id,client);
     }
 
 
