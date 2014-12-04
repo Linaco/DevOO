@@ -69,6 +69,8 @@ function Vue(controleur, com){
             }
         }
         if(chargerLivraisons){
+            this.razLivraison();
+            this.vueLegende.raz();
             com.appelService('modele/livraisons','',this.livraisonPuisItineraireOk,this.nouvelItineraireErr,true);
         } else {
             com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);   
