@@ -99,18 +99,24 @@ public class Controleur {
 	 */
 	public void ajouterLivraison(int idIntersection, int idClient, int idLivraisonPrecedente) {
 		System.out.println("debut controleur");
-		Livraison precedente = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraisonPrecedente);
+		//Livraison precedente = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraisonPrecedente);
+		Livraison precedente = null;
 		for(PlageHoraire pH : this.feuilledeRoute.getPlagesHoraires()){
 			for(Livraison l : pH.getListeLivraison()){
+				System.err.println("livraison > "+l.getIdLiv());
 				if(l.getIdLiv()==idLivraisonPrecedente){
 					precedente=l;
 				}
 			}
 		}
-		System.out.println("dat controleur");
+		if( precedente == null ){
+			System.err.println("Precedente n'existe pas...");
+			return;
+		}
+		System.err.println("precedente : "+precedente.getIdLiv());
 		Intersection inter = this.grapheRoutier.getIntersection(idIntersection);
-		List<Livraison> lI = precedente.getPlageHoraire().getListeLivraison();
 		
+		List<Livraison> lI = precedente.getPlageHoraire().getListeLivraison();
 		
 		
 		//creation de la commandeAjout

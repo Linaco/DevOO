@@ -72,6 +72,18 @@ public class PlageHoraire {
 	}
 	
 	/**
+	 * Ajoute la livraison passée en paramètre à listeLivraison
+	 * On en profite pour renseigner l'attribut PlageHoraire de la livraison concernée 
+	 * @param l 
+	 * 		 : livraison à ajouter
+	 * @param pre
+	 * 		: livraison qui doit précéder l
+	 */
+	public void addLivraison(Livraison pre, Livraison l){
+		this.listeLivraisons.add(this.listeLivraisons.indexOf(pre), l);
+	}
+	
+	/**
 	 * Supprime la livraison passée en paramètre de listeLivraison
 	 * @param liv
 	 * 		 : livraison à supprimer

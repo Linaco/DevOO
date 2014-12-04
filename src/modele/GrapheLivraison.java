@@ -157,24 +157,21 @@ public class GrapheLivraison implements Graph {
 
 	/**
 	 * Permet d'obtenir une livraison par son identifiant
-<<<<<<< HEAD
-	 * @param idLivraison int : identifiant de la livraison ï¿½ retrouver
-	 * @return Livraison : 
-=======
 	 * @param idLivraison : identifiant de la livraison à retrouver
 	 * @return Livraison : la livraison correspondant à idLivraison
->>>>>>> 33ab8f89435c37bfa9f3d4fc35ab3afa9134cc09
 	 */
 	public Livraison getLivraison(int idLivraison) {
-		Livraison l = null;
+		System.err.println("getLivraison :"+idLivraison+ " | livraisons" +this.livraisons );
+		Livraison next = null;
 		Iterator<Livraison> it = this.livraisons.iterator();
 		while (it.hasNext()) {
-			l = it.next();
-			if (l.getIdLiv() == idLivraison) {
-				break;
+			next = it.next();
+			System.err.println("next > "+next);
+			if (next.getIdLiv() == idLivraison) {
+				return next;
 			}
 		}
-		return l;
+		return null;
 	}
 	
 	public List<Livraison> getLivraisons(){

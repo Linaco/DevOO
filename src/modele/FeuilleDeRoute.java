@@ -95,11 +95,13 @@ public class FeuilleDeRoute {
     * @return liste<Integer>
     */
    public List<Integer> trouverSuivant(Livraison livraison){
+	   System.err.println("98");
 	   List<Integer> listePosition = new ArrayList<Integer>();
 	   Etape etape = livraison.getEtape();
 	   int pos = this.itineraire.indexOf(etape);
 	   int nextLivraison = 0;
-	   nextLivraison+=pos+1;
+	   System.err.println("99");
+	   nextLivraison+=pos;
 	   while(!this.itineraire.get(nextLivraison).hasLivraison()){
 		  nextLivraison++;
 		  if(nextLivraison==this.itineraire.size()){
@@ -107,6 +109,7 @@ public class FeuilleDeRoute {
 			  break;
 		  }
 	   }
+	   System.err.println("100");
 	   listePosition.add(pos);
 	   listePosition.add(nextLivraison);
 	   return listePosition;
@@ -177,17 +180,28 @@ public class FeuilleDeRoute {
 		   }
 	   }
 	   if(!b){
+		   // On ne devrait jamais arriver l�.......
 		   pH.addLivraison(nouvelleLivraison);
 		   plagesHoraires.add(pH);
 	   }else{
-		   plagesHoraires.get(index).addLivraison(nouvelleLivraison);
+		   System.err.println(1);
+		   plagesHoraires.get(index).addLivraison(livraisonPrecedente,nouvelleLivraison);
 	   }
-	   this.getGrapheLivraison().getLivraisons().add(this.getGrapheLivraison().getLivraisons().indexOf(livraisonPrecedente)+1,nouvelleLivraison);
+	   //this.getGrapheLivraison().getLivraisons().add(this.getGrapheLivraison().getLivraisons().indexOf(livraisonPrecedente)+1,nouvelleLivraison);
+
+	   /*System.err.println(2);
+	   List<Livraison> listeLivraisons = this.getGrapheLivraison().getLivraisons();
+	   System.err.println(livraisonPrecedente);
+	   System.err.println(3 + " "+listeLivraisons.indexOf(livraisonPrecedente));
+	   listeLivraisons.add(listeLivraisons.indexOf(livraisonPrecedente),nouvelleLivraison);*/
+
+	   System.err.println(4);
 	   List<Integer> posEtapes = trouverSuivant(livraisonPrecedente);
 	   //Retrait des etapes obsolètes
 	   for(int i=0; i<posEtapes.get(1)-posEtapes.get(0)-1;i++){
 		   itineraire.remove(posEtapes.get(0)+1);
 	   }
+	   System.err.println("precedente --> "+livraisonPrecedente.getIdLiv());
 	   //ajout des nouvelles étapes de livraison précédente-->nouvelle livraison
 	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(livraisonPrecedente.getPointLivraison(), nouvelleLivraison.getPointLivraison());
 	   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];

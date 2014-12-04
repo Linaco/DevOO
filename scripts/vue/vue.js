@@ -314,18 +314,21 @@ function Vue(controleur, com){
                 it.etatDesactive();
             } else {
                 it.etatSelectionnable();
-                var liv = it.livraison;
-                it.activerClic(function() {
-                    ctrl.vue._livraisonPrecedenteOk(idIntersection, liv, value);
-                });
+                it.activerClic(this.genererFctPopup(idIntersection, it.livraison.id, value));
             }
         }
+    }.bind(this);
+
+    this.genererFctPopup = function(idInter, idLiv, idClient) {
+        return function() {
+            ctrl.vue._livraisonPrecedenteOk(idInter, idLiv, idClient);
+        };
     };
 
     this._livraisonPrecedenteOk = function(idIntersection, livraison, client){
         console.log("ok",idIntersection,livraison);
         // Pas besoin de tout remettre, on va réafficher
-        this.ctrl.ajouterLivraison(idIntersection,livraison.id,client);
+        this.ctrl.ajouterLivraison(idIntersection,livraison,client);
     }
 
 
@@ -610,6 +613,7 @@ function VueIntersection(pos, id){
         console.log("clic standard",this);
         if(this.livraison){
             this.cercle.openPopup();
+            console.log(this.livraison);
         } else {
             this.cercle.openPopup();
         }
