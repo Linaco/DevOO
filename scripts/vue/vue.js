@@ -11,6 +11,12 @@ function Vue(controleur, com){
     this.routes = [];
     this.itineraire;
 
+    this.doc;
+    var doc = this.doc;
+
+    this.feuilleDeRoute = new VueFeuilleDeRoute(com, doc, this);
+    var feuilleDeRoute = this.feuilleDeRoute;
+
     // functions
     this.enableRedo = function(){
         console.log("Vue.enableRedo");
@@ -84,6 +90,9 @@ function Vue(controleur, com){
         this.fermerChargement();
         this.masquer();
         this.afficher();
+
+        this.feuilleDeRoute.chargerFeuille(doc);
+
     }.bind(this);
 
     this.nouvellesLivraisons = function(){
@@ -124,6 +133,7 @@ function Vue(controleur, com){
                 }
             }
         }
+        doc = feuilleDeRoute.livraison;
 
         this.fermerChargement();
     }.bind(this);
