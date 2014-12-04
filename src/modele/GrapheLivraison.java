@@ -17,14 +17,17 @@ public class GrapheLivraison implements Graph {
 	int[][] matriceAdjacence;
 	List<Livraison> livraisons;
 	
+	/**
+	 * Constructeur de GrapheLivraison
+	 */
 	public GrapheLivraison(){
 		livraisons = new ArrayList<Livraison>();
 	}
 	
 	/**
-	 * 
-	 * @param matriceAdjacence Matrice contenant les couts des plus courts chemins entre chaque livraison. Le depet doit etre a l'indice 0.
-	 * @param lLivraisons Liste des livraisons pour la tournee a calculer, ordonnee selon le meme ordre que les colonnes de la matrice d'adjacence.
+	 * Constructeur de GrapheLivraison
+	 * @param matriceAdjacence : Matrice contenant les couts des plus courts chemins entre chaque livraison. Le depet doit etre a l'indice 0.
+	 * @param lLivraisons : Liste des livraisons pour la tournee a calculer, ordonnee selon le meme ordre que les colonnes de la matrice d'adjacence.
 	 */
 	public GrapheLivraison(int[][] matriceAdjacence, List<Livraison> lLivraisons){
 		this.nbSommets = matriceAdjacence[0].length;
@@ -51,8 +54,8 @@ public class GrapheLivraison implements Graph {
 	}
     
 	/**
-	 * MÃ©thode de calcul de l'ordre des livraisons en fonction des chemins entre elles
-	 * @return La list ordonnee des livraisons si la tournee specifiee est realisable, null sinon
+	 * Méthode de calcul de l'ordre des livraisons en fonction des chemins entre elles
+	 * @return List Livraison : La liste ordonnée des livraisons si la tournee specifiee est realisable, null sinon
 	 */
     public List<Livraison> calculerOrdreLivraisons() {
     	List<Livraison> lListe = new ArrayList<>();
@@ -74,9 +77,6 @@ public class GrapheLivraison implements Graph {
 
     	return lListe;
     }
-
-
-    public List<Livraison> getLivraisons(){return this.livraisons;}
     
 	@Override
 	public int getMaxArcCost() {
@@ -155,6 +155,11 @@ public class GrapheLivraison implements Graph {
 		return true;
 	}
 
+	/**
+	 * Permet d'obtenir une livraison par son identifiant
+	 * @param idLivraison : identifiant de la livraison à retrouver
+	 * @return Livraison : la livraison correspondant à idLivraison
+	 */
 	public Livraison getLivraison(int idLivraison) {
 		Livraison l = null;
 		Iterator<Livraison> it = this.livraisons.iterator();
