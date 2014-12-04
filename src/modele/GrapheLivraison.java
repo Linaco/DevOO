@@ -54,8 +54,8 @@ public class GrapheLivraison implements Graph {
 	}
     
 	/**
-	 * Méthode de calcul de l'ordre des livraisons en fonction des chemins entre elles
-	 * @return List Livraison : La liste ordonnée des livraisons si la tournee specifiee est realisable, null sinon
+	 * Mï¿½thode de calcul de l'ordre des livraisons en fonction des chemins entre elles
+	 * @return List Livraison : La liste ordonnï¿½e des livraisons si la tournee specifiee est realisable, null sinon
 	 */
     public List<Livraison> calculerOrdreLivraisons() {
     	List<Livraison> lListe = new ArrayList<>();
@@ -157,7 +157,7 @@ public class GrapheLivraison implements Graph {
 
 	/**
 	 * Permet d'obtenir une livraison par son identifiant
-	 * @param idLivraison int : identifiant de la livraison à retrouver
+	 * @param idLivraison int : identifiant de la livraison ï¿½ retrouver
 	 * @return Livraison : 
 	 */
 	public Livraison getLivraison(int idLivraison) {
@@ -170,6 +170,10 @@ public class GrapheLivraison implements Graph {
 			}
 		}
 		return l;
+	}
+	
+	public List<Livraison> getLivraisons(){
+		return this.livraisons;
 	}
     
 }

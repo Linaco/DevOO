@@ -170,6 +170,7 @@ public class FeuilleDeRoute {
 	   }else{
 		   plagesHoraires.get(index).addLivraison(nouvelleLivraison);
 	   }
+	   this.getGrapheLivraison().getLivraisons().add(this.getGrapheLivraison().getLivraisons().indexOf(livraisonPrecedente)+1,nouvelleLivraison);
 	   List<Integer> posEtapes = trouverSuivant(livraisonPrecedente);
 	   //Retrait des etapes obsolètes
 	   for(int i=0; i<posEtapes.get(1)-posEtapes.get(0);i++){
@@ -197,7 +198,7 @@ public class FeuilleDeRoute {
 		   nouvellesEtapes.add(new Etape(heureCourante,listeIntersection.get(i)));
 	   }
 	   itineraire.addAll(positionNouvelleLivraison+1, nouvellesEtapes);
-	   this.majHeureDePassage(itineraire.get(positionNouvelleLivraison+nouvellesEtapes.size()), carte);
+	   //this.majHeureDePassage(itineraire.get(positionNouvelleLivraison+nouvellesEtapes.size()), carte);
    }
    
    /**
@@ -206,25 +207,31 @@ public class FeuilleDeRoute {
     * @param grapheroutier
     */
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
+	   System.out.println("Debut");
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
+	   this.getGrapheLivraison().getLivraisons().remove(l);
 	   int positionPrecedente = trouverPrecedent(l).get(0);
 	   int positionSuivante = trouverSuivant(l).get(1);
+	   System.out.println("Après les trouver");
 	   //supression des etapes
 	   for(int i=0;i<positionSuivante-positionPrecedente;i++){
 		   itineraire.remove(positionPrecedente+1);
+		   System.out.println("Delete");
 	   }
 	   //liaison entre précédent et suivant
-	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(itineraire.get(positionPrecedente).getAdresse(), itineraire.get(positionSuivante).getAdresse());
+	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(itineraire.get(positionPrecedente).getAdresse(), itineraire.get(positionPrecedente+1).getAdresse());
 	   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
 	   List<Etape> nouvellesEtapes = new ArrayList<Etape>();
 	   Date heureCourante = itineraire.get(positionPrecedente).getHeurePassagePrevue();
 	   for (int i=1; i<listeIntersection.size()-1;i++){
 		   heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
 		   nouvellesEtapes.add(new Etape(heureCourante, listeIntersection.get(i)));
+		   System.out.println("Ajout");
 	   }
-	   itineraire.addAll(positionSuivante, nouvellesEtapes);
-	   this.majHeureDePassage(itineraire.get(positionPrecedente+nouvellesEtapes.size()), carte);
+	   itineraire.addAll(positionPrecedente+1, nouvellesEtapes);
+	   System.out.println("Fin");
+	   //this.majHeureDePassage(itineraire.get(positionPrecedente+nouvellesEtapes.size()), carte);
    }
    
    public GrapheLivraison getGrapheLivraison(){
