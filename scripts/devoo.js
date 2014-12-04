@@ -109,6 +109,18 @@ function Controleur(){
         vue.erreur(msg);
     };
 
+    this.ajouterLivraison = function(idIntersection, idLivraison, idClient){
+        vue.afficherChargement("Ajout en cours, veuillez patienter...");
+        com.appelService("controleur/ajouter-livraison",idIntersection+"\n"+idClient+"\n"+idLivraison,this._ajouterLivraisonOk,this._ajouterLivraisonErr,true);
+    }
+    this._ajouterLivraisonOk = function() {
+        vue.nouvelItineraire(true);
+    };
+    this._ajouterLivraisonErr = function() {
+        vue.fermerChargement();
+        vue.erreur(msg);
+    };
+
     // init
     this.vue = vue = new Vue(this, com);
 
