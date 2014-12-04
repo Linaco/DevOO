@@ -80,7 +80,7 @@ public class ServeurBuilder {
 						if (this.getControleur().chargerLivraisons(doc)) {
 							return Reponse.succes("Les livraisons ont ï¿½tï¿½ chargï¿½es.");
 						} else {
-							return Reponse.erreur("Le service de chargement des livraisons a ï¿½chouï¿½.");	
+							return Reponse.erreur("Le service de chargement des livraisons a échoué. Peut être n'avez vous pas chargé de plan ?");	
 						}
 						
 					} catch (SAXException e) {

@@ -59,7 +59,7 @@ function Controleur(){
     this.chargerLivraisons = function(evt){
         vue.afficherChargement("Chargement des données de livraisons...\n"
                 + "Merci de patienter quelques instants.");
-        com.envoyerXml(evt,'controleur/charger-livraisons',this._chargerLivraisonsOk,this._chargerLivraisonsErr);
+        com.envoyerXml(evt,'controleur/charger-livraisons',this._chargerLivraisonsOk,this._chargerLivraisonsErr,true);
     }.bind(this);
 
     this.clicTelechargerInitineraire = function(){
