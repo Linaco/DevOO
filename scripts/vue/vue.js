@@ -296,6 +296,30 @@ function Vue(controleur, com){
         this.ctrl.demandeDeSuppression(idLivraison);
     }
 
+    this._ajoutLivraison = function(idIntersection) {
+        var it = this.getIntersection(idIntersection);
+        it.closePopup();
+        this.info("Veuillez sélectionner la livraison après laquelle votre nouvelle livraison sera effectuée.");
+        for( var i = 0; i < this.intersections.length; ++i){
+            var it = this.intersections[i];
+            if(!it.livraison){
+                it.etatDesactive();
+            } else {
+                it.etatSelectionnable();
+                var liv = it.livraison;
+                it.activerClic(function() {
+                    ctrl.vue._livraisonPrecedenteOk(idIntersection, liv);
+                });
+            }
+        }
+    };
+
+    this._livraisonPrecedenteOk = function(idIntersection, livraison){
+        console.log("ok",idIntersection,livraison);
+        // Pas besoin de tout remettre, on va réafficher
+        this.ctrl.ajouterLivraison(idIntersection,livraison.id,0);
+    }
+
 
 
     //Constructeur
@@ -517,6 +541,7 @@ function VueIntersection(pos, id){
     this.etatSelectionnable = function(){
         this.cercle.setStyle(this.paramSelec);
         this.etat = "selectionnable";
+        
         //this._clic = this._clicSelectionnable;
         this.activerClic(this._clicSelectionnable);
         return this;
@@ -526,6 +551,14 @@ function VueIntersection(pos, id){
         this.cercle.setStyle(this.livraison ? this.paramLivraison :
                             (this.entrepot ? this.paramEntrepot : this.paramDefaut));
         this.etat = "standard";
+
+        if(!this.livraison){
+            this.cercle.unbindPopup();
+            var div = document.getElementById('popup-ajout').cloneNode(true);
+            div.getElementsByTagName("adresse")[0].textContent = this.id;
+            div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._ajoutLivraison("+this.id+");");
+            this.cercle.bindPopup(div);
+        }
         //this._clic = this._clicStandard;
         this.activerClic(this._clicStandard);
         return this;
@@ -568,11 +601,14 @@ function VueIntersection(pos, id){
         console.log("clic standard",this);
         if(this.livraison){
             this.cercle.openPopup();
+        } else {
+            this.cercle.openPopup();
         }
         //this.etatSelectionnable();
     }
 
     // Constructeur
+
     this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)/*
             .bindPopup("Intersection "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
             .on("mouseover",function () {this.openPopup();})
