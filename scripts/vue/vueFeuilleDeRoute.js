@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////
 // Class Vue
-function VueFeuilleDeRoute(appCom, livraison, vue){
+function VueFeuilleDeRoute(appCom, vue){
 
     // attributs
     this.com = appCom;
