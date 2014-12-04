@@ -253,7 +253,7 @@ public class FeuilleDeRoute {
 		   nouvellesEtapes.add(new Etape(heureCourante, listeIntersection.get(i)));
 	   }
 	   itineraire.addAll(positionPrecedente+1, nouvellesEtapes);
-	   //this.majHeureDePassage(itineraire.get(positionPrecedente+nouvellesEtapes.size()), carte);
+	   this.majHeureDePassage(itineraire.get(positionPrecedente+nouvellesEtapes.size()), carte);
    }
    
    public GrapheLivraison getGrapheLivraison(){
