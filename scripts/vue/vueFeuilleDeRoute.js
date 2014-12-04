@@ -27,31 +27,37 @@ function VueFeuilleDeRoute(appCom, vue){
 
         for(var i = 1; i < etapes.length; ++i){
             var id2 = etapes[i].getAttribute("idIntersection");
-            $('#FDR').append("<p>");
+            
             var route = this.vue.getRoute(id1, id2);
             if(route){
                 var heure = etapes[i-1].getAttribute("heurePassage");
                 //console.log("route", route);
                 //console.log("plage", idPlage,this.couleurPlages[idPlage]);
-                var livraison = etapes[i].getElementsByTagName("livraison");
+                var livraison = etapes[i-1].getElementsByTagName("livraison");
 
+                
+
+                if(livraison.length != 0 ){
+
+                    for(var a = 0; a < livraison.length ; a++){
+                        $('#FDR').append("<p class='livraison'>"+heure+" : "+livraison[a].getAttribute("adresse")+" -> Livraison pour le client"+ livraison[a].getAttribute("idClient") + "</p>");
+                        var start = heure.substring(0,heure.length - 2);
+                        var nbr = heure.substring(heure.length-2,heure.length);
+                        nbr = parseInt(nbr) + 10;
+
+                        heure = start.concat(nbr);
+                    }
+
+                    
+
+
+                }
+                $('#FDR').append("<p>");
                 $('#FDR').append(heure+" : ");
                 $('#FDR').append(route.nom+ " en direction de ");
                 $('#FDR').append(this.vue.getIntersection(id2).id );
-
-                if(livraison.length != 0 ){
-                    $('#FDR').append("</p>");
-
-                    for(var a = 0; a < livraison.length ; a++){
-                        $('#FDR').append("<p class='livraison'>"+livraison[a].getAttribute("adresse")+" : Livraison pour le client"+ livraison[a].getAttribute("idClient") + "</p>");
-
-                    }
-
-                } else {
-                
-                    $('#FDR').append("</p>");
-
-                }
+            
+                $('#FDR').append("</p>");
             }
             id1 = id2;
         }
