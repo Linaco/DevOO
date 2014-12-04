@@ -125,15 +125,21 @@ public class ServeurBuilder {
 		
 		new ServiceControleur(c,"annuler",this.serveur){
 			protected Reponse getReponse(InputStream in){
-				this.getControleur().annuler();
-				return Reponse.succes("Annulation terminï¿½e.");
+				if(this.getControleur().annuler()){
+					return Reponse.succes("Annulation terminï¿½e.");
+				} else {
+					return Reponse.erreur("Il n'y a rien à annuler !");
+				}
 			}
 		};
 		
 		new ServiceControleur(c,"retablir",this.serveur){
 			protected Reponse getReponse(InputStream in){
-				this.getControleur().retablir();
-				return Reponse.succes("Annulation rï¿½tablie");
+				if(this.getControleur().retablir()){
+					return Reponse.succes("Retablir rï¿½tablie");
+				} else {
+					return Reponse.erreur("Il n'y a rien à rétablir !");
+				}
 			}
 		};
 		
