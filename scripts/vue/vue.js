@@ -12,6 +12,21 @@ function Vue(controleur, com){
     this.routes = [];
     this.itineraire;
 
+    /*this.warningIcon = L.AwesomeMarkers.icon({
+        icon: 'coffee',
+        markerColor: 'red'
+    });*/
+
+    this.warningIcon = L.icon({
+        iconUrl: 'http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/process-warning-icon.png',
+        shadowUrl: null,
+
+        iconSize:     [25, 25], // size of the icon
+        shadowSize:   [0, 0], // size of the shadow
+        iconAnchor:   [12, 10], // point of the icon which will correspond to marker's location
+        shadowAnchor: [0, 0],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
 
     this.feuilleDeRoute = new VueFeuilleDeRoute(com, this);
     var feuilleDeRoute = this.feuilleDeRoute;
@@ -110,6 +125,15 @@ function Vue(controleur, com){
             }
             id1 = id2;
         }
+
+        var impossible = doc.getElementsByTagName("livraisonsImpossibles")[0];
+        var livs = impossible.getElementsByTagName("livraison");
+        for(var i = 0; i < livs.length; ++i){
+            var liv = livs[i];
+            var it = this.getIntersection(liv.getAttribute("idIntersection"));
+            it.ajouterMarker(this.warningIcon);
+        }
+
         this.fermerChargement();
         this.masquer();
         this.afficher();
@@ -470,6 +494,7 @@ function VueIntersection(pos, id){
     this.rayon = this.rayonDefaut;
 
     this.etat = "standard";
+    this.marker = null;
 
     this.cercle;
 
@@ -507,6 +532,7 @@ function VueIntersection(pos, id){
 
     this.razLivraison = function() {
         this.livraison = null;
+        this.marker = null;
         this.entrepot = false;
         this.setRayon(this.rayonDefaut);
         this.cercle.unbindPopup();
@@ -598,13 +624,42 @@ function VueIntersection(pos, id){
 
     this.afficher = function(){
         this.cercle.addTo(map);
+        if(this.marker){
+            console.log("Afficher");
+            //this.ajouterMarker("nlanlanl");
+            this.marker.addTo(map);
+        }
         return this;
     }
 
     this.masquer = function(){
         map.removeLayer(this.cercle);
+        if(this.marker){
+            this.enleverMarker();
+        }
         return this;
     }
+
+    this.enleverMarker = function() {
+        //this.cercle.unbindLabel();
+        map.removeLayer(this.marker);
+    };
+    this.supprimerMarker = function() {
+        this.enleverMarker();
+        this.marker= null;
+        this.cercle.fire("click");
+    };
+
+    this.ajouterMarker = function(warning) {
+        console.log("Ajouter Marker",warning);
+        console.log(this.cercle.getLatLng());
+        this.marker = L.marker(this.cercle.getLatLng(),{icon:warning})
+                    .on('click',this.supprimerMarker,this)
+                    .addTo(map);
+        /*this.marker = this.cercle.bindLabel(msg,{noHide:true})
+                        .on("click",this.supprimerMarker,this)
+                        .addTo(map);*/
+    };
 
     this._clicSelectionnable = function() {
         console.log("clic selectionnable", this);
