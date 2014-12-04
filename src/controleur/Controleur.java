@@ -30,12 +30,12 @@ public class Controleur {
 	
 	
 	/**
-	 * Remise à zéro de la feuille de route
-	 * Appelle à la méthode pour charger le document passé en paramètre
+	 * Remise ï¿½ zï¿½ro de la feuille de route
+	 * Appelle ï¿½ la mï¿½thode pour charger le document passï¿½ en paramï¿½tre
 	 * @param livDoc
-	 * 		: document à parser
+	 * 		: document ï¿½ parser
 	 * @return boolean
-	 * 		 true si la feuille de route est correctement générée //
+	 * 		 true si la feuille de route est correctement gï¿½nï¿½rï¿½e //
 	 * 		 false si la feuille est incorrecte
 	 */
 	public boolean chargerLivraisons(Document livDoc){
@@ -50,12 +50,12 @@ public class Controleur {
 	}
 	
 	/**
-	 * Remise à zéro du graphe routier
-	 * Appelle à la méthode pour charger le document passé en paramètre
+	 * Remise ï¿½ zï¿½ro du graphe routier
+	 * Appelle ï¿½ la mï¿½thode pour charger le document passï¿½ en paramï¿½tre
 	 * @param plan
-	 * 		: document à parser
+	 * 		: document ï¿½ parser
 	 * @return boolean
-	 * 		 true si le graphe routier est correctement généré //
+	 * 		 true si le graphe routier est correctement gï¿½nï¿½rï¿½ //
 	 * 		 false si le graphe routier incorrecte
 	 */
 	public boolean chargerPlan(Document plan){
@@ -94,10 +94,19 @@ public class Controleur {
 	 * Ajoute une livraison et l'enregistre dans la pile pour undo/redo
 	 * @param idIntersection : id de l'intersection de l'adresse de livraison
 	 * @param idClient : id du client de la livraison
-	 * @param idLivraisonPrecedente : id de la livraison effectué avant celle ajoutée
+	 * @param idLivraisonPrecedente : id de la livraison effectuï¿½ avant celle ajoutï¿½e
 	 */
 	public void ajouterLivraison(int idIntersection, int idClient, int idLivraisonPrecedente) {
+		System.out.println("debut controleur");
 		Livraison precedente = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraisonPrecedente);
+		for(PlageHoraire pH : this.feuilledeRoute.getPlagesHoraires()){
+			for(Livraison l : pH.getListeLivraison()){
+				if(l.getIdLiv()==idLivraisonPrecedente){
+					precedente=l;
+				}
+			}
+		}
+		System.out.println("dat controleur");
 		Intersection inter = this.grapheRoutier.getIntersection(idIntersection);
 		List<Livraison> lI = precedente.getPlageHoraire().getListeLivraison();
 		
