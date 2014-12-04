@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>vue\vue.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Controleur.html">Controleur</a></li>
+                                <li><a href="../classes/Vue.html">Vue</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/appcom.html">appcom</a></li>
+                                <li><a href="../modules/controleur.html">controleur</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: vue\vue.js</h1>
+                        
+                        <div class="file">
+                            <pre class="code prettyprint linenums">
+                        ///////////////////////////////////////////////////
+                        // Class Vue
+                        
+                        /**
+                         * Description
+                         *
+                         * @class Vue
+                         * @author Robin Nicolet
+                         * @constructor
+                         */
+                        function Vue(controleur, com){
+                            // attributs
+                            this.com = com;
+                            this.ctrl = controleur;
+                            var com = this.com;
+                        
+                            this.couleurPlages = [&#x27;#2974FF&#x27;,&#x27;#62FF29&#x27;,&#x27;#FF00FF&#x27;,&#x27;#00C8FF&#x27;];
+                        
+                            this.intersections = [];
+                            this.routes = [];
+                            this.itineraire;
+                        
+                            /*this.warningIcon = L.AwesomeMarkers.icon({
+                                icon: &#x27;coffee&#x27;,
+                                markerColor: &#x27;red&#x27;
+                            });*/
+                        
+                            this.warningIcon = L.icon({
+                                iconUrl: &#x27;http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/process-warning-icon.png&#x27;,
+                                shadowUrl: null,
+                        
+                                iconSize:     [25, 25], // size of the icon
+                                shadowSize:   [0, 0], // size of the shadow
+                                iconAnchor:   [12, 10], // point of the icon which will correspond to marker&#x27;s location
+                                shadowAnchor: [0, 0],  // the same for the shadow
+                                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                            });
+                        
+                            this.feuilleDeRoute = new VueFeuilleDeRoute(com, this);
+                            var feuilleDeRoute = this.feuilleDeRoute;
+                        
+                            this.vueLegende = new VueLegende(com, this);
+                        
+                            // functions
+                            this.enableRedo = function(){
+                                console.log(&quot;Vue.enableRedo&quot;);
+                            };
+                            this.disableRedo = function(){
+                                console.log(&quot;Vue.disableRedo&quot;);
+                            }
+                            this.erreur = function(msg){
+                                this.fermerInfo();
+                                document.getElementById(&quot;msg-erreur&quot;).textContent = msg;
+                                $(&#x27;#modal-erreur&#x27;).modal(&#x27;show&#x27;);
+                            }
+                            this.fermerErreur = function(){
+                                $(&#x27;#modal-erreur&#x27;).modal(&#x27;hide&#x27;);
+                            }
+                            this.info = function(msg){
+                                this.fermerErreur();
+                                document.getElementById(&quot;msg-info&quot;).textContent = msg;
+                                $(&#x27;#modal-info&#x27;).modal(&#x27;show&#x27;);
+                            }
+                            this.fermerInfo = function(){
+                                $(&#x27;#modal-info&#x27;).modal(&#x27;hide&#x27;);
+                            }
+                        
+                            this.afficherChargement = function(msg){
+                                document.getElementById(&quot;msg-chargement&quot;).textContent
+                                    = msg;
+                                    console.log(&quot;ouvrir&quot;);
+                                //$(&#x27;#modalChargement&#x27;).modal({backdrop: &#x27;static&#x27;, keyboard: false});
+                                //$(&quot;#modalChargement&quot;).css(&quot;visibility&quot;, &quot;visible&quot;);
+                                $(&#x27;#modalChargement&#x27;).modal(&#x27;show&#x27;);
+                            }
+                        
+                            this.fermerChargement = function(){
+                                console.log(&quot;fermer&quot;);
+                                //console.log(document.getElementsByTagName(&quot; bootstrap-backdrop&quot;));
+                                $(&#x27;.modal.in&#x27;).modal(&#x27;hide&#x27;) ;
+                                $(&#x27;#modalChargement&#x27;).modal(&#x27;hide&#x27;);
+                                //$(&quot;#modalChargement&quot;).css(&quot;visibility&quot;, &quot;hidden&quot;);
+                                //console.log(document.getElementsByTagName(&quot; bootstrap-backdrop&quot;));
+                            }
+                        
+                            //visibilité
+                            this.nouvelItineraire = function(chargerLivraisons) {
+                                    console.log(this.intersections.length);
+                                for(var j = 0; j &lt; this.routes.length; ++j){
+                                    //console.log(&quot;RAAAAZ&quot;);
+                                    this.routes[j].razPassages();
+                                }
+                                if(chargerLivraisons){
+                                    this.razLivraison();
+                                    this.vueLegende.raz();
+                                    com.appelService(&#x27;modele/livraisons&#x27;,&#x27;&#x27;,this.livraisonPuisItineraireOk,this.nouvelItineraireErr,true);
+                                } else {
+                                    com.appelService(&#x27;modele/itineraire&#x27;,&#x27;&#x27;,this.nouvelItineraireOk,this.nouvelItineraireErr, true);   
+                                }
+                             };
+                            this.livraisonPuisItineraireOk = function(str) {
+                                this.nouvellesLivraisonsOk(str, true);
+                                console.log(&quot;PuisOK&quot;);
+                                //this.fermerChargement();
+                                //this.afficherChargement(&quot;Récupération du nouvel itinéraire&quot;);
+                                //com.appelService(&#x27;modele/itineraire&#x27;,&#x27;&#x27;,this.nouvelItineraireOk,this.nouvelItineraireErr, true);
+                                this.nouvelItineraire(false);
+                            }.bind(this);
+                            this.nouvelItineraireErr = function(msg) {
+                                this.fermerChargement();
+                                this.erreur(msg);
+                            }.bind(this);
+                            this.nouvelItineraireOk = function(str) {
+                                var parser=new DOMParser();
+                                var doc=parser.parseFromString(str,&quot;text/xml&quot;);
+                                console.log(&quot;itineraire&quot;,doc);
+                        
+                                var fdr = doc.getElementsByTagName(&quot;feuilleDeRoute&quot;)[0];
+                                var etapes = fdr.getElementsByTagName(&quot;etape&quot;);
+                                var id1 = etapes[0].getAttribute(&quot;idIntersection&quot;);
+                        
+                                console.log(&quot;etapes&quot;,etapes.length);
+                                for(var i = 1; i &lt; etapes.length; ++i){
+                                    var id2 = etapes[i].getAttribute(&quot;idIntersection&quot;);
+                                    var intersection = this.getIntersection(id2);
+                                    var hdp = etapes[i].getAttribute(&quot;heurePassage&quot;);
+                                    if(intersection.livraison)intersection.setHeurePassage(hdp);
+                        
+                                    var route = this.getRoute(id1, id2);
+                                    if(route){
+                                        var idPlage = etapes[i-1].getAttribute(&quot;idPlageHoraire&quot;);
+                                        //console.log(&quot;route&quot;, route);
+                                        //console.log(&quot;plage&quot;, idPlage,this.couleurPlages[idPlage]);
+                                        var couleur = this.couleurPlages[idPlage];
+                                        if(couleur == null)couleur = &quot;red&quot;;
+                                        route.ajouterPassage(0,  couleur );
+                                    }
+                                    id1 = id2;
+                                }
+                        
+                                var impossible = doc.getElementsByTagName(&quot;livraisonsImpossibles&quot;)[0];
+                                var livs = impossible.getElementsByTagName(&quot;livraison&quot;);
+                                for(var i = 0; i &lt; livs.length; ++i){
+                                    var liv = livs[i];
+                                    var it = this.getIntersection(liv.getAttribute(&quot;idIntersection&quot;));
+                                    it.ajouterMarker(this.warningIcon);
+                                }
+                        
+                                this.fermerChargement();
+                                this.masquer();
+                                this.afficher();
+                        
+                                this.feuilleDeRoute.chargerFeuille(doc);
+                        
+                            }.bind(this);
+                        
+                            this.nouvellesLivraisons = function(){
+                                this.razLivraison();
+                                this.vueLegende.raz();
+                                com.appelService(&#x27;modele/livraisons&#x27;,&#x27;&#x27;,this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
+                            };
+                        
+                            /*&lt;plage debut=&quot;8&quot; fin=&quot;10&quot;&gt;
+                                &lt;livraison id=&quot;2&quot; idClient=&quot;546&quot; idIntersection=&quot;&quot; /&gt;
+                            &lt;/plage&gt;*/
+                            this.nouvellesLivraisonsErr = function(msg) {
+                                this.fermerChargement();
+                                this.erreur(msg);
+                            }.bind(this);
+                            this.nouvellesLivraisonsOk = function(str, laisserChargement) {
+                                var parser=new DOMParser();
+                                var doc=parser.parseFromString(str,&quot;text/xml&quot;);
+                                console.log(&quot;livraisons&quot;,doc);
+                        
+                                var entrepot = doc.getElementsByTagName(&quot;livraisons&quot;)[0].getAttribute(&quot;idEntrepot&quot;);
+                                var itEntrepot  = this.getIntersection(entrepot);
+                                if(itEntrepot)itEntrepot.setEntrepot(true);
+                        
+                                var plages = doc.getElementsByTagName(&quot;plage&quot;);
+                                for(var i = 0; i &lt; plages.length; ++i){
+                                    var plageTxt = plages[i].getAttribute(&quot;debut&quot;)
+                                            + &quot;-&quot; + plages[i].getAttribute(&quot;fin&quot;) + &quot;h&quot;;
+                                    var livs = plages[i].getElementsByTagName(&quot;livraison&quot;);
+                                    for(var j = 0; j &lt; livs.length; ++j){
+                                        var idIntersection = livs[j].getAttribute(&quot;idIntersection&quot;);
+                                        var it = this.getIntersection(idIntersection);
+                                        if(it){
+                                            it.setLivraison(livs[j].getAttribute(&quot;id&quot;),
+                                                            livs[j].getAttribute(&quot;idClient&quot;),
+                                                            plageTxt,
+                                                            null);
+                                        }
+                                    }
+                                }
+                        
+                                this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
+                                this.vueLegende.displayLivraisons();
+                                if(!laisserChargement) {
+                                    this.fermerChargement();
+                                }
+                                this.afficher();
+                            }.bind(this);
+                            this.nouveauPlan = function(){
+                                this.masquer();
+                                this.intersections = [];
+                                this.routes = [];
+                                com.appelService(&#x27;modele/plan&#x27;,&#x27;&#x27;,this.retourModelePlanOk,this.retourModelePlanErr, true);
+                            };
+                            this.retourModelePlanErr = function(msg) {
+                                this.fermerChargement();
+                                this.erreur(msg);
+                            };
+                            this.retourModelePlanOk = function(str){
+                                //this.info(str);
+                                var parser=new DOMParser();
+                                var doc=parser.parseFromString(str,&quot;text/xml&quot;);
+                        
+                                var xmin, xmax, ymin, ymax;
+                        
+                                var plan = doc.getElementsByTagName(&quot;plan&quot;)[0];
+                                console.log(&quot;plan&quot;,plan);
+                                var its = plan.getElementsByTagName(&quot;intersection&quot;);
+                                for( var i = 0; i &lt; its.length; ++i){
+                                    var it = its[i];
+                                    var id = it.getAttribute(&quot;id&quot;);
+                                    var x = -it.getAttribute(&quot;x&quot;)/500;
+                                    var y = it.getAttribute(&quot;y&quot;)/500;
+                                    if( i == 0 ){
+                                        xmin = xmax = x;
+                                        ymin = ymax = y;
+                                    } else {
+                                        if( x &lt; xmin){
+                                            xmin = x;
+                                        } else if( x &gt; xmax){
+                                            xmax = x;
+                                        }
+                                        if( y &lt; ymin){
+                                            ymin = y;
+                                        } else if( y &gt; ymax){
+                                            ymax = y;
+                                        }
+                                    }
+                                    this.ajouterIntersection([x,y],id);
+                                }
+                                for( var i = 0; i &lt; its.length; ++i){
+                                    var it = its[i];
+                                    var id1 = it.getAttribute(&quot;id&quot;);
+                                    var routes = it.getElementsByTagName(&quot;route&quot;);
+                                    //console.log(&#x27;routes&#x27;,routes);
+                                    for( var j = 0; j &lt; routes.length; ++j){
+                                        var route = routes[j];
+                                        var idRoute = route.getAttribute(&quot;id&quot;);
+                                        var id2 = route.getAttribute(&quot;idDestination&quot;);
+                                        var nom = route.getAttribute(&quot;nom&quot;);
+                                        this.ajouterRoute(id1,id2,nom);
+                                    }
+                                }
+                                var dw = (xmax - xmin)*0.25, dh = (ymax - ymin)*0.25;
+                                map.setMaxBounds([[xmin-dw,ymin-dh],[xmax+dw,ymax+dh]]);
+                                map.fitBounds([[xmin,ymin],[xmax,ymax]]);
+                        
+                                this.afficher();
+                                this.fermerChargement();
+                            }.bind(this);
+                        
+                            this.afficher = function() {
+                                for( var i = 0; i &lt; this.routes.length; ++i ){
+                                    this.routes[i].afficher();
+                                }
+                                for( var i = 0; i &lt; this.intersections.length; ++i ){
+                                    this.intersections[i].afficher();
+                                }
+                            };
+                        
+                            this.masquer = function() {
+                                for( var i = 0; i &lt; this.intersections.length; ++i ){
+                                    this.intersections[i].masquer();
+                                }
+                                for( var i = 0; i &lt; this.routes.length; ++i ){
+                                    this.routes[i].masquer();
+                                }
+                            };
+                        
+                            //métier
+                            this.razLivraison = function() {
+                                for(var i = 0; i &lt; this.intersections.length; ++i){
+                                    this.intersections[i].razLivraison();
+                                    var routes = this.intersections[i].routes;
+                                    for(var j = 0; j &lt; this.routes.length; ++j){
+                                        this.routes[j].razPassages();
+                                    }
+                                }
+                            };
+                        
+                            this.ajouterIntersection = function(pos, id) {
+                                return this.intersections[this.intersections.length]
+                                    = new VueIntersection(pos,id);
+                            }
+                        
+                            this.ajouterRoute = function(i1,i2,nom){
+                                var a = this.getIntersection(i1),
+                                    b = this.getIntersection(i2);
+                                if ( a &amp;&amp; b ) return this.routes[this.routes.length] 
+                                    = new VueRoute(a,b,nom);
+                                return null;
+                            }
+                        
+                            /*this.ajouterLivraison = function(idIntersection) {
+                                var i = getIntersection(idIntersection);
+                                if(i) i.setLivraison(true);
+                                return this;
+                            }*/
+                        
+                            this.getIntersection = function(id) {
+                                for( var i = 0; i &lt; this.intersections.length; ++i ){
+                                    if( this.intersections[i].id == id){
+                                        return this.intersections[i];
+                                    }
+                                }
+                                return null;
+                            }
+                        
+                            this.getRoute = function(id1,id2) {
+                                var it1 = this.getIntersection(id1);
+                                if(it1){
+                                    return it1.getRouteIntersection(id2);
+                                }
+                                return null;
+                            };
+                        
+                            this._livraisonSupprimee = function(idLivraison, idIntersection){
+                                var it = this.getIntersection(idIntersection);
+                                it.closePopup();
+                                console.log(&quot;livraison supprimée&quot;,idLivraison, it);
+                                this.ctrl.demandeDeSuppression(idLivraison);
+                            }
+                        
+                            this._ajoutLivraison = function(idIntersection) {
+                                var value = document.getElementById(&quot;input-client&quot;).value;
+                                if(!value){
+                                    this.erreur(&quot;Veuillez rentrer un id client avant de pouvoir ajouter votre livraison.&quot;);
+                                    return;
+                                }
+                        
+                                var it = this.getIntersection(idIntersection);
+                                it.closePopup();
+                                this.info(&quot;Veuillez sélectionner la livraison après laquelle votre nouvelle livraison sera effectuée.&quot;);
+                                for( var i = 0; i &lt; this.intersections.length; ++i){
+                                    var it = this.intersections[i];
+                                    if(!it.livraison){
+                                        it.etatDesactive();
+                                    } else {
+                                        it.etatSelectionnable();
+                                        it.activerClic(this.genererFctPopup(idIntersection, it.livraison.id, value));
+                                    }
+                                }
+                            }.bind(this);
+                        
+                            this.genererFctPopup = function(idInter, idLiv, idClient) {
+                                return function() {
+                                    ctrl.vue._livraisonPrecedenteOk(idInter, idLiv, idClient);
+                                };
+                            };
+                        
+                            this._livraisonPrecedenteOk = function(idIntersection, livraison, client){
+                                console.log(&quot;ok&quot;,idIntersection,livraison);
+                                // Pas besoin de tout remettre, on va réafficher
+                                this.ctrl.ajouterLivraison(idIntersection,livraison,client);
+                            }
+                        
+                        
+                        
+                            //Constructeur
+                            // initialisation de la map
+                            this.map = L.map(&#x27;map&#x27;,{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
+                            //this.map.attributionControl.setPosition(&#x27;bottomleft&#x27;);
+                            L.control.attribution({prefix: &#x27;Projet DevOO - INSA de Lyon - H4104 - 2014&#x27;, position: &#x27;topleft&#x27;}).addTo(this.map);
+                            // Ajout des controls (boutons)
+                            //console.log(&quot;ctrl : &quot;);
+                            //console.log(controleur);
+                            L.control.zoom({position:&#x27;topright&#x27;, zoomInTitle: &quot;Zoomer&quot;}).addTo(this.map);
+                            L.easyButton(&#x27;fa-arrow-circle-left&#x27;, controleur.annuler, &#x27;Undo&#x27;, this.map);
+                            L.easyButton(&#x27;fa-arrow-circle-right&#x27;, controleur.retablir, &#x27;Redo&#x27;, this.map);
+                            L.easyButton(&#x27;fa-road&#x27;, controleur.clicChargerPlan, &#x27;Charger un plan&#x27;, this.map).setPosition(&#x27;bottomleft&#x27;);
+                            document.getElementById(&#x27;charger-plan&#x27;).addEventListener(&#x27;change&#x27;, controleur.chargerPlan, false);
+                            L.easyButton(&#x27;fa-cubes&#x27;, controleur.clicChargerLivraisons, &#x27;Charger les livraison&#x27;, this.map).setPosition(&#x27;bottomleft&#x27;);
+                            document.getElementById(&#x27;charger-livraisons&#x27;).addEventListener(&#x27;change&#x27;, controleur.chargerLivraisons, false);
+                            //L.easyButton(&#x27;fa-plus&#x27;, null, &#x27;Ajouter une livraison&#x27;, this.map).setPosition(&#x27;bottomleft&#x27;);
+                            this.controlCalcul = L.easyButton(&#x27;fa-refresh&#x27;, controleur._clicCalcul, &quot;Calculer l&#x27;itinéraire&quot;, this.map).setPosition(&#x27;bottomleft&#x27;);
+                            //this.controlCalcul.getContainer().getElementsByTagName(&#x27;i&#x27;)[0].className += &quot; fa-spin&quot;;
+                            //console.log(this.controlCalcul.getContainer().className);
+                            var controlFDR = L.easyButton(&#x27;fa-file-text&#x27;, controleur.clicTelechargerInitineraire, &quot;Télécharger la feuille de route&quot;, this.map).setPosition(&#x27;bottomright&#x27;);
+                        
+                            $(&#x27;#modalChargement&#x27;).modal({backdrop: &#x27;static&#x27;, keyboard: false, show:false});
+                            $(&#x27;#modal-info&#x27;).modal({backdrop: false, show: false});
+                            $(&#x27;#modal-erreur&#x27;).modal({backdrop: false, show: false});
+                        }
+                        
+                        function VueLegende(com, vue){
+                            this.vue = vue;
+                            this.com = com;
+                            this.lateral = document.getElementById(&#x27;lateral&#x27;);
+                            this.couleurPlages = [&#x27;#2974FF&#x27;,&#x27;#62FF29&#x27;,&#x27;#FF00FF&#x27;,&#x27;#00C8FF&#x27;];
+                        
+                            this.displayPlagesHoraires = function() {
+                                this.com.appelService(&#x27;modele/plagesHoraires&#x27;, &#x27;&#x27;, this._plageOk, this._plageErr, true);
+                            };
+                        
+                            this._plageOk = function(reponse){
+                        
+                                this.raz();
+                        
+                                var parser=new DOMParser();
+                                var doc=parser.parseFromString(reponse,&quot;text/xml&quot;);
+                                var liste = doc.getElementsByTagName(&#x27;plage&#x27;);
+                        
+                                var listePlages = document.createElement(&#x27;div&#x27;);
+                                listePlages.id = &quot;listePlages&quot;;
+                                lateral.appendChild(listePlages);
+                        
+                                var titre = document.createElement(&#x27;h3&#x27;);
+                                titre.innerHTML = &#x27;Liste plages horaires&#x27;;
+                                listePlages.appendChild(titre);
+                        
+                                for (var i=0; i &lt; liste.length; i++) {
+                                    var p = document.createElement(&#x27;p&#x27;);
+                                    p.innerHTML = liste[i].getAttribute(&#x27;debut&#x27;) + &#x27; - &#x27;;
+                                    p.innerHTML += liste[i].getAttribute(&#x27;fin&#x27;);
+                                    listePlages.appendChild(p);
+                        
+                                    var colorId = liste[i].getAttribute(&#x27;id&#x27;);
+                                    p.style.color = this.couleurPlages[colorId];
+                                }
+                            }.bind(this);
+                        
+                            this._plageErr = function(msgErreur) {
+                                var msg = document.createElement(&#x27;p&#x27;);
+                                msg.value = &#x27;Erreur de chargement des plages horaires.&#x27;;
+                                msg.id = &#x27;errorListePlages&#x27;;
+                                this.lateral.appendChild(msg);
+                            }.bind(this);
+                        
+                            this.displayLivraisons = function() {
+                                this.com.appelService(&#x27;modele/livraisons&#x27;, &#x27;&#x27;, this._livraisonsOk, this._livraisonsErr, true);
+                            };
+                        
+                            this._livraisonsOk = function(reponse) {
+                        
+                                var parser=new DOMParser();
+                                var doc=parser.parseFromString(reponse,&quot;text/xml&quot;);
+                                var liste = doc.getElementsByTagName(&#x27;plage&#x27;);
+                        
+                                var listeLivraisons = document.createElement(&#x27;div&#x27;);
+                                listeLivraisons.id = &quot;listeLivraisons&quot;;
+                                lateral.appendChild(listeLivraisons);
+                        
+                                var titre = document.createElement(&#x27;h3&#x27;);
+                                titre.innerHTML = &#x27;Liste des livraisons&#x27;;
+                                listeLivraisons.appendChild(titre);;
+                                for (var i=0; i &lt; liste.length; i++) {
+                                    var p = document.createElement(&#x27;p&#x27;);
+                                    p.innerHTML = liste[i].getAttribute(&#x27;debut&#x27;) + &#x27; - &#x27;;
+                                    p.innerHTML += liste[i].getAttribute(&#x27;fin&#x27;) + &#x27; : &lt;br /&gt;&#x27;;
+                                    var sous_liste = liste[i].getElementsByTagName(&#x27;livraison&#x27;);
+                        
+                                    for(var j=0; j &lt; sous_liste.length; j++) {
+                                        p.innerHTML += &#x27;Client : &#x27; + sous_liste[j].getAttribute(&#x27;idClient&#x27;) + &#x27; -- &#x27;;
+                                        p.innerHTML += &#x27;Adresse : &#x27; + sous_liste[j].getAttribute(&#x27;idIntersection&#x27;);
+                                        p.innerHTML += &#x27;&lt;br /&gt;&#x27;;
+                                    }
+                                    p.innerHTML += &#x27;&lt;br /&gt;&#x27;;
+                                    
+                                    listeLivraisons.appendChild(p);
+                                }
+                        
+                            }.bind(this);
+                        
+                            this._livraisonsErr = function(msgErreur) {
+                                var msg = document.createElement(&#x27;p&#x27;);
+                                msg.value = &#x27;Erreur de chargement des livraisons.&#x27;;
+                                msg.id = &#x27;errorListeLivraisons&#x27;;
+                                this.lateral.appendChild(msg);
+                            }.bind(this);
+                        
+                            this.raz = function() {
+                                while (this.lateral.firstChild) {
+                                    this.lateral.removeChild(this.lateral.firstChild);
+                                }
+                            };
+                        }
+                        
+                        function VueIntersection(pos, id){
+                        
+                            // attributs
+                            this.pos = pos;
+                            this.id = id;
+                        
+                            this.paramDefaut = {color: &#x27;#fff&#x27;, opacity: 0.5, fillColor: &#x27;#fff&#x27;, fillOpacity: 0.5};
+                            this.paramLivraison = {color: &#x27;#0f0&#x27;, opacity: 0.5, fillColor: &#x27;#ff0&#x27;, fillOpacity: 0.5};
+                            this.paramEntrepot = {color: &#x27;#0ff&#x27;, opacity: 0.5, fillColor: &#x27;#0ff&#x27;, fillOpacity: 0.5};
+                            this.paramSelec = {color: &#x27;red&#x27;, opacity: 0.8, fillColor: &#x27;yellow&#x27;, fillOpacity: 0.8};
+                            this.paramDesactive = {color: &#x27;#a0a0a0&#x27;, fillColor: &#x27;a0a0a0&#x27;};
+                            this.rayonDefaut = 520;
+                            this.rayonLivraison = 1000;
+                            this.rayonEntrepot = 1500;
+                            this.rayon = this.rayonDefaut;
+                        
+                            this.etat = &quot;standard&quot;;
+                            this.marker = null;
+                        
+                            this.divPopup = null;
+                        
+                            this.cercle;
+                        
+                            this.livraison = null;
+                            this.entrepot = false;
+                            this.routesSortantes = [];
+                        
+                            // methodes
+                            this.setLivraison = function(id, idClient, plage, hdp) {
+                                console.log(&quot;setLivraison&quot;);
+                                this.livraison = {
+                                    id: id,
+                                    idClient: idClient,
+                                    plage: plage,
+                                    hdp: hdp
+                                };
+                                this.setRayon(this.rayonLivraison);
+                                var div = document.getElementById(&#x27;popup-livraison&#x27;).cloneNode(true);
+                                //console.log(&quot;div&quot;,div);
+                                div.getElementsByTagName(&quot;client&quot;)[0].textContent = this.livraison.idClient;
+                                if(hdp)div.getElementsByTagName(&quot;hdp&quot;)[0].textContent = this.livraison.hdp;
+                                div.getElementsByTagName(&quot;plage&quot;)[0].textContent = plage;
+                                div.getElementsByTagName(&quot;button&quot;)[0].setAttribute(&quot;onclick&quot;,&quot;ctrl.vue._livraisonSupprimee(&quot;+this.livraison.id+&quot;,&quot;+this.id+&quot;);&quot;);
+                                this.cercle.bindPopup(div);
+                                this.divPopup = div;
+                                this.majEtat();
+                                return this;
+                            }
+                        
+                            this.setHeurePassage = function(hdp) {
+                                //console.log(&quot;heurePassage&quot;,this.cercle.getPopup());
+                                //var popup = this.cercle.getPopup();
+                                //if(popup){
+                                    var div = this.divPopup;//popup.getContent();
+                                    div.getElementsByTagName(&quot;hdp&quot;)[0].textContent = hdp;
+                                    //popup.update();
+                                //}
+                            };
+                        
+                            this.setEntrepot = function(bool) {
+                                this.entrepot = bool ? true : false;
+                                if(this.entrepot){
+                                    this.setRayon(this.rayonEntrepot);
+                                    this.majEtat();
+                                }
+                            };
+                        
+                            this.razLivraison = function() {
+                                this.livraison = null;
+                                this.enleverMarker();
+                                this.marker = null;
+                                this.entrepot = false;
+                                this.setRayon(this.rayonDefaut);
+                                this.cercle.unbindPopup();
+                                this.etatStandard();
+                                this.majEtat();
+                            };
+                        
+                            this.getRouteIntersection = function(idIntersection) {
+                                for(var i = 0; i &lt; this.routesSortantes.length; ++i){
+                                    if(this.routesSortantes[i].B.id == idIntersection){
+                                        return this.routesSortantes[i];
+                                    }
+                                }
+                                return null;
+                            };
+                        
+                            this.setRayon = function(r){
+                                this.rayon = r;
+                                this.cercle.setRadius(r);
+                            }
+                        
+                            this.closePopup = function() {
+                                this.cercle.closePopup();
+                            };
+                        
+                            this.majEtat = function(){
+                                switch(this.etat){
+                                    case &quot;standard&quot;:
+                                        this.etatStandard();
+                                        break;
+                                    case &quot;selectionnable&quot;:
+                                        this.etatSelectionnable();
+                                        break;
+                                    case &quot;desactive&quot;:
+                                        this.etatDesactive();
+                                        break;
+                                }
+                            };
+                        
+                            this.ajouterRouteSortante = function(route) {
+                                //console.log(&quot;ajouterRouteSortante : route &quot;, route);
+                                this.routesSortantes[this.routesSortantes.length] = route;
+                            };
+                        
+                            this.etatSelectionnable = function(){
+                                this.cercle.setStyle(this.paramSelec);
+                                this.etat = &quot;selectionnable&quot;;
+                                
+                                //this._clic = this._clicSelectionnable;
+                                this.activerClic(this._clicSelectionnable);
+                                return this;
+                            };
+                        
+                            this.etatStandard = function(){
+                                this.cercle.setStyle(this.livraison ? this.paramLivraison :
+                                                    (this.entrepot ? this.paramEntrepot : this.paramDefaut));
+                                this.etat = &quot;standard&quot;;
+                        
+                                if(!this.livraison){
+                                    this.cercle.unbindPopup();
+                                    var div = document.getElementById(&#x27;popup-ajout&#x27;).cloneNode(true);
+                                    div.getElementsByTagName(&quot;adresse&quot;)[0].textContent = this.id;
+                                    div.getElementsByTagName(&quot;button&quot;)[0].setAttribute(&quot;onclick&quot;,&quot;ctrl.vue._ajoutLivraison(&quot;+this.id+&quot;);&quot;);
+                                    this.cercle.bindPopup(div);
+                                }
+                                //this._clic = this._clicStandard;
+                                this.activerClic(this._clicStandard);
+                                return this;
+                            };
+                        
+                            this.etatDesactive = function(){
+                                this.cercle.setStyle(this.paramDesactive);
+                                this.etat = &quot;desactive&quot;;
+                                this.desactiverClic();
+                                return this;
+                            };
+                        
+                            this.desactiverClic = function() {
+                                this.cercle.off(&quot;click&quot;);
+                                return this;
+                            }
+                        
+                            this.activerClic = function(fct){
+                                this.desactiverClic();
+                                f = fct ? fct : this._clicStandard;
+                                this.cercle.on(&quot;click&quot;,f,this);
+                                return this;
+                            }
+                        
+                            this.afficher = function(){
+                                this.cercle.addTo(map);
+                                if(this.marker){
+                                    console.log(&quot;Afficher&quot;);
+                                    //this.ajouterMarker(&quot;nlanlanl&quot;);
+                                    this.marker.addTo(map);
+                                }
+                                return this;
+                            }
+                        
+                            this.masquer = function(){
+                                map.removeLayer(this.cercle);
+                                if(this.marker){
+                                    this.enleverMarker();
+                                }
+                                return this;
+                            }
+                        
+                            this.enleverMarker = function() {
+                                //this.cercle.unbindLabel();
+                                if(this.marker)map.removeLayer(this.marker);
+                            };
+                            this._clicMarker = function() {
+                                //this.enleverMarker();
+                                //this.marker= null;
+                                this.cercle.fire(&quot;click&quot;);
+                            };
+                        
+                            this.ajouterMarker = function(warning) {
+                                console.log(&quot;Ajouter Marker&quot;,warning);
+                                console.log(this.cercle.getLatLng());
+                                this.marker = L.marker(this.cercle.getLatLng(),{icon:warning})
+                                            .on(&#x27;click&#x27;,this._clicMarker,this)
+                                            .addTo(map);
+                                /*this.marker = this.cercle.bindLabel(msg,{noHide:true})
+                                                .on(&quot;click&quot;,this.supprimerMarker,this)
+                                                .addTo(map);*/
+                            };
+                        
+                            this._clicSelectionnable = function() {
+                                console.log(&quot;clic selectionnable&quot;, this);
+                                //this.etatStandard();
+                            }
+                            this._clicStandard = function() {
+                                console.log(&quot;clic standard&quot;,this);
+                                if(this.livraison){
+                                    this.cercle.openPopup();
+                                    console.log(this.livraison);
+                                } else {
+                                    this.cercle.openPopup();
+                                }
+                                //this.etatSelectionnable();
+                            }
+                        
+                            // Constructeur
+                        
+                            this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)/*
+                                    .bindPopup(&quot;Intersection &quot;+id+&quot;&lt;br&gt;(&quot;+pos[0]+&quot;,&quot;+pos[1]+&quot;)&quot;, {offset: L.point(0,-10),closeButton:false})
+                                    .on(&quot;mouseover&quot;,function () {this.openPopup();})
+                                    .on(&quot;mouseout&quot;,function () {this.closePopup();})*/;
+                            return this;
+                        }
+                        
+                        function VueRoute(intersec1, intersec2, nom){
+                            // attributs
+                            this.defaut = {
+                                ecartArc: 0.05,
+                                ecartSuivant : 0.06,
+                                nbLigne: 20,
+                                couleur: &#x27;#5f5f5f&#x27;
+                            }
+                        
+                            this.A = intersec1;
+                            this.B = intersec2;
+                            this.nom = nom;
+                        
+                        
+                            this.paramDefaut = {weight:5,color: this.defaut.couleur ,opacity:0.8};
+                            
+                            this.ligneBase;
+                        
+                            this.passages = [];
+                        
+                            // methodes
+                            // setters
+                            this.setNom = function(nom) {
+                                this.ligneBase.unbindLabel();
+                                this.nom = nom;
+                                this.ligneBase.bindLabel(nom);
+                                return this;
+                            };
+                        
+                            // affichage
+                            this.afficher = function(){
+                                this.ligneBase.addTo(map);
+                                for( var i = 0; i &lt; this.passages.length; ++i){
+                                    this.passages[i].addTo(map);
+                                }
+                                this.decorateurSens.addTo(map);
+                                return this;
+                            }
+                        
+                            this.masquer = function(){
+                                map.removeLayer(this.ligneBase);
+                                map.removeLayer(this.decorateurSens);
+                                for( var i=0; i &lt; this.passages.length; ++i){
+                                    map.removeLayer(this.passages[i]);
+                                }
+                                return this;
+                            }
+                        
+                            // events
+                            this._clic = function(){
+                                console.log(&#x27;clic&#x27;,this);
+                            }.bind(this);
+                        
+                            this._mouseover = function() {
+                                this.ligneBase.setStyle({color:&quot;#0f0&quot;});
+                            }.bind(this);
+                        
+                            this._mouseout = function() {
+                                this.ligneBase.setStyle({color: &#x27;#5f5f5f&#x27;});
+                            }.bind(this);
+                        
+                            // métier
+                            this.ajouterPassage = function(idLivraison, couleur) {
+                                var path = ArcMaker.arcPath(this.A.pos, this.B.pos,
+                                        this.defaut.ecartArc + this.defaut.ecartSuivant*(1+this.passages.length),
+                                        this.defaut.nbLigne);
+                                var opt = this.paramDefaut;
+                                opt.color = couleur;
+                                opt.opacity = 0.9;
+                                opt.idLivraison = idLivraison;
+                                //console.log(opt);
+                                var ligne = L.polyline(path, opt);
+                                ligne.on(&#x27;mouseover&#x27;, this._mouseover, this);
+                                ligne.on(&#x27;mouseout&#x27;, this._mouseout, this);
+                                this.passages[this.passages.length] = ligne;
+                                return this;
+                            }
+                        
+                            this.razPassages = function() {
+                                for (var i = this.passages.length - 1; i &gt;= 0; i--) {
+                                    map.removeLayer(this.passages[i]);
+                                }
+                                this.passages = [];
+                            };
+                        
+                            // initialisation
+                            this.A.ajouterRouteSortante(this);
+                        
+                            this.path = ArcMaker.arcPath(this.A.pos, this.B.pos,
+                                        this.defaut.ecartArc,
+                                        this.defaut.nbLigne);
+                        
+                            this.ligneBase = L.polyline(this.path,this.paramDefaut)
+                                .on(&quot;mouseover&quot;, this._mouseover)
+                                .on(&quot;mouseout&quot;, this._mouseout)
+                                .on(&#x27;click&#x27;, this._clic, this);
+                        
+                            this.decorateurSens = L.polylineDecorator(this.ligneBase, {
+                                patterns: [
+                                    // define a pattern of 10px-wide dashes, repeated every 20px on the line 
+                                    {offset: &quot;50%&quot;, repeat: &#x27;100%&#x27;, symbol: new L.Symbol.ArrowHead ({pixelSize: 10, headAngle:40, pathOptions: {opacity:0.5,fillOpacity:0.2,weight:1,color: &quot;black&quot;,fillColor:&quot;yellow&quot;,fillOpacity:0.8}})}
+                                ]
+                            });
+                            return this;
+                        }
+                        
+                        function VueEtape(idIntersection, idLivraison, plage){
+                            this.intersection = idIntersection;
+                            this.livraison = idLivraison;
+                            this.plage = plage;
+                        }
+                        
+                        function VueItineraire(){
+                            // attributs
+                            this.etapes = [];
+                            // methodes
+                            this.ajouterEtape = function(idIntersection, idLivraison, plage){
+                                this.etapes[this.etapes.length]
+                                    = new VueEtape(idIntersection, idLivraison, plage);
+                            }
+                        }
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

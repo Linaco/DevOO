@@ -1,5 +1,13 @@
 ///////////////////////////////////////////////////
 // Class Vue
+
+/**
+ * Description
+ *
+ * @class Vue
+ * @author Robin Nicolet
+ * @constructor
+ */
 function Vue(controleur, com){
     // attributs
     this.com = com;

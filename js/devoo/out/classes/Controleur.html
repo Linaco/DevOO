@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Controleur</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Controleur.html">Controleur</a></li>
+                                <li><a href="../classes/Vue.html">Vue</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/appcom.html">appcom</a></li>
+                                <li><a href="../modules/controleur.html">controleur</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>Controleur Class</h1>
+                        <div class="box meta">
+                        
+                        
+                                <div class="foundat">
+                                    Defined in: <a href="../files/controleur_controleur.js.html#l30"><code>controleur\controleur.js:30</code></a>
+                                </div>
+                        
+                                    Module: <a href="../modules/controleur.html">controleur</a>
+                        
+                        </div>
+                        
+                        
+                        <div class="box intro">
+                            <p>Controleur de l&#39;application. Reçois les évènements utilisateurs de la vue, puis invoque
+                        les services adaptés de l&#39;application java pour modifier les données.</p>
+                        
+                        </div>
+                        
+                            <div class="constructor">
+                                <h2>Constructor</h2>
+                                <div id="method_Controleur" class="method item">
+                                    <h3 class="name"><code>Controleur</code></h3>
+                                
+                                        <span class="paren">()</span>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    <div class="meta">
+                                                <p>
+                                                Defined in
+                                        <a href="../files/controleur_controleur.js.html#l30"><code>controleur\controleur.js:30</code></a>
+                                        </p>
+                                
+                                
+                                
+                                    </div>
+                                
+                                    <div class="description">
+                                        
+                                    </div>
+                                
+                                
+                                
+                                </div>
+                            </div>
+                        
+                        <div id="classdocs" class="tabview">
+                            <ul class="api-class-tabs">
+                                <li class="api-class-tab index"><a href="#index">Index</a></li>
+                        
+                                    <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+                                    <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+                            </ul>
+                        
+                            <div>
+                                <div id="index" class="api-class-tabpanel index">
+                                    <h2 class="off-left">Item Index</h2>
+                        
+                                        <div class="index-section methods">
+                                            <h3>Methods</h3>
+                        
+                                            <ul class="index-list methods">
+                                                    <li class="index-item method">
+                                                        <a href="#method__ajouterLivraisonErr">_ajouterLivraisonErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__annulerErr">_annulerErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__annulerOk">_annulerOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__chargerLivraisonsErr">_chargerLivraisonsErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__chargerLivraisonsOk">_chargerLivraisonsOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__chargerPlanErr">_chargerPlanErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__chargerPlanOk">_chargerPlanOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__clicCalcul">_clicCalcul</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__clicCalculErr">_clicCalculErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__clicCalculOk">_clicCalculOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__retablirErr">_retablirErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__retablirOk">_retablirOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__suppressionErr">_suppressionErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__suppressionOk">_suppressionOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_ajouterLivraison">ajouterLivraison</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_annuler">annuler</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_chargerLivraisons">chargerLivraisons</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_chargerPlan">chargerPlan</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_clicChargerLivraisons">clicChargerLivraisons</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_clicChargerPlan">clicChargerPlan</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_clicTelechargerInitineraire">clicTelechargerInitineraire</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_demandeDeSuppression">demandeDeSuppression</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_nouvelItineraire">nouvelItineraire</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_retablir">retablir</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                                        <div class="index-section properties">
+                                            <h3>Properties</h3>
+                        
+                                            <ul class="index-list properties">
+                                                    <li class="index-item property">
+                                                        <a href="#property_vue">vue</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                        
+                                </div>
+                        
+                                    <div id="methods" class="api-class-tabpanel">
+                                        <h2 class="off-left">Methods</h2>
+                        
+                                            <div id="method__ajouterLivraisonErr" class="method item">
+                                                <h3 class="name"><code>_ajouterLivraisonErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l370"><code>controleur\controleur.js:370</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/ahouter-livraison</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_ajouterLivraison" class="crosslink">ajouterLivraison</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__annulerErr" class="method item">
+                                                <h3 class="name"><code>_annulerErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l77"><code>controleur\controleur.js:77</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/annuler</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_annuler" class="crosslink">annuler</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__annulerOk" class="method item">
+                                                <h3 class="name"><code>_annulerOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>rep</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l65"><code>controleur\controleur.js:65</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/annuler</code> a réussi.
+                                            <br/> On demande alors à la vue de regénérer l&#39;itinéraire (l&#39;annulation d&#39;un chargement
+                                            de plan/livraisons n&#39;est pas prise en charge, voir spec.s).
+                                            <br/> Voir <a href="../classes/Controleur.html#method_annuler" class="crosslink">annuler</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">rep</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service)</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__chargerLivraisonsErr" class="method item">
+                                                <h3 class="name"><code>_chargerLivraisonsErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l215"><code>controleur\controleur.js:215</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/charger-livraisons</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_chargerLivraisons" class="crosslink">chargerLivraisons</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__chargerLivraisonsOk" class="method item">
+                                                <h3 class="name"><code>_chargerLivraisonsOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l204"><code>controleur\controleur.js:204</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/charger-livraisons</code> a réussi.
+                                            Elle demande alors la vue de recharger les livraisons.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_chargerLivraisons" class="crosslink">chargerLivraisons</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service).</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__chargerPlanErr" class="method item">
+                                                <h3 class="name"><code>_chargerPlanErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l165"><code>controleur\controleur.js:165</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/charger-plan</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_chargerPlan" class="crosslink">chargerPlan</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__chargerPlanOk" class="method item">
+                                                <h3 class="name"><code>_chargerPlanOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l154"><code>controleur\controleur.js:154</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/charger-plan</code> a réussi.
+                                            Elle demande alors la vue de recharger le plan.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_chargerPlan" class="crosslink">chargerPlan</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service).</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__clicCalcul" class="method item">
+                                                <h3 class="name"><code>_clicCalcul</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l262"><code>controleur\controleur.js:262</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Affiche l&#39;écran de chargement puis appelle le service <code>/controleur/calculer-itineraire</code> qui permet de lancer le calcul
+                                            de l&#39;itinéraire côté serveur.
+                                            <br/>Si l&#39;appel au service réussit, càd que le calcul est réussi, la méthode 
+                                            <a href="../classes/Controleur.html#method__clicCalculOk" class="crosslink">_clicCalculOk</a> est appelée 
+                                            ( <a href="../classes/Controleur.html#method__clicCalculErr" class="crosslink">_clicCalculErr</a> dans le cas contraire).</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method__clicCalculErr" class="method item">
+                                                <h3 class="name"><code>_clicCalculErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l288"><code>controleur\controleur.js:288</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/calculer-itineraire</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method__clicCalcul" class="crosslink">_clicCalcul</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__clicCalculOk" class="method item">
+                                                <h3 class="name"><code>_clicCalculOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l277"><code>controleur\controleur.js:277</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/calculer-itineraire</code> a réussi.
+                                            Elle demande alors la vue de recharger l&#39;itinéraire.
+                                            <br/> Voir <a href="../classes/Controleur.html#method__clicCalcul" class="crosslink">_clicCalcul</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service).</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__retablirErr" class="method item">
+                                                <h3 class="name"><code>_retablirErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l115"><code>controleur\controleur.js:115</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/retablir</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_retablir" class="crosslink">retablir</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__retablirOk" class="method item">
+                                                <h3 class="name"><code>_retablirOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>rep</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l103"><code>controleur\controleur.js:103</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/retablir</code> a réussi.
+                                            <br/> On demande alors à la vue de regénérer l&#39;itinéraire (l&#39;annulation d&#39;un chargement
+                                            de plan/livraisons n&#39;est pas prise en charge, voir spec.s).
+                                            <br/> Voir <a href="../classes/Controleur.html#method_retablir" class="crosslink">retablir</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">rep</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service)</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__suppressionErr" class="method item">
+                                                <h3 class="name"><code>_suppressionErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l327"><code>controleur\controleur.js:327</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/supprimer-livraison</code> a échoué.
+                                            Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_demandeDeSuppression" class="crosslink">demandeDeSuppression</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur retourné par le service.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__suppressionOk" class="method item">
+                                                <h3 class="name"><code>_suppressionOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l316"><code>controleur\controleur.js:316</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/supprimer-livraison</code> a réussi.
+                                            Elle demande alors la vue de recharger l&#39;itinéraire ainsi que les livraisons.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_demandeDeSuppression" class="crosslink">demandeDeSuppression</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service).</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_ajouterLivraison" class="method item">
+                                                <h3 class="name"><code>ajouterLivraison</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>idIntersection</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>idLivraison</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>idClient</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l341"><code>controleur\controleur.js:341</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Affiche l&#39;écran de chargement puis appelle le service <code>/controleur/ajouter-livraison</code> qui permet d&#39;ajouter une livraison.
+                                             <br/>Si l&#39;appel au service réussit, càd que l&#39;ajout s&#39;est bien déroulé, la méthode 
+                                             Controleur/_ajouterLivraisonOk:method est appelée 
+                                             ( <a href="../classes/Controleur.html#method__ajouterLivraisonErr" class="crosslink">_ajouterLivraisonErr</a> dans le cas contraire).</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">idIntersection</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection à laquelle on veut livrer.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">idLivraison</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de la livraison devant précéder celle que l&#39;on crée.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">idClient</code>
+                                                                    <span class="type">Object</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID du client à livrer.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_annuler" class="method item">
+                                                <h3 class="name"><code>annuler</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l52"><code>controleur\controleur.js:52</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Démarre l&#39;écran de chargement, puis appel le service <code>/controleur/annuler</code>.<br/>
+                                            Si l&#39;appel au service réussit, la méthode 
+                                            <a href="../classes/Controleur.html#method__annulerOk" class="crosslink">_annulerOk</a> est appelée 
+                                            ( <a href="../classes/Controleur.html#method__annulerErr" class="crosslink">_annulerErr</a> dans le cas contraire).</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_chargerLivraisons" class="method item">
+                                                <h3 class="name"><code>chargerLivraisons</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>evt</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l187"><code>controleur\controleur.js:187</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Méthode associée à la selection d&#39;un fichier livraisons. Affiche l&#39;écran de chargement puis
+                                            appelle le service <code>/controleur/charger-livraisons</code> avec le contenu du fichier comme paramètre.
+                                            <br/>Si l&#39;appel au service réussit, la méthode 
+                                            <a href="../classes/Controleur.html#method__chargerLivraisonsOk" class="crosslink">_chargerLivraisonsOk</a> est appelée 
+                                            ( <a href="../classes/Controleur.html#method__chargerLivraisonsErr" class="crosslink">_chargerLivraisonsErr</a> dans le cas contraire).
+                                            <br/> Voir le module <a href="../modules/appcom.html">appcom</a>.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">evt</code>
+                                                                    <span class="type">FileEvent</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>FileEvent contenant le fichier choisi par l&#39;utilisateur.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_chargerPlan" class="method item">
+                                                <h3 class="name"><code>chargerPlan</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>evt</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l137"><code>controleur\controleur.js:137</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Méthode associée à la selection d&#39;un fichier plan. Affiche l&#39;écran de chargement puis
+                                            appelle le service <code>/controleur/charger-plan</code> avec le contenu du fichier comme paramètre.
+                                            <br/>Si l&#39;appel au service réussit, la méthode 
+                                            <a href="../classes/Controleur.html#method__chargerPlanOk" class="crosslink">_chargerPlanOk</a> est appelée 
+                                            ( <a href="../classes/Controleur.html#method__chargerPlanErr" class="crosslink">_chargerPlanErr</a> dans le cas contraire).
+                                            <br/> Voir le module <a href="../modules/appcom.html">appcom</a>.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">evt</code>
+                                                                    <span class="type">FileEvent</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>FileEvent contenant le fichier choisi par l&#39;utilisateur.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_clicChargerLivraisons" class="method item">
+                                                <h3 class="name"><code>clicChargerLivraisons</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l179"><code>controleur\controleur.js:179</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Simule un clic sur l&#39;input HTML dédié à l&#39;ouverture de fichier pour les livraisons.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_clicChargerPlan" class="method item">
+                                                <h3 class="name"><code>clicChargerPlan</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l129"><code>controleur\controleur.js:129</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Simule un clic sur l&#39;input HTML dédié à l&#39;ouverture de fichier pour le plan.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_clicTelechargerInitineraire" class="method item">
+                                                <h3 class="name"><code>clicTelechargerInitineraire</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l229"><code>controleur\controleur.js:229</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode utilise la librairie jsPDF pour générer un itinéraire au format PDF qui
+                                            s&#39;ouvre dans un nouvel onglet. Ce PDF est généré à partir de la div <code>FDR</code>(pour feuille de
+                                            route) du code HTML.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_demandeDeSuppression" class="method item">
+                                                <h3 class="name"><code>demandeDeSuppression</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>id</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l302"><code>controleur\controleur.js:302</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Affiche l&#39;écran de chargement puis appelle le service <code>/controleur/supprimer-livraison</code> qui permet de supprimer une livraison.
+                                            <br/>Si l&#39;appel au service réussit, càd que la suppression s&#39;est bien déroulée, la méthode 
+                                            <a href="../classes/Controleur.html#method__suppressionOk" class="crosslink">_suppressionOk</a> est appelée 
+                                            ( <a href="../classes/Controleur.html#method__suppressionErr" class="crosslink">_suppressionErr</a> dans le cas contraire).</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">id</code>
+                                                                    <span class="type">Number</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de la livraison à supprimer.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvelItineraire" class="method item">
+                                                <h3 class="name"><code>nouvelItineraire</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l359"><code>controleur\controleur.js:359</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/ajouter-livraison</code> a réussi.
+                                            Elle demande alors la vue de recharger l&#39;itinéraire ainsi que les livraisons.
+                                            <br/> Voir <a href="../classes/Controleur.html#method_ajouterLivraison" class="crosslink">ajouterLivraison</a></p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Réponse du service (aucune pour ce service).</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_retablir" class="method item">
+                                                <h3 class="name"><code>retablir</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l91"><code>controleur\controleur.js:91</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Démarre l&#39;écran de chargement, puis appel le service <code>/controleur/retablir</code>.<br/>
+                                            Si l&#39;appel au service réussit, la méthode 
+                                            <a href="../classes/Controleur.html#method__retablirOk" class="crosslink">_retablirOk</a> est appelée 
+                                            ( <a href="../classes/Controleur.html#method__retablirErr" class="crosslink">_retablirErr</a> dans le cas contraire).</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                                    <div id="properties" class="api-class-tabpanel">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property_vue" class="property item">
+                                                <h3 class="name"><code>vue</code></h3>
+                                                <span class="type"><a href="../classes/Vue.html" class="crosslink">Vue</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l385"><code>controleur\controleur.js:385</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Instance de la classe <a href="../classes/Vue.html" class="crosslink">Vue</a> associée au modèle.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

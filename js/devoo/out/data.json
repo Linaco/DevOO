@@ -1,0 +1,482 @@
+{
+    "project": {},
+    "files": {
+        "appcom\\com.js": {
+            "name": "appcom\\com.js",
+            "modules": {
+                "appcom": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "controleur\\controleur.js": {
+            "name": "controleur\\controleur.js",
+            "modules": {
+                "controleur": 1
+            },
+            "classes": {
+                "Controleur": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "vue\\vue.js": {
+            "name": "vue\\vue.js",
+            "modules": {},
+            "classes": {
+                "Vue": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "appcom": {
+            "name": "appcom",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "appcom\\com.js",
+            "line": 3,
+            "description": "Controleur de l'application. Reçois les évènements utilisateurs de la vue, puis invoque\nles services adaptés de l'application java pour modifier les données."
+        },
+        "controleur": {
+            "name": "controleur",
+            "submodules": {},
+            "classes": {
+                "Controleur": 1,
+                "Vue": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "vue\\vue.js",
+            "line": 4,
+            "description": "Controleur de l'application. Reçois les évènements utilisateurs de la vue, puis invoque\nles services adaptés de l'application java pour modifier les données."
+        }
+    },
+    "classes": {
+        "Controleur": {
+            "name": "Controleur",
+            "shortname": "Controleur",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "controleur",
+            "namespace": "",
+            "file": "controleur\\controleur.js",
+            "line": 30,
+            "description": "Controleur de l'application. Reçois les évènements utilisateurs de la vue, puis invoque\nles services adaptés de l'application java pour modifier les données.",
+            "author": "Robin Nicolet",
+            "is_constructor": 1
+        },
+        "Vue": {
+            "name": "Vue",
+            "shortname": "Vue",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "controleur",
+            "namespace": "",
+            "file": "vue\\vue.js",
+            "line": 4,
+            "description": "Description",
+            "author": "Robin Nicolet",
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "controleur\\controleur.js",
+            "line": 52,
+            "description": "Démarre l'écran de chargement, puis appel le service `/controleur/annuler`.<br/>\nSi l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_annulerOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_annulerErr:method\"}}{{/crossLink}} dans le cas contraire).",
+            "itemtype": "method",
+            "name": "annuler",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 65,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/annuler` a réussi.\n<br/> On demande alors à la vue de regénérer l'itinéraire (l'annulation d'un chargement\nde plan/livraisons n'est pas prise en charge, voir spec.s).\n<br/> Voir {{#crossLink \"Controleur/annuler:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_annulerOk",
+            "params": [
+                {
+                    "name": "rep",
+                    "description": "Réponse du service (aucune pour ce service)",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 77,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/annuler` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/annuler:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_annulerErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 91,
+            "description": "Démarre l'écran de chargement, puis appel le service `/controleur/retablir`.<br/>\nSi l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_retablirOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_retablirErr:method\"}}{{/crossLink}} dans le cas contraire).",
+            "itemtype": "method",
+            "name": "retablir",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 103,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/retablir` a réussi.\n<br/> On demande alors à la vue de regénérer l'itinéraire (l'annulation d'un chargement\nde plan/livraisons n'est pas prise en charge, voir spec.s).\n<br/> Voir {{#crossLink \"Controleur/retablir:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_retablirOk",
+            "params": [
+                {
+                    "name": "rep",
+                    "description": "Réponse du service (aucune pour ce service)",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 115,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/retablir` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/retablir:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_retablirErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 129,
+            "description": "Simule un clic sur l'input HTML dédié à l'ouverture de fichier pour le plan.",
+            "itemtype": "method",
+            "name": "clicChargerPlan",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 137,
+            "description": "Méthode associée à la selection d'un fichier plan. Affiche l'écran de chargement puis\nappelle le service `/controleur/charger-plan` avec le contenu du fichier comme paramètre.\n<br/>Si l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_chargerPlanOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_chargerPlanErr:method\"}}{{/crossLink}} dans le cas contraire).\n<br/> Voir le module {{#crossLinkModule \"appcom\"}}{{/crossLinkModule}}.",
+            "itemtype": "method",
+            "name": "chargerPlan",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "FileEvent contenant le fichier choisi par l'utilisateur.",
+                    "type": "FileEvent"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 154,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-plan` a réussi.\nElle demande alors la vue de recharger le plan.\n<br/> Voir {{#crossLink \"Controleur/chargerPlan:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_chargerPlanOk",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Réponse du service (aucune pour ce service).",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 165,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-plan` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/chargerPlan:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_chargerPlanErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 179,
+            "description": "Simule un clic sur l'input HTML dédié à l'ouverture de fichier pour les livraisons.",
+            "itemtype": "method",
+            "name": "clicChargerLivraisons",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 187,
+            "description": "Méthode associée à la selection d'un fichier livraisons. Affiche l'écran de chargement puis\nappelle le service `/controleur/charger-livraisons` avec le contenu du fichier comme paramètre.\n<br/>Si l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_chargerLivraisonsOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_chargerLivraisonsErr:method\"}}{{/crossLink}} dans le cas contraire).\n<br/> Voir le module {{#crossLinkModule \"appcom\"}}{{/crossLinkModule}}.",
+            "itemtype": "method",
+            "name": "chargerLivraisons",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "FileEvent contenant le fichier choisi par l'utilisateur.",
+                    "type": "FileEvent"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 204,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-livraisons` a réussi.\nElle demande alors la vue de recharger les livraisons.\n<br/> Voir {{#crossLink \"Controleur/chargerLivraisons:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_chargerLivraisonsOk",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Réponse du service (aucune pour ce service).",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 215,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-livraisons` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/chargerLivraisons:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_chargerLivraisonsErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 229,
+            "description": "Cette méthode utilise la librairie jsPDF pour générer un itinéraire au format PDF qui\ns'ouvre dans un nouvel onglet. Ce PDF est généré à partir de la div `FDR`(pour feuille de\nroute) du code HTML.",
+            "itemtype": "method",
+            "name": "clicTelechargerInitineraire",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 238,
+            "description": "Description",
+            "params": [
+                {
+                    "name": "element",
+                    "description": ""
+                },
+                {
+                    "name": "renderer",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "Literal"
+            },
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 262,
+            "description": "Affiche l'écran de chargement puis appelle le service `/controleur/calculer-itineraire` qui permet de lancer le calcul\nde l'itinéraire côté serveur.\n<br/>Si l'appel au service réussit, càd que le calcul est réussi, la méthode \n{{#crossLink \"Controleur/_clicCalculOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_clicCalculErr:method\"}}{{/crossLink}} dans le cas contraire).",
+            "itemtype": "method",
+            "name": "_clicCalcul",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 277,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/calculer-itineraire` a réussi.\nElle demande alors la vue de recharger l'itinéraire.\n<br/> Voir {{#crossLink \"Controleur/_clicCalcul:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_clicCalculOk",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Réponse du service (aucune pour ce service).",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 288,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/calculer-itineraire` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/_clicCalcul:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_clicCalculErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 302,
+            "description": "Affiche l'écran de chargement puis appelle le service `/controleur/supprimer-livraison` qui permet de supprimer une livraison.\n<br/>Si l'appel au service réussit, càd que la suppression s'est bien déroulée, la méthode \n{{#crossLink \"Controleur/_suppressionOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_suppressionErr:method\"}}{{/crossLink}} dans le cas contraire).",
+            "itemtype": "method",
+            "name": "demandeDeSuppression",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "ID de la livraison à supprimer.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 316,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/supprimer-livraison` a réussi.\nElle demande alors la vue de recharger l'itinéraire ainsi que les livraisons.\n<br/> Voir {{#crossLink \"Controleur/demandeDeSuppression:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_suppressionOk",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Réponse du service (aucune pour ce service).",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 327,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/supprimer-livraison` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/demandeDeSuppression:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_suppressionErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 341,
+            "description": "Affiche l'écran de chargement puis appelle le service `/controleur/ajouter-livraison` qui permet d'ajouter une livraison.\n <br/>Si l'appel au service réussit, càd que l'ajout s'est bien déroulé, la méthode \n {{#crossLink \"Controleur/_ajouterLivraisonOk:method\"}}{{/crossLink}} est appelée \n ( {{#crossLink \"Controleur/_ajouterLivraisonErr:method\"}}{{/crossLink}} dans le cas contraire).",
+            "itemtype": "method",
+            "name": "ajouterLivraison",
+            "params": [
+                {
+                    "name": "idIntersection",
+                    "description": "ID de l'intersection à laquelle on veut livrer."
+                },
+                {
+                    "name": "idLivraison",
+                    "description": "ID de la livraison devant précéder celle que l'on crée."
+                },
+                {
+                    "name": "idClient",
+                    "description": "ID du client à livrer."
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 359,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/ajouter-livraison` a réussi.\nElle demande alors la vue de recharger l'itinéraire ainsi que les livraisons.\n<br/> Voir {{#crossLink \"Controleur/ajouterLivraison:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "nouvelItineraire",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Réponse du service (aucune pour ce service).",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 370,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/ahouter-livraison` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/ajouterLivraison:method\"}}{{/crossLink}}",
+            "itemtype": "method",
+            "name": "_ajouterLivraisonErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur retourné par le service.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 385,
+            "description": "Instance de la classe {{#crossLink \"Vue\"}}{{/crossLink}} associée au modèle.",
+            "itemtype": "property",
+            "name": "vue",
+            "type": "Vue",
+            "class": "Controleur",
+            "module": "controleur"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nDescription",
+            "line": " controleur\\controleur.js:238"
+        }
+    ]
+}
