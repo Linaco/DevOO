@@ -33,31 +33,31 @@ function VueFeuilleDeRoute(appCom, vue){
                 var heure = etapes[i-1].getAttribute("heurePassage");
                 //console.log("route", route);
                 //console.log("plage", idPlage,this.couleurPlages[idPlage]);
+                var attente = etapes[i-1].getAttribute("secondesAttente");
+                if( attente > 0 ){
+                    attente /= 1000*60;
+                    attente = Math.round(attente);
+                    $('#FDR').append("<p class='attente'>Attendre <tps>"+attente+"<tps> minute"+ (attente > 1 ?"s":"") +" avant de se présenter chez le client. </p>" );
+                }
+
                 var livraison = etapes[i-1].getElementsByTagName("livraison");
 
-                
-
                 if(livraison.length != 0 ){
-
                     for(var a = 0; a < livraison.length ; a++){
-                        $('#FDR').append("<p class='livraison'>"+heure+" : "+livraison[a].getAttribute("adresse")+" -> Livraison pour le client "+ livraison[a].getAttribute("idClient") + "</p>");
-                        $('#FDR').append("<p>Attendre 10 min...</p>")
+                        $('#FDR').append("<p class='livraison'><tps>"+heure+"</tps> : "+livraison[a].getAttribute("adresse")+" -> Livraison pour le client <client>"+ livraison[a].getAttribute("idClient") + "</client></p>");
+                        $('#FDR').append("<p>Temps de livraison : 10 min</p>")
                         var start = heure.substring(0,heure.length - 2);
                         var nbr = heure.substring(heure.length-2,heure.length);
                         nbr = parseInt(nbr) + 10;
 
                         heure = start.concat(nbr);
-                    }
-
-                    
-
-
+                    }                  
                 }
                 $('#FDR').append("<p>");
-                $('#FDR').append(heure+" : ");
-                $('#FDR').append(route.nom+ " en direction de ");
-                $('#FDR').append(this.vue.getIntersection(id2).id );
-            
+                $('#FDR').append("<tps style=\"color: red\">"+heure+"</tps> : ");
+                $('#FDR').append("<route>"+route.nom+ "</route> en direction de <inter>");
+                $('#FDR').append(this.vue.getIntersection(id2).id +"</inter>");
+                
                 $('#FDR').append("</p>");
             }
             id1 = id2;
