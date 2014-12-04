@@ -12,6 +12,10 @@ function Vue(controleur, com){
     this.routes = [];
     this.itineraire;
 
+
+    this.feuilleDeRoute = new VueFeuilleDeRoute(com, this);
+    var feuilleDeRoute = this.feuilleDeRoute;
+
     this.vueLegende = new VueLegende(com, this);
 
     // functions
@@ -43,13 +47,16 @@ function Vue(controleur, com){
             = msg;
             console.log("ouvrir");
         //$('#modalChargement').modal({backdrop: 'static', keyboard: false});
+        //$("#modalChargement").css("visibility", "visible");
         $('#modalChargement').modal('show');
     }
 
     this.fermerChargement = function(){
         console.log("fermer");
         //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
+        $('.modal.in').modal('hide') ;
         $('#modalChargement').modal('hide');
+        //$("#modalChargement").css("visibility", "hidden");
         //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
     }
 
@@ -71,7 +78,7 @@ function Vue(controleur, com){
         this.nouvellesLivraisonsOk(str, true);
         console.log("PuisOK");
         //this.fermerChargement();
-        this.afficherChargement("Récupération du nouvel itinéraire");
+        //this.afficherChargement("Récupération du nouvel itinéraire");
         //com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
         this.nouvelItineraire(false);
     }.bind(this);
@@ -79,7 +86,7 @@ function Vue(controleur, com){
         this.fermerChargement();
         this.erreur(msg);
     }.bind(this);
-    this.nouvelItineraireOk = function(str, laisserChargement) {
+    this.nouvelItineraireOk = function(str) {
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
         console.log("itineraire",doc);
@@ -101,9 +108,12 @@ function Vue(controleur, com){
             }
             id1 = id2;
         }
-        if(!laisserChargement) this.fermerChargement();
+        this.fermerChargement();
         this.masquer();
         this.afficher();
+
+        this.feuilleDeRoute.chargerFeuille(doc);
+
     }.bind(this);
 
     this.nouvellesLivraisons = function(){
@@ -119,7 +129,7 @@ function Vue(controleur, com){
         this.fermerChargement();
         this.erreur(msg);
     }.bind(this);
-    this.nouvellesLivraisonsOk = function(str) {
+    this.nouvellesLivraisonsOk = function(str, laisserChargement) {
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
         console.log("livraisons",doc);
@@ -147,7 +157,10 @@ function Vue(controleur, com){
 
         this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
         this.vueLegende.displayLivraisons();
-        this.fermerChargement();
+        if(!laisserChargement) {
+            this.fermerChargement();
+        }
+        this.afficher();
     }.bind(this);
     this.nouveauPlan = function(){
         this.masquer();
