@@ -500,6 +500,7 @@ function VueIntersection(pos, id){
         this.entrepot = false;
         this.setRayon(this.rayonDefaut);
         this.cercle.unbindPopup();
+        this.etatStandard();
         this.majEtat();
     };
 
