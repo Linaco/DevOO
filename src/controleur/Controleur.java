@@ -60,6 +60,7 @@ public class Controleur {
 	 */
 	public boolean chargerPlan(Document plan){
 		grapheRoutier.clean();
+		feuilledeRoute.clean();
 		grapheRoutier = ChargerPlan.chargerPlan(plan);
 		if(grapheRoutier.getListeIntersections().size() == 0){
 			return false;
