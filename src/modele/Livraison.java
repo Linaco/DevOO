@@ -117,7 +117,7 @@ public class Livraison {
      */
     public void setEtapePassagePrevue(Etape etape){
         etapePassagePrevue = etape;
-        etape.setaLivraison();
+        etape.setLivraison(this);
     }
     
     public boolean display(PrintStream stream){

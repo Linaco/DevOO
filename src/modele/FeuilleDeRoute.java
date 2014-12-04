@@ -100,7 +100,7 @@ public class FeuilleDeRoute {
 	   int pos = this.itineraire.indexOf(etape);
 	   int nextLivraison = 0;
 	   nextLivraison+=pos+1;
-	   while(!this.itineraire.get(nextLivraison).getaLivraison()){
+	   while(!this.itineraire.get(nextLivraison).hasLivraison()){
 		  nextLivraison++;
 		  if(nextLivraison==this.itineraire.size()){
 			  nextLivraison=this.itineraire.size()-1;
@@ -122,7 +122,7 @@ public class FeuilleDeRoute {
 	   int pos = this.itineraire.indexOf(etape);
 	   int previousLivraison = 0;
 	   previousLivraison += pos-1;
-	   while(!this.itineraire.get(previousLivraison).getaLivraison()){
+	   while(!this.itineraire.get(previousLivraison).hasLivraison()){
 		   previousLivraison--;
 		   if(previousLivraison==-1){
 			   previousLivraison=0;
@@ -187,7 +187,6 @@ public class FeuilleDeRoute {
 		   heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
 		   nouvellesEtapes.add(new Etape(heureCourante,listeIntersection.get(i)));
 	   }
-	   nouvellesEtapes.get(nouvellesEtapes.size()-1).setaLivraison();
 	   nouvelleLivraison.setEtapePassagePrevue(nouvellesEtapes.get(nouvellesEtapes.size()-1));
 	   itineraire.addAll(posEtapes.get(0)+1, nouvellesEtapes);
 	   int positionNouvelleLivraison = posEtapes.get(0)+nouvellesEtapes.size();
