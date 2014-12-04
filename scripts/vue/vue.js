@@ -339,7 +339,7 @@ function Vue(controleur, com){
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
     L.easyButton('fa-cubes', controleur.clicChargerLivraisons, 'Charger les livraison', this.map).setPosition('bottomleft');
     document.getElementById('charger-livraisons').addEventListener('change', controleur.chargerLivraisons, false);
-    L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
+    //L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
     this.controlCalcul = L.easyButton('fa-refresh', controleur._clicCalcul, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
     //this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
     //console.log(this.controlCalcul.getContainer().className);

@@ -100,7 +100,7 @@ public class FeuilleDeRoute {
 	   int pos = this.itineraire.indexOf(etape);
 	   int nextLivraison = 0;
 	   nextLivraison+=pos+1;
-	   while(!this.itineraire.get(nextLivraison).getaLivraison()){
+	   while(!this.itineraire.get(nextLivraison).hasLivraison()){
 		  nextLivraison++;
 		  if(nextLivraison==this.itineraire.size()){
 			  nextLivraison=this.itineraire.size()-1;
@@ -122,7 +122,7 @@ public class FeuilleDeRoute {
 	   int pos = this.itineraire.indexOf(etape);
 	   int previousLivraison = 0;
 	   previousLivraison += pos-1;
-	   while(!this.itineraire.get(previousLivraison).getaLivraison()){
+	   while(!this.itineraire.get(previousLivraison).hasLivraison()){
 		   previousLivraison--;
 		   if(previousLivraison==-1){
 			   previousLivraison=0;
@@ -140,12 +140,22 @@ public class FeuilleDeRoute {
     * @param grapheRoutier
     */
    public void majHeureDePassage(Etape etape, GrapheRoutier carte){
+	   
 	   int posEtape = this.getItineraire().indexOf(etape);
+	   Etape etapeCourante;
+	   int attenteCourante = 0;
 	   for(int i=posEtape+1; i<this.getItineraire().size();i++){
-		   Object[]resultatCalcul = carte.calculerPlusCourtChemin(this.getItineraire().get(i-1).getAdresse(), this.getItineraire().get(i).getAdresse());
-		   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
-		   Date heureCourante=new Date(itineraire.get(i-1).getHeurePassagePrevue().getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(0),listeIntersection.get(1)).getTempsParcours()*1000));
-		   this.getItineraire().get(i).setHeurePassagePrevue(heureCourante);
+		   etapeCourante =this.getItineraire().get(i);
+		   Date heureCourante=new Date(itineraire.get(i-1).getHeurePassagePrevue().getTime()+(int)Math.round(carte.getRoute(this.getItineraire().get(i-1).getAdresse(), etapeCourante.getAdresse()).getTempsParcours()*1000));
+           if(etapeCourante.getLivraison()!=null && etapeCourante.getLivraison().getPlageHoraire().getHeureDebut().after(heureCourante)){
+               attenteCourante=(int) (etapeCourante.getLivraison().getPlageHoraire().getHeureDebut().getTime()-heureCourante.getTime());
+               heureCourante = etapeCourante.getLivraison().getPlageHoraire().getHeureDebut();
+           }
+           else{      
+               attenteCourante=0;
+           }
+           etapeCourante.setAttenteAvantPassage(attenteCourante);
+           etapeCourante.setHeurePassagePrevue(heureCourante);
 	   }
    }
    
@@ -187,7 +197,6 @@ public class FeuilleDeRoute {
 		   heureCourante=new Date(heureCourante.getTime()+(int)Math.round(carte.getRoute(listeIntersection.get(i-1),listeIntersection.get(i)).getTempsParcours()*1000));
 		   nouvellesEtapes.add(new Etape(heureCourante,listeIntersection.get(i)));
 	   }
-	   nouvellesEtapes.get(nouvellesEtapes.size()-1).setaLivraison();
 	   nouvelleLivraison.setEtapePassagePrevue(nouvellesEtapes.get(nouvellesEtapes.size()-1));
 	   itineraire.addAll(posEtapes.get(0)+1, nouvellesEtapes);
 	   int positionNouvelleLivraison = posEtapes.get(0)+nouvellesEtapes.size();
@@ -242,7 +251,7 @@ public class FeuilleDeRoute {
     * @param carte Le Graphe Routier a utiliser pour calculer le parcours
     */
    @SuppressWarnings("unchecked")
-   public void calculerParcours(GrapheRoutier carte) {
+   public boolean calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
         List<Livraison> livraisonsPlageSuivante;
         List<Livraison> toutesLivraisons = new ArrayList<>();
@@ -254,6 +263,11 @@ public class FeuilleDeRoute {
 
         for(PlageHoraire p: plagesHoraires){
             toutesLivraisons.addAll(p.getListeLivraison());
+        }
+        
+        System.err.println();
+        if(toutesLivraisons.size() == 0){
+        	return false;
         }
         
         //Calcul de tous les plus courts chemins adequats
@@ -363,6 +377,8 @@ public class FeuilleDeRoute {
                 itineraire.remove(itineraire.size()-1);
             }
         }
+        
+        return true;
    }
    
 	/**

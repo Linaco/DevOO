@@ -1,5 +1,6 @@
 package appcom;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -80,7 +81,7 @@ public class ServeurBuilder {
 						if (this.getControleur().chargerLivraisons(doc)) {
 							return Reponse.succes("Les livraisons ont ï¿½tï¿½ chargï¿½es.");
 						} else {
-							return Reponse.erreur("Le service de chargement des livraisons a ï¿½chouï¿½.");	
+							return Reponse.erreur("Le service de chargement des livraisons a échoué. Peut être n'avez vous pas chargé de plan ?");	
 						}
 						
 					} catch (SAXException e) {
@@ -99,14 +100,18 @@ public class ServeurBuilder {
 		};
 		
 		new ServiceControleur(c,"ajouter-livraison",this.serveur){
-			protected Reponse getReponse(String in){
-				String[] parts = in.split("\n");
-				int idIntersection = Integer.parseInt(parts[0]);
-				int idClient = Integer.parseInt(parts[1]);
-				int idLivraisonPrecedente = Integer.parseInt(parts[2]);
-				System.err.println(parts);
-				this.getControleur().ajouterLivraison(idIntersection, idClient, idLivraisonPrecedente);
-				return Reponse.succes("Ajout livraison terminée.");
+			protected Reponse getReponse(BufferedReader in){
+				try {
+					int idIntersection = Integer.parseInt(in.readLine());
+					int idClient = Integer.parseInt(in.readLine());
+					int idLivraisonPrecedente = Integer.parseInt(in.readLine());
+					System.err.println(idIntersection+" "+idClient+" "+idLivraisonPrecedente);
+					this.getControleur().ajouterLivraison(idIntersection, idClient, idLivraisonPrecedente);
+					return Reponse.succes("Ajout livraison terminée.");
+				} catch (IOException e){
+					e.printStackTrace();
+					return Reponse.erreur("La lecture des paramètres à échoué.");
+				}
 			}
 		};
 		
@@ -134,8 +139,11 @@ public class ServeurBuilder {
 		
 		new ServiceControleur(c,"calculer-itineraire",this.serveur){
 			protected Reponse getReponse(InputStream in){
-				this.getControleur().getFeuilleDeRoute().calculerParcours(this.getControleur().getGrapheRoutier());
-				return Reponse.succes("Itineraire calculï¿½ !");			
+				if(this.getControleur().getFeuilleDeRoute().calculerParcours(this.getControleur().getGrapheRoutier())){
+					return Reponse.succes("Itineraire calculé !");
+				} else {
+					return Reponse.erreur("Impossible de calculer l'itinéraire :(...\nN'auriez vous pas oublié de charger des livraisons ?");
+				}		
 			}
 		};
 		

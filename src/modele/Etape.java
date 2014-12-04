@@ -13,7 +13,7 @@ public class Etape {
 	private Date heureDePassage;
     private int secondesAttenteAvantPassage;
 	private Intersection adresse;
-	private boolean aLivraison;
+	private Livraison livraison;
 
 	/**
 	 * Constructeur d'Etape    
@@ -25,7 +25,7 @@ public class Etape {
     	this.heureDePassage = heurePassage;
     	DateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");        
         secondesAttenteAvantPassage=0;
-        aLivraison = false;
+        livraison = null;
     }
 
     
@@ -53,22 +53,22 @@ public class Etape {
     	this.heureDePassage = nouvelleHeure;
     }
     
-    /**
-     * Permet d'indiquer que l'étape est associée à une livraison
-     */
-    public void setaLivraison(){
-    	this.aLivraison = true;
-    }
-    
-    /**
-     * Getter sur le booléen indiquant si l'étape est associée à une intersection
-     * @return boolean : true si et seulement si l'étape est associée à une intersection
-     */
-    public boolean getaLivraison(){
-    	return this.aLivraison;
-    }
+    public Livraison getLivraison() {
+		return livraison;
+	}
 
-    /**
+
+
+	public void setLivraison(Livraison livraison) {
+		this.livraison = livraison;
+	}
+	
+	public boolean hasLivraison(){
+		return livraison != null;
+	}
+
+
+	/**
      * Getter sur le temps à attendre avant de pouvoir réaliser l'étape
      * @return int : le temps d'attente avant de réaliser l'étape
      */
