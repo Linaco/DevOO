@@ -48,26 +48,42 @@ public class GrapheRoutier {
     }
 
     /**
-     * 
+     * Constructeur par défaut du graphe routier
      */
     public GrapheRoutier() {
     	this.listeIntersection = new ArrayList<Intersection>();
         listePlusCourtsChemins = new ArrayList<>();        
     }
     
+    /**
+     * Getter sur la liste des intersections
+     * @return List Intersection : la liste des intersections du graphe routier
+     */
     public List<Intersection> getListeIntersections(){
     	return this.listeIntersection;
     }
     
+    /**
+     * Vide le graphe routier de toutes ses intersections
+     */
     public void clean(){
     	this.listeIntersection.clear();
     	Route.idRoutes = 0;
     }
     
+    /**
+     * Ajoute l'intersection donnée au graphe routier
+     * @param inter : l'intersection à ajouter au graphe routier
+     */
     public void ajouterIntersection(Intersection inter){
     	this.listeIntersection.add(inter.getId(),inter);
     }
     
+    /**
+     * Permet de savoir si une intersection avec un identifiant donné existe
+     * @param idInter : l'identifiant de l'intersection pour laquelle on veut savoir si elle existe
+     * @return boolean : vaut true si et seulement si l'intersection existe dans le graphe
+     */
     public boolean interExiste(int idInter){
     	for(int i = 0; i<listeIntersection.size(); i++){
     		if(idInter == listeIntersection.get(i).getId()){
@@ -77,9 +93,6 @@ public class GrapheRoutier {
     	return false;
     }
     
-    public Intersection rechercherInterParId(int id){
-    	return listeIntersection.get(id);
-    }
     
     public boolean display(PrintStream stream){
     	for(int i = 0; i<listeIntersection.size(); i++){
@@ -90,9 +103,9 @@ public class GrapheRoutier {
     
     /**
      * 
-     * @param depart L'interserction dont on veut connaitre la route sortante
-     * @param arrivee L'intersection dont on veut connaitre la route entrante
-     * @return La route allant de depart ï¿½ï¿½ arrivï¿½ï¿½e
+     * @param depart : L'intersection dont on veut connaitre la route sortante
+     * @param arrivee : L'intersection dont on veut connaitre la route entrante
+     * @return Route : La route allant de départ à arrivée
      */
     public Route getRoute(Intersection depart, Intersection arrivee){
         for(Route r:depart.getTroncsSortants()){
@@ -104,10 +117,10 @@ public class GrapheRoutier {
     } 
     
    /**
-    * Calcul le plus court chemin entre le depart et l'arrivï¿½ï¿½e donnï¿½ï¿½s
-    * @param depart Intersection correspondant au point de dï¿½ï¿½part du chemin calculï¿½ï¿½
-    * @param arrivee Intersection correspondant au point d'arrivï¿½ï¿½e du chemin calculï¿½ï¿½
-    * @return Tableau contenant la liste ordonnï¿½ï¿½e des routes ï¿½ï¿½ suivre pour atteindre le l'arrivï¿½ï¿½e depuis le dï¿½ï¿½part avec un cout minimal et le cout de la solution, null si aucune solution
+    * Calcul le plus court chemin entre le depart et l'arrivée donnés
+    * @param depart Intersection : Intersection correspondant au point de départ du chemin calculé
+    * @param arrivee : Intersection correspondant au point d'arrivée du chemin calculé
+    * @return Object[] : Tableau contenant la liste ordonnée des routes à suivre pour atteindre l'arrivée depuis le départ avec un cout minimal et le cout de la solution, null si aucune solution
     */
      public Object[] calculerPlusCourtChemin(Intersection depart, Intersection arrivee) {
 
@@ -167,6 +180,10 @@ public class GrapheRoutier {
         
     }
      
+     /**
+      * Permet d'obtenir la description XML du graphe
+      * @return String : une chaîne de caractères contenant la description XML complète du graphe routier
+      */
      public String getPlanXML(){
     	String res = "";
  		res += "<plan>";
@@ -178,6 +195,11 @@ public class GrapheRoutier {
  		return res;
      }
      
+     /**
+      * Permet d'obtenir l'intersection ayant l'id donné
+      * @param idIntersection : identifiant de l'intersection à retrouver
+      * @return Intersection : l'intersection correspondant à idIntersection
+      */
      public Intersection getIntersection(int idIntersection) {
     	 Iterator<Intersection> it = this.listeIntersection.iterator();
     	 while (it.hasNext()) {

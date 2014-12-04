@@ -9,7 +9,7 @@ import modele.*;
 public class Controleur {
 	
 	/**
-	 * Attribut de classe DateFormat permettant le formatage de l'heure à partir d'une String
+	 * Attribut de classe DateFormat permettant le formatage de l'heure ï¿½ partir d'une String
 	 */
 	
 	
@@ -24,6 +24,8 @@ public class Controleur {
 	 public Controleur(){
 		grapheRoutier = new GrapheRoutier();
 		feuilledeRoute = new FeuilleDeRoute();
+		listeFaits = new Stack<Commande>();
+		listeAnnules = new Stack<Commande>();
 	}
 	
 	
@@ -117,8 +119,14 @@ public class Controleur {
 	 */
 	public void supprimerLivraison(int idLivraison) {
 		Livraison livraison = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraison);
+		for(PlageHoraire pH : this.feuilledeRoute.getPlagesHoraires()){
+			for(Livraison l : pH.getListeLivraison()){
+				if(l.getIdLiv()==idLivraison){
+					livraison=l;
+				}
+			}
+		}
 		CommandeSupression c = new CommandeSupression(livraison, this.grapheRoutier, this.feuilledeRoute);
-		
 		c.executer();
 		this.listeFaits.push(c);
 		this.listeAnnules.clear(); // supprime les actions annulees

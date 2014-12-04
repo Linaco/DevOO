@@ -3,6 +3,7 @@
 function Vue(controleur, com){
     // attributs
     this.com = com;
+    this.ctrl = controleur;
     var com = this.com;
 
     this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
@@ -10,6 +11,12 @@ function Vue(controleur, com){
     this.intersections = [];
     this.routes = [];
     this.itineraire;
+
+
+    this.feuilleDeRoute = new VueFeuilleDeRoute(com, this);
+    var feuilleDeRoute = this.feuilleDeRoute;
+
+    this.vueLegende = new VueLegende(com, this);
 
     // functions
     this.enableRedo = function(){
@@ -38,23 +45,43 @@ function Vue(controleur, com){
     this.afficherChargement = function(msg){
         document.getElementById("msg-chargement").textContent
             = msg;
-        $('#modalChargement').modal({backdrop: 'static', keyboard: false});
+            console.log("ouvrir");
+        //$('#modalChargement').modal({backdrop: 'static', keyboard: false});
+        //$("#modalChargement").css("visibility", "visible");
+        $('#modalChargement').modal('show');
     }
 
     this.fermerChargement = function(){
+        console.log("fermer");
+        //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
+        $('.modal.in').modal('hide') ;
         $('#modalChargement').modal('hide');
+        //$("#modalChargement").css("visibility", "hidden");
+        //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
     }
 
     //visibilité
-    this.nouvelItineraire = function() {
+    this.nouvelItineraire = function(chargerLivraisons) {
         for(var i = 0; i < this.intersections.length; ++i){
             var routes = this.intersections[i].routes;
             for(var j = 0; j < this.routes.length; ++j){
                 this.routes[j].razPassages();
             }
         }
-        com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
-    };
+        if(chargerLivraisons){
+            com.appelService('modele/livraisons','',this.livraisonPuisItineraireOk,this.nouvelItineraireErr,true);
+        } else {
+            com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);   
+        }
+     };
+    this.livraisonPuisItineraireOk = function(str) {
+        this.nouvellesLivraisonsOk(str, true);
+        console.log("PuisOK");
+        //this.fermerChargement();
+        //this.afficherChargement("Récupération du nouvel itinéraire");
+        //com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
+        this.nouvelItineraire(false);
+    }.bind(this);
     this.nouvelItineraireErr = function(msg) {
         this.fermerChargement();
         this.erreur(msg);
@@ -84,11 +111,14 @@ function Vue(controleur, com){
         this.fermerChargement();
         this.masquer();
         this.afficher();
+
+        this.feuilleDeRoute.chargerFeuille(doc);
+
     }.bind(this);
 
     this.nouvellesLivraisons = function(){
         this.razLivraison();
-
+        this.vueLegende.raz();
         com.appelService('modele/livraisons','',this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
     };
 
@@ -99,7 +129,7 @@ function Vue(controleur, com){
         this.fermerChargement();
         this.erreur(msg);
     }.bind(this);
-    this.nouvellesLivraisonsOk = function(str) {
+    this.nouvellesLivraisonsOk = function(str, laisserChargement) {
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
         console.log("livraisons",doc);
@@ -125,7 +155,10 @@ function Vue(controleur, com){
             }
         }
 
-        this.fermerChargement();
+        //this.vueLegende.displayPlagesHoraires(); // affiche les plages horaires dès le chargement
+        //this.vueLegende.displayLivraisons();
+        if(!laisserChargement) this.fermerChargement();
+        this.afficher();
     }.bind(this);
     this.nouveauPlan = function(){
         this.masquer();
@@ -150,7 +183,7 @@ function Vue(controleur, com){
         for( var i = 0; i < its.length; ++i){
             var it = its[i];
             var id = it.getAttribute("id");
-            var x = it.getAttribute("x")/500;
+            var x = -it.getAttribute("x")/500;
             var y = it.getAttribute("y")/500;
             if( i == 0 ){
                 xmin = xmax = x;
@@ -178,7 +211,7 @@ function Vue(controleur, com){
                 var idRoute = route.getAttribute("id");
                 var id2 = route.getAttribute("idDestination");
                 var nom = route.getAttribute("nom");
-                this.ajouterRoute(id1,id2);
+                this.ajouterRoute(id1,id2,nom);
             }
         }
         var dw = (xmax - xmin)*0.25, dh = (ymax - ymin)*0.25;
@@ -223,11 +256,11 @@ function Vue(controleur, com){
             = new VueIntersection(pos,id);
     }
 
-    this.ajouterRoute = function(i1,i2){
+    this.ajouterRoute = function(i1,i2,nom){
         var a = this.getIntersection(i1),
             b = this.getIntersection(i2);
         if ( a && b ) return this.routes[this.routes.length] 
-            = new VueRoute(a,b);
+            = new VueRoute(a,b,nom);
         return null;
     }
 
@@ -257,8 +290,8 @@ function Vue(controleur, com){
     this._livraisonSupprimee = function(idLivraison, idIntersection){
         var it = this.getIntersection(idIntersection);
         it.closePopup();
-        //console.log(idLivraison, it);
-        this.info("Suppression prise en compte");
+        console.log("livraison supprimée",idLivraison, it);
+        this.ctrl.demandeDeSuppression(idLivraison);
     }
 
 
@@ -284,12 +317,102 @@ function Vue(controleur, com){
     //console.log(this.controlCalcul.getContainer().className);
     var controlFDR = L.easyButton('fa-file-text', controleur.clicTelechargerInitineraire, "Télécharger la feuille de route", this.map).setPosition('bottomright');
 
+    $('#modalChargement').modal({backdrop: 'static', keyboard: false, show:false});
     $('#modal-info').modal({backdrop: false, show: false});
     $('#modal-erreur').modal({backdrop: false, show: false});
 }
 
-function VueLegende(){
+function VueLegende(com, vue){
+    this.vue = vue;
+    this.com = com;
+    this.lateral = document.getElementById('lateral');
+    this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
 
+    this.displayPlagesHoraires = function() {
+        this.com.appelService('modele/plagesHoraires', '', this._plageOk, this._plageErr, true);
+    };
+
+    this._plageOk = function(reponse){
+
+        this.raz();
+
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(reponse,"text/xml");
+        var liste = doc.getElementsByTagName('plage');
+
+        var listePlages = document.createElement('div');
+        listePlages.id = "listePlages";
+        lateral.appendChild(listePlages);
+
+        var titre = document.createElement('h3');
+        titre.innerHTML = 'Liste plages horaires';
+        listePlages.appendChild(titre);
+
+        for (var i=0; i < liste.length; i++) {
+            var p = document.createElement('p');
+            p.innerHTML = liste[i].getAttribute('debut') + ' - ';
+            p.innerHTML += liste[i].getAttribute('fin');
+            listePlages.appendChild(p);
+
+            var colorId = liste[i].getAttribute('id');
+            p.style.color = this.couleurPlages[colorId];
+        }
+    }.bind(this);
+
+    this._plageErr = function(msgErreur) {
+        var msg = document.createElement('p');
+        msg.value = 'Erreur de chargement des plages horaires.';
+        msg.id = 'errorListePlages';
+        this.lateral.appendChild(msg);
+    }.bind(this);
+
+    this.displayLivraisons = function() {
+        this.com.appelService('modele/livraisons', '', this._livraisonsOk, this._livraisonsErr, true);
+    };
+
+    this._livraisonsOk = function(reponse) {
+
+        var parser=new DOMParser();
+        var doc=parser.parseFromString(reponse,"text/xml");
+        var liste = doc.getElementsByTagName('plage');
+
+        var listeLivraisons = document.createElement('div');
+        listeLivraisons.id = "listeLivraisons";
+        lateral.appendChild(listeLivraisons);
+
+        var titre = document.createElement('h3');
+        titre.innerHTML = 'Liste des livraisons';
+        listeLivraisons.appendChild(titre);;
+        for (var i=0; i < liste.length; i++) {
+            var p = document.createElement('p');
+            p.innerHTML = liste[i].getAttribute('debut') + ' - ';
+            p.innerHTML += liste[i].getAttribute('fin') + ' : <br />';
+            var sous_liste = liste[i].getElementsByTagName('livraison');
+
+            for(var j=0; j < sous_liste.length; j++) {
+                p.innerHTML += 'Client : ' + sous_liste[j].getAttribute('idClient') + ' -- ';
+                p.innerHTML += 'Adresse : ' + sous_liste[j].getAttribute('idIntersection');
+                p.innerHTML += '<br />';
+            }
+            p.innerHTML += '<br />';
+            
+            listeLivraisons.appendChild(p);
+        }
+
+    }.bind(this);
+
+    this._livraisonsErr = function(msgErreur) {
+        var msg = document.createElement('p');
+        msg.value = 'Erreur de chargement des livraisons.';
+        msg.id = 'errorListeLivraisons';
+        this.lateral.appendChild(msg);
+    }.bind(this);
+
+    this.raz = function() {
+        while (this.lateral.firstChild) {
+            this.lateral.removeChild(this.lateral.firstChild);
+        }
+    };
 }
 
 function VueIntersection(pos, id){
@@ -300,7 +423,7 @@ function VueIntersection(pos, id){
 
     this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
     this.paramLivraison = {color: '#0f0', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
-    this.paramEntrepot = {color: '#0ff', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
+    this.paramEntrepot = {color: '#0ff', opacity: 0.5, fillColor: '#0ff', fillOpacity: 0.5};
     this.paramSelec = {color: 'red', opacity: 0.8, fillColor: 'yellow', fillOpacity: 0.8};
     this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
     this.rayonDefaut = 520;
@@ -455,7 +578,7 @@ function VueIntersection(pos, id){
     return this;
 }
 
-function VueRoute(intersec1, intersec2){
+function VueRoute(intersec1, intersec2, nom){
     // attributs
     this.defaut = {
         ecartArc: 0.05,
@@ -466,7 +589,7 @@ function VueRoute(intersec1, intersec2){
 
     this.A = intersec1;
     this.B = intersec2;
-    this.nom = "route sans nom";
+    this.nom = nom;
 
 
     this.paramDefaut = {weight:5,color: this.defaut.couleur ,opacity:0.8};

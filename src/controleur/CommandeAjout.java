@@ -22,7 +22,7 @@ public class CommandeAjout implements Commande {
 
     @Override
     public void annuler() {
-        // TODO implement here
+        this.feuilleDeRoute.supprimerLivraison(this.livraison, this.grapheRoutier);
     }
 
 	@Override
