@@ -43,7 +43,7 @@ function VueFeuilleDeRoute(appCom, vue){
                     $('#FDR').append("</p>");
 
                     for(var a = 0; a < livraison.length ; a++){
-                        $('#FDR').append("<p class='livraison'>Livraison pour le client"+ " " + "</p>");
+                        $('#FDR').append("<p class='livraison'>"+livraison[a].getAttribute("adresse")+" : Livraison pour le client"+ livraison[a].getAttribute("idClient") + "</p>");
 
                     }
 
@@ -60,7 +60,7 @@ function VueFeuilleDeRoute(appCom, vue){
         //var route = vue.getRoute(id1,id2);
     };
 
-    function checkLivraison(id){
+    function checkLivraison(id){/*
 
         console.log("livraison", livraison);
 
@@ -79,17 +79,8 @@ function VueFeuilleDeRoute(appCom, vue){
                     return false;
                 
 
-/*
-                var it = this.vue.getIntersection(idIntersection);
-                if(it){
-
-
-                    it.setLivraison(livs[j].getAttribute("id"),
-                                    livs[j].getAttribute("idClient"),
-                                    plageTxt,
-                                    null);*/
                 }
             }
-        }
+        }*/
     };
 }
