@@ -21,12 +21,28 @@ function Controleur(){
     // functions
     this.annuler = function() {
         console.log("undo");
-        vue.info("Annulation...");
+        vue.afficherChargement("Annulation de l'action...");
+        com.appelService("controleur/annuler","",this._annulerOk,this._annulerErr,true);
     };
+    this._annulerOk = function(rep) {
+        vue.nouvelItineraire(true);
+    };
+    this._annulerErr = function(msg) {
+        vue.fermerChargement();
+        vue.erreur(msg);
+    }.bind(this);
     this.retablir = function(){
         console.log("redo");
-        vue.erreur("Erreur lors du rétablissement de l'action...");
+        vue.afficherChargement("Retablissement de l'action...");
+        com.appelService("controleur/retablir","",this._retablirOk,this._retablirErr,true);
     };
+    this._retablirOk = function(rep) {
+        vue.nouvelItineraire(true);
+    };
+    this._retablirErr = function(msg) {
+        vue.fermerChargement();
+        vue.erreur(msg);
+    }.bind(this);
     this.clicChargerPlan = function(){
         document.getElementById('charger-plan').click();
     };
