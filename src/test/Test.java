@@ -64,7 +64,7 @@ public class Test {
 			String path = new File("Tests/Plan-Minimal.xml").getAbsolutePath();
 			System.out.println("Vérifiez que vous disposez du Fichier à :"+path);
 			File file = new File(path);
-			ChargerPlan plan = new ChargerPlan(stringToDom(loadFile(file)));
+			//ChargerPlan plan = new ChargerPlan(stringToDom(loadFile(file)));
 			
 			
 		} else {
