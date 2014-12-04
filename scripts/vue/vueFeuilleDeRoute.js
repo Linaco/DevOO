@@ -41,6 +41,7 @@ function VueFeuilleDeRoute(appCom, vue){
 
                     for(var a = 0; a < livraison.length ; a++){
                         $('#FDR').append("<p class='livraison'>"+heure+" : "+livraison[a].getAttribute("adresse")+" -> Livraison pour le client "+ livraison[a].getAttribute("idClient") + "</p>");
+                        $('#FDR').append("<p>Attendre 10 min...</p>")
                         var start = heure.substring(0,heure.length - 2);
                         var nbr = heure.substring(heure.length-2,heure.length);
                         nbr = parseInt(nbr) + 10;
