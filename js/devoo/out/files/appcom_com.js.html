@@ -38,13 +38,18 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Com.html">Com</a></li>
                                 <li><a href="../classes/Controleur.html">Controleur</a></li>
                                 <li><a href="../classes/Vue.html">Vue</a></li>
+                                <li><a href="../classes/VueIntersection.html">VueIntersection</a></li>
+                                <li><a href="../classes/VueLegende.html">VueLegende</a></li>
+                                <li><a href="../classes/VueRoute.html">VueRoute</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/appcom.html">appcom</a></li>
                                 <li><a href="../modules/controleur.html">controleur</a></li>
+                                <li><a href="../modules/vue.html">vue</a></li>
                             </ul>
                         </div>
                     </div>
@@ -82,15 +87,24 @@
                         
                         <div class="file">
                             <pre class="code prettyprint linenums">
-                        ///////////////////////////////////////////////////////////////////////////////////////
-                        // &gt;&gt;&gt; Class Com
                         /**
-                         * Controleur de l&#x27;application. Reçois les évènements utilisateurs de la vue, puis invoque
-                         * les services adaptés de l&#x27;application java pour modifier les données.
+                         * Le package appcom permet la communication entre les différents morceaux de l&#x27;application 
+                         * (java/js).
                          *
                          * @module appcom
                          */
                         
+                        ///////////////////////////////////////////////////////////////////////////////////////
+                        // &gt;&gt;&gt; Class Com
+                        
+                        /**
+                         * La classe Com offre des méthodes qui encapsulent l&#x27;appel de services et l&#x27;envoi de 
+                         * fichiers XML au serveur.
+                         *
+                         * @class Com
+                         * @author Robin Nicolet
+                         * @constructor
+                         */
                         function Com(){
                         
                             ///////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +112,19 @@
                         
                             // &gt; Appel d&#x27;un service
                         
+                            /**
+                             * Appelle le service demandé avec les paramètres données, puis appelle les
+                             * fonctions données en paramètre lors de la réception d&#x27;une réponse serveur.
+                             * Utilisée de façon synchrone, la méthode retourne directement la reponse.
+                             *
+                             * @method appelService
+                             * @param nomService {String} service à appeler
+                             * @param params {String} service à appeler
+                             * @param fctOk {function(String)} fonction à appeler en cas de succes
+                             * @param fctErr {function(String)} fonction à appeler en cas d&#x27;échec
+                             * @param [async=false] {String} spécifie si l&#x27;appel est asynchrone..
+                             * @return {String|void} Reponse si synchrone.
+                             */
                             this.appelService = function(nomService, params, fctOk, fctErr, async){
                         
                                 var asynchronous = async == null ? false : async;
@@ -143,6 +170,16 @@
                         
                             // &gt; Envoi d&#x27;un fichier XML
                         
+                            /**
+                             * Appelle le service demandé avec le fichier XML comme paramètre, puis appelle les
+                             * fonctions données en paramètre lors de la réception d&#x27;une réponse serveur.
+                             *
+                             * @method envoyerXml
+                             * @param fileEvt {FileEvent} Evenement associé à la selection du fichier
+                             * @param nomService {String} service à appeler
+                             * @param fctOk {function(String)} fonction à appeler en cas de succes
+                             * @param fctErr {function(String)} fonction à appeler en cas d&#x27;échec
+                             */
                             this.envoyerXml = function(fileEvt, nomService, fctOk, fctErr, async){
                                 var f = fileEvt.target.files[0];
                                 if(f){

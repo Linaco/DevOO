@@ -38,13 +38,18 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Com.html">Com</a></li>
                                 <li><a href="../classes/Controleur.html">Controleur</a></li>
                                 <li><a href="../classes/Vue.html">Vue</a></li>
+                                <li><a href="../classes/VueIntersection.html">VueIntersection</a></li>
+                                <li><a href="../classes/VueLegende.html">VueLegende</a></li>
+                                <li><a href="../classes/VueRoute.html">VueRoute</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/appcom.html">appcom</a></li>
                                 <li><a href="../modules/controleur.html">controleur</a></li>
+                                <li><a href="../modules/vue.html">vue</a></li>
                             </ul>
                         </div>
                     </div>
@@ -83,16 +88,19 @@
                         
                         
                                 <div class="foundat">
-                                    Defined in: <a href="../files/vue_vue.js.html#l4"><code>vue\vue.js:4</code></a>
+                                    Defined in: <a href="../files/vue_vue.js.html#l10"><code>vue\vue.js:10</code></a>
                                 </div>
                         
-                                    Module: <a href="../modules/controleur.html">controleur</a>
+                                    Module: <a href="../modules/vue.html">vue</a>
                         
                         </div>
                         
                         
                         <div class="box intro">
-                            <p>Description</p>
+                            <p>Vue de l&#39;application, gère toutes les informations graphiques renvoyées à l&#39;utilsateur.
+                        <br/>
+                        L&#39;application utilise Leaflet (plus les plugins suivants : label, easyButton, polylineDecorator),
+                        Bootstrap et jsPDF.</p>
                         
                         </div>
                         
@@ -113,7 +121,7 @@
                                     <div class="meta">
                                                 <p>
                                                 Defined in
-                                        <a href="../files/vue_vue.js.html#l4"><code>vue\vue.js:4</code></a>
+                                        <a href="../files/vue_vue.js.html#l10"><code>vue\vue.js:10</code></a>
                                         </p>
                                 
                                 
@@ -133,18 +141,1828 @@
                             <ul class="api-class-tabs">
                                 <li class="api-class-tab index"><a href="#index">Index</a></li>
                         
+                                    <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+                                    <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
                             </ul>
                         
                             <div>
                                 <div id="index" class="api-class-tabpanel index">
                                     <h2 class="off-left">Item Index</h2>
                         
+                                        <div class="index-section methods">
+                                            <h3>Methods</h3>
                         
+                                            <ul class="index-list methods">
+                                                    <li class="index-item method">
+                                                        <a href="#method__ajoutLivraison">_ajoutLivraison</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method__livraisonSupprimee">_livraisonSupprimee</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_afficher">afficher</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_afficherChargement">afficherChargement</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_ajouterIntersection">ajouterIntersection</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_ajouterRoute">ajouterRoute</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_erreur">erreur</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_fermerChargement">fermerChargement</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_fermerErreur">fermerErreur</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_fermerInfo">fermerInfo</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_genererFctPopup">genererFctPopup</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_genererFctPopup">genererFctPopup</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_getIntersection">getIntersection</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_getRoute">getRoute</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_info">info</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_livraisonPuisItineraireOk">livraisonPuisItineraireOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_masquer">masquer</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_nouveauPlan">nouveauPlan</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_nouvelItineraire">nouvelItineraire</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_nouvelItineraireErr">nouvelItineraireErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_nouvelItineraireOk">nouvelItineraireOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_nouvellesLivraisons">nouvellesLivraisons</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_nouvellesLivraisonsErr">nouvellesLivraisonsErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_nouvellesLivraisonsOk">nouvellesLivraisonsOk</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_razLivraison">razLivraison</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_retourModelePlanErr">retourModelePlanErr</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method private">
+                                                        <a href="#method_retourModelePlanOk">retourModelePlanOk</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                                        <div class="index-section properties">
+                                            <h3>Properties</h3>
+                        
+                                            <ul class="index-list properties">
+                                                    <li class="index-item property">
+                                                        <a href="#property_com">com</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_couleurPlages">couleurPlages</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_ctrl">ctrl</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_feuilleDeRoute">feuilleDeRoute</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_intersections">intersections</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_routes">routes</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_vueLegende">vueLegende</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_warningIcon">warningIcon</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
                         
                         
                                 </div>
                         
+                                    <div id="methods" class="api-class-tabpanel">
+                                        <h2 class="off-left">Methods</h2>
                         
+                                            <div id="method__ajoutLivraison" class="method item">
+                                                <h3 class="name"><code>_ajoutLivraison</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>idIntersection</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l545"><code>vue\vue.js:545</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Passe les intersections où il y a une livraison en mode <code>séléctionnable</code> et leur
+                                            associe un écouteur de clic.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">idIntersection</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection où l&#39;on veut la livraison.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method__livraisonSupprimee" class="method item">
+                                                <h3 class="name"><code>_livraisonSupprimee</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>idLivraison</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>idIntersection</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l532"><code>vue\vue.js:532</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Signale au controleur que l&#39;utilisateur veut supprimer une livraison.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">idLivraison</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de la livraison.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">idIntersection</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection associée à la livraison.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_afficher" class="method item">
+                                                <h3 class="name"><code>afficher</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l431"><code>vue\vue.js:431</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Affiche les éléments du plan dans la map Leaflet.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_afficherChargement" class="method item">
+                                                <h3 class="name"><code>afficherChargement</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l130"><code>vue\vue.js:130</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Affiche l&#39;écran de chargement avec le message souhaité (voir modals Bootstrap)</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message à afficher</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_ajouterIntersection" class="method item">
+                                                <h3 class="name"><code>ajouterIntersection</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>pos</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>id</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l473"><code>vue\vue.js:473</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Crée et ajoute une intersection à la liste des intersections.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">pos</code>
+                                                                    <span class="type">LngLat</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>position sur la map (cf Leaflet)</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">id</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_ajouterRoute" class="method item">
+                                                <h3 class="name"><code>ajouterRoute</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>i1</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>i2</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>nom</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l484"><code>vue\vue.js:484</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Crée et ajoute une route à la liste des routes.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">i1</code>
+                                                                    <span class="type"><a href="../classes/VueIntersection.html" class="crosslink">VueIntersection</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Départ de la route</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">i2</code>
+                                                                    <span class="type"><a href="../classes/VueIntersection.html" class="crosslink">VueIntersection</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Arrivée de la route</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">nom</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Nom de la route</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_erreur" class="method item">
+                                                <h3 class="name"><code>erreur</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l92"><code>vue\vue.js:92</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Ouvre la popup d&#39;erreur avec le message souhaité (voir modals Bootstrap)</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message à afficher</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_fermerChargement" class="method item">
+                                                <h3 class="name"><code>fermerChargement</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l144"><code>vue\vue.js:144</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Ferme l&#39;écran de chargement&#39; (voir modals Bootstrap)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_fermerErreur" class="method item">
+                                                <h3 class="name"><code>fermerErreur</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l103"><code>vue\vue.js:103</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Ferme la popup d&#39;erreur (voir modals Bootstrap)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_fermerInfo" class="method item">
+                                                <h3 class="name"><code>fermerInfo</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l122"><code>vue\vue.js:122</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Ferme la popup d&#39;info (voir modals Bootstrap)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_genererFctPopup" class="method item">
+                                                <h3 class="name"><code>genererFctPopup</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>idInter</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>idLiv</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>idClient</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l572"><code>vue\vue.js:572</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Renvoie une fonction bien formée pour l&#39;ajout de livraison.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">idInter</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection où l&#39;on veut la livraison.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">idLiv</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de la livraison qui doit précéder celle que l&#39;on crée.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">idClient</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID du client à livrer.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_genererFctPopup" class="method item">
+                                                <h3 class="name"><code>genererFctPopup</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>idInter</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>livraison</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>client</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l585"><code>vue\vue.js:585</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Notifie le controleur que l&#39;utilisateur veut ajouter une livraison.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">idInter</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection où l&#39;on veut la livraison.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">livraison</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de la livraison qui doit précéder celle que l&#39;on crée.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">client</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID du client à livrer.</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_getIntersection" class="method item">
+                                                <h3 class="name"><code>getIntersection</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>id</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/VueIntersection.html" class="crosslink">VueIntersection</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l499"><code>vue\vue.js:499</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Renvoie la VueIntersection correspondant à cet ID</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">id</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID de l&#39;intersection</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/VueIntersection.html" class="crosslink">VueIntersection</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_getRoute" class="method item">
+                                                <h3 class="name"><code>getRoute</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>id1</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>id2</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/VueRoute.html" class="crosslink">VueRoute</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l514"><code>vue\vue.js:514</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Renvoie la route, si elle existe, qui va de l&#39;intersection dont l&#39;id vaut id1
+                                            à l&#39;intersection dont l&#39;id vaut id2</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">id1</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID départ</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">id2</code>
+                                                                    <span class="type">Integer</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>ID arrivée</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/VueRoute.html" class="crosslink">VueRoute</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_info" class="method item">
+                                                <h3 class="name"><code>info</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l111"><code>vue\vue.js:111</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Ouvre la popup d&#39;info avec le message souhaité (voir modals Bootstrap)</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message à afficher</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_livraisonPuisItineraireOk" class="method item private">
+                                                <h3 class="name"><code>livraisonPuisItineraireOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>str</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l179"><code>vue\vue.js:179</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Retour du service <code>/modele/livraisons</code>, on charge les livraisons sur le plan
+                                            puis on demande le nouvel itinéraire.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">str</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Reponse du service, pas utilisé</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_masquer" class="method item">
+                                                <h3 class="name"><code>masquer</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l444"><code>vue\vue.js:444</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Enlève les éléments du plan de la map Leaflet.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouveauPlan" class="method item">
+                                                <h3 class="name"><code>nouveauPlan</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l339"><code>vue\vue.js:339</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Détruit les routes, les intersections, appelle le bon service pour recharger le plan.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvelItineraire" class="method item">
+                                                <h3 class="name"><code>nouvelItineraire</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>chargerLivraisons</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l159"><code>vue\vue.js:159</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Appel le bon service pour recharger l&#39;itinéraire.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">chargerLivraisons</code>
+                                                                    <span class="type">Boolean</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>faut-il recharger aussi les livraisons</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvelItineraireErr" class="method item private">
+                                                <h3 class="name"><code>nouvelItineraireErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l191"><code>vue\vue.js:191</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Echec du service <code>/modele/itineraire</code>, on ferme l&#39;écran de chargement
+                                            puis on affiche le message d&#39;erreur.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur renvoyé par le service</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvelItineraireOk" class="method item private">
+                                                <h3 class="name"><code>nouvelItineraireOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>str</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l203"><code>vue\vue.js:203</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Retour du service <code>/modele/itineraire</code>,
+                                            on parcours alors le XML reçu pour créer l&#39;itinéraire.<br/></p>
+                                            <pre class="code prettyprint"><code> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+                                             &lt;feuilleDeRoute&gt;
+                                                 &lt;itineraire&gt;
+                                                     &lt;etape heurePassage=&quot;0h00&quot; secondesAttente=&quot;0&quot; idIntersection=&quot;0&quot; idPlageHoraire=&quot;0&quot;&gt;
+                                                         &lt;livraison idClient=&quot;0&quot; adresse=&quot;0&quot;/&gt;
+                                                     &lt;/etape&gt;
+                                                 &lt;/itineraire&gt;
+                                                 &lt;livraisonsImpossibles&gt;
+                                                     &lt;livraison idClient=&quot;0&quot; adresse=&quot;0&quot;/&gt;
+                                                 &lt;/livraisonsImpossibles&gt;
+                                             &lt;/feuilleDeRoute&gt;
+                                            </code></pre>
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">str</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>XML renvoyé par le service</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvellesLivraisons" class="method item">
+                                                <h3 class="name"><code>nouvellesLivraisons</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l267"><code>vue\vue.js:267</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Détruit les livraisons, la légende, appelle le bon service pour recharger les livraisons.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvellesLivraisonsErr" class="method item private">
+                                                <h3 class="name"><code>nouvellesLivraisonsErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l277"><code>vue\vue.js:277</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Echec du service <code>/modele/livraisons</code>, on ferme l&#39;écran de chargement
+                                            puis on affiche le message d&#39;erreur.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur renvoyé par le service</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_nouvellesLivraisonsOk" class="method item private">
+                                                <h3 class="name"><code>nouvellesLivraisonsOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>str</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>laisserChargement</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l289"><code>vue\vue.js:289</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Retour du service <code>/modele/livraisons</code>,
+                                            on parcours alors le XML reçu pour créer les livraisons.<br/></p>
+                                            <pre class="code prettyprint"><code> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+                                             &lt;livraisons idEntrepot=&quot;0&quot;&gt;
+                                                 &lt;plage debut=&quot;0h00&quot; fin=&quot;23h59&quot;&gt;
+                                                     &lt;livraison idClient=&quot;0&quot; adresse=&quot;0&quot;/&gt;
+                                                 &lt;/plage&gt;
+                                             &lt;/livraisons&gt;
+                                            </code></pre>
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">str</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>XML renvoyé par le service</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">laisserChargement</code>
+                                                                    <span class="type">Boolean</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Empeche la fermeture de l&#39;écran de chargement</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_razLivraison" class="method item">
+                                                <h3 class="name"><code>razLivraison</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l459"><code>vue\vue.js:459</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Réinitialise les données de livraison. Remet un plan vierge.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_retourModelePlanErr" class="method item private">
+                                                <h3 class="name"><code>retourModelePlanErr</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>msg</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l350"><code>vue\vue.js:350</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Echec du service <code>/modele/plan</code>, on ferme l&#39;écran de chargement
+                                            puis on affiche le message d&#39;erreur.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">msg</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>Message d&#39;erreur renvoyé par le service</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_retourModelePlanOk" class="method item private">
+                                                <h3 class="name"><code>retourModelePlanOk</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>str</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                                    <span class="flag private">private</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l362"><code>vue\vue.js:362</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Retour du service <code>/modele/plan</code>,
+                                            on parcours alors le XML reçu pour créer le plan.<br/></p>
+                                            <pre class="code prettyprint"><code> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+                                             &lt;plan&gt;
+                                                 &lt;intersection id=&quot;0&quot; x=&quot;0&quot; y=&quot;0&quot;&gt;
+                                                     &lt;route id=&quot;0&quot; idDestination=&quot;0&quot; nom=&quot;nom de la route&quot;/&gt;
+                                                 &lt;/intersection&gt;
+                                             &lt;/plan&gt;
+                                            </code></pre>
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">str</code>
+                                                                    <span class="type">String</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>XML renvoyé par le service</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                                    <div id="properties" class="api-class-tabpanel">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property_com" class="property item">
+                                                <h3 class="name"><code>com</code></h3>
+                                                <span class="type"><a href="../classes/Com.html" class="crosslink">Com</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l25"><code>vue\vue.js:25</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Instance de la classe <a href="../classes/Com.html" class="crosslink">Com</a> permettant de communiquer
+                                            avec le serveur.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_couleurPlages" class="property item">
+                                                <h3 class="name"><code>couleurPlages</code></h3>
+                                                <span class="type">String</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l42"><code>vue\vue.js:42</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Tableau de String. Banque de couleurs des plages horaires</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_ctrl" class="property item">
+                                                <h3 class="name"><code>ctrl</code></h3>
+                                                <span class="type"><a href="../classes/Controleur.html" class="crosslink">Controleur</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l34"><code>vue\vue.js:34</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Instance de la classe <a href="../classes/Com.html" class="crosslink">Com</a> permettant de transmettre
+                                            les interactions utilisateur.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_feuilleDeRoute" class="property item">
+                                                <h3 class="name"><code>feuilleDeRoute</code></h3>
+                                                <span class="type">VueFeuilleDeRoute</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l74"><code>vue\vue.js:74</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Vue de la feuille de route (PDF)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_intersections" class="property item">
+                                                <h3 class="name"><code>intersections</code></h3>
+                                                <span class="type"><a href="../classes/VueIntersection.html" class="crosslink">VueIntersection[]</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l48"><code>vue\vue.js:48</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Liste des intersection du plan</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_routes" class="property item">
+                                                <h3 class="name"><code>routes</code></h3>
+                                                <span class="type"><a href="../classes/VueRoute.html" class="crosslink">VueRoute[]</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l53"><code>vue\vue.js:53</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Liste des routes du plan</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_vueLegende" class="property item">
+                                                <h3 class="name"><code>vueLegende</code></h3>
+                                                <span class="type"><a href="../classes/VueLegende.html" class="crosslink">VueLegende</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l81"><code>vue\vue.js:81</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Vue de la légende (Panneau latéral)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_warningIcon" class="property item">
+                                                <h3 class="name"><code>warningIcon</code></h3>
+                                                <span class="type">Icon</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/vue_vue.js.html#l59"><code>vue\vue.js:59</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Icone donné aux intersections associées à une livraison hors de sa plage horaire</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
                         
                         
                             </div>

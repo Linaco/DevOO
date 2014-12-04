@@ -6,7 +6,9 @@
             "modules": {
                 "appcom": 1
             },
-            "classes": {},
+            "classes": {
+                "Com": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -23,9 +25,14 @@
         },
         "vue\\vue.js": {
             "name": "vue\\vue.js",
-            "modules": {},
+            "modules": {
+                "vue": 1
+            },
             "classes": {
-                "Vue": 1
+                "Vue": 1,
+                "VueLegende": 1,
+                "VueIntersection": 1,
+                "VueRoute": 1
             },
             "fors": {},
             "namespaces": {}
@@ -35,30 +42,63 @@
         "appcom": {
             "name": "appcom",
             "submodules": {},
-            "classes": {},
+            "classes": {
+                "Com": 1
+            },
             "fors": {},
             "namespaces": {},
             "tag": "module",
             "file": "appcom\\com.js",
-            "line": 3,
-            "description": "Controleur de l'application. Reçois les évènements utilisateurs de la vue, puis invoque\nles services adaptés de l'application java pour modifier les données."
+            "line": 11,
+            "description": "Le package appcom permet la communication entre les différents morceaux de l'application \n(java/js)."
         },
         "controleur": {
             "name": "controleur",
             "submodules": {},
             "classes": {
-                "Controleur": 1,
-                "Vue": 1
+                "Controleur": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "controleur\\controleur.js",
+            "line": 30,
+            "description": "Controleur de l'application. Reçois les évènements utilisateurs de la vue, puis invoque\nles services adaptés de l'application java pour modifier les données."
+        },
+        "vue": {
+            "name": "vue",
+            "submodules": {},
+            "classes": {
+                "Vue": 1,
+                "VueLegende": 1,
+                "VueIntersection": 1,
+                "VueRoute": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
             "file": "vue\\vue.js",
-            "line": 4,
-            "description": "Controleur de l'application. Reçois les évènements utilisateurs de la vue, puis invoque\nles services adaptés de l'application java pour modifier les données."
+            "line": 965,
+            "description": "Vue de l'application, gère toutes les informations graphiques renvoyées à l'utilsateur."
         }
     },
     "classes": {
+        "Com": {
+            "name": "Com",
+            "shortname": "Com",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "appcom",
+            "namespace": "",
+            "file": "appcom\\com.js",
+            "line": 11,
+            "description": "La classe Com offre des méthodes qui encapsulent l'appel de services et l'envoi de \nfichiers XML au serveur.",
+            "author": "Robin Nicolet",
+            "is_constructor": 1
+        },
         "Controleur": {
             "name": "Controleur",
             "shortname": "Controleur",
@@ -83,19 +123,150 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "controleur",
+            "module": "vue",
             "namespace": "",
             "file": "vue\\vue.js",
-            "line": 4,
-            "description": "Description",
+            "line": 10,
+            "description": "Vue de l'application, gère toutes les informations graphiques renvoyées à l'utilsateur.\n<br/>\nL'application utilise Leaflet (plus les plugins suivants : label, easyButton, polylineDecorator),\nBootstrap et jsPDF.",
+            "author": "Robin Nicolet",
+            "is_constructor": 1
+        },
+        "VueLegende": {
+            "name": "VueLegende",
+            "shortname": "VueLegende",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vue",
+            "namespace": "",
+            "file": "vue\\vue.js",
+            "line": 627,
+            "description": "Vue de la légende, gère la partie droite de l'IHM",
+            "author": "Anthony Laou-Hine",
+            "is_constructor": 1
+        },
+        "VueIntersection": {
+            "name": "VueIntersection",
+            "shortname": "VueIntersection",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vue",
+            "namespace": "",
+            "file": "vue\\vue.js",
+            "line": 737,
+            "description": "Vue graphique d'une intersection, d'un noeud du graphe",
+            "author": "Robin Nicolet",
+            "is_constructor": 1
+        },
+        "VueRoute": {
+            "name": "VueRoute",
+            "shortname": "VueRoute",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vue",
+            "namespace": "",
+            "file": "vue\\vue.js",
+            "line": 965,
+            "description": "Vue graphique d'une route, d'un tronçon du graphe",
             "author": "Robin Nicolet",
             "is_constructor": 1
         }
     },
     "classitems": [
         {
+            "file": "appcom\\com.js",
+            "line": 26,
+            "description": "Appelle le service demandé avec les paramètres données, puis appelle les\nfonctions données en paramètre lors de la réception d'une réponse serveur.\nUtilisée de façon synchrone, la méthode retourne directement la reponse.",
+            "itemtype": "method",
+            "name": "appelService",
+            "params": [
+                {
+                    "name": "nomService",
+                    "description": "service à appeler",
+                    "type": "String"
+                },
+                {
+                    "name": "params",
+                    "description": "service à appeler",
+                    "type": "String"
+                },
+                {
+                    "name": "fctOk",
+                    "description": "fonction à appeler en cas de succes",
+                    "type": "Function(String)"
+                },
+                {
+                    "name": "fctErr",
+                    "description": "fonction à appeler en cas d'échec",
+                    "type": "Function(String)"
+                },
+                {
+                    "name": "async",
+                    "description": "spécifie si l'appel est asynchrone..",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "Reponse si synchrone.",
+                "type": "String|void"
+            },
+            "class": "Com",
+            "module": "appcom"
+        },
+        {
+            "file": "appcom\\com.js",
+            "line": 84,
+            "description": "Appelle le service demandé avec le fichier XML comme paramètre, puis appelle les\nfonctions données en paramètre lors de la réception d'une réponse serveur.",
+            "itemtype": "method",
+            "name": "envoyerXml",
+            "params": [
+                {
+                    "name": "fileEvt",
+                    "description": "Evenement associé à la selection du fichier",
+                    "type": "FileEvent"
+                },
+                {
+                    "name": "nomService",
+                    "description": "service à appeler",
+                    "type": "String"
+                },
+                {
+                    "name": "fctOk",
+                    "description": "fonction à appeler en cas de succes",
+                    "type": "Function(String)"
+                },
+                {
+                    "name": "fctErr",
+                    "description": "fonction à appeler en cas d'échec",
+                    "type": "Function(String)"
+                }
+            ],
+            "class": "Com",
+            "module": "appcom"
+        },
+        {
             "file": "controleur\\controleur.js",
-            "line": 52,
+            "line": 43,
+            "description": "Instance de la classe {{#crossLink \"Com\"}}{{/crossLink}} permettant de communiquer\navec le serveur.",
+            "itemtype": "property",
+            "name": "com",
+            "type": "Com",
+            "class": "Controleur",
+            "module": "controleur"
+        },
+        {
+            "file": "controleur\\controleur.js",
+            "line": 58,
             "description": "Démarre l'écran de chargement, puis appel le service `/controleur/annuler`.<br/>\nSi l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_annulerOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_annulerErr:method\"}}{{/crossLink}} dans le cas contraire).",
             "itemtype": "method",
             "name": "annuler",
@@ -104,7 +275,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 65,
+            "line": 71,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/annuler` a réussi.\n<br/> On demande alors à la vue de regénérer l'itinéraire (l'annulation d'un chargement\nde plan/livraisons n'est pas prise en charge, voir spec.s).\n<br/> Voir {{#crossLink \"Controleur/annuler:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_annulerOk",
@@ -115,12 +286,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 77,
+            "line": 84,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/annuler` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/annuler:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_annulerErr",
@@ -131,12 +304,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 91,
+            "line": 99,
             "description": "Démarre l'écran de chargement, puis appel le service `/controleur/retablir`.<br/>\nSi l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_retablirOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_retablirErr:method\"}}{{/crossLink}} dans le cas contraire).",
             "itemtype": "method",
             "name": "retablir",
@@ -145,7 +320,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 103,
+            "line": 111,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/retablir` a réussi.\n<br/> On demande alors à la vue de regénérer l'itinéraire (l'annulation d'un chargement\nde plan/livraisons n'est pas prise en charge, voir spec.s).\n<br/> Voir {{#crossLink \"Controleur/retablir:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_retablirOk",
@@ -156,12 +331,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 115,
+            "line": 124,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/retablir` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/retablir:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_retablirErr",
@@ -172,12 +349,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 129,
+            "line": 139,
             "description": "Simule un clic sur l'input HTML dédié à l'ouverture de fichier pour le plan.",
             "itemtype": "method",
             "name": "clicChargerPlan",
@@ -186,7 +365,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 137,
+            "line": 147,
             "description": "Méthode associée à la selection d'un fichier plan. Affiche l'écran de chargement puis\nappelle le service `/controleur/charger-plan` avec le contenu du fichier comme paramètre.\n<br/>Si l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_chargerPlanOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_chargerPlanErr:method\"}}{{/crossLink}} dans le cas contraire).\n<br/> Voir le module {{#crossLinkModule \"appcom\"}}{{/crossLinkModule}}.",
             "itemtype": "method",
             "name": "chargerPlan",
@@ -202,7 +381,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 154,
+            "line": 164,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-plan` a réussi.\nElle demande alors la vue de recharger le plan.\n<br/> Voir {{#crossLink \"Controleur/chargerPlan:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_chargerPlanOk",
@@ -213,12 +392,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 165,
+            "line": 176,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-plan` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/chargerPlan:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_chargerPlanErr",
@@ -229,12 +410,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 179,
+            "line": 191,
             "description": "Simule un clic sur l'input HTML dédié à l'ouverture de fichier pour les livraisons.",
             "itemtype": "method",
             "name": "clicChargerLivraisons",
@@ -243,7 +426,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 187,
+            "line": 199,
             "description": "Méthode associée à la selection d'un fichier livraisons. Affiche l'écran de chargement puis\nappelle le service `/controleur/charger-livraisons` avec le contenu du fichier comme paramètre.\n<br/>Si l'appel au service réussit, la méthode \n{{#crossLink \"Controleur/_chargerLivraisonsOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_chargerLivraisonsErr:method\"}}{{/crossLink}} dans le cas contraire).\n<br/> Voir le module {{#crossLinkModule \"appcom\"}}{{/crossLinkModule}}.",
             "itemtype": "method",
             "name": "chargerLivraisons",
@@ -259,7 +442,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 204,
+            "line": 216,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-livraisons` a réussi.\nElle demande alors la vue de recharger les livraisons.\n<br/> Voir {{#crossLink \"Controleur/chargerLivraisons:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_chargerLivraisonsOk",
@@ -270,12 +453,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 215,
+            "line": 228,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/charger-livraisons` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/chargerLivraisons:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_chargerLivraisonsErr",
@@ -286,12 +471,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 229,
+            "line": 243,
             "description": "Cette méthode utilise la librairie jsPDF pour générer un itinéraire au format PDF qui\ns'ouvre dans un nouvel onglet. Ce PDF est généré à partir de la div `FDR`(pour feuille de\nroute) du code HTML.",
             "itemtype": "method",
             "name": "clicTelechargerInitineraire",
@@ -300,7 +487,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 238,
+            "line": 252,
             "description": "Description",
             "params": [
                 {
@@ -320,7 +507,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 262,
+            "line": 276,
             "description": "Affiche l'écran de chargement puis appelle le service `/controleur/calculer-itineraire` qui permet de lancer le calcul\nde l'itinéraire côté serveur.\n<br/>Si l'appel au service réussit, càd que le calcul est réussi, la méthode \n{{#crossLink \"Controleur/_clicCalculOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_clicCalculErr:method\"}}{{/crossLink}} dans le cas contraire).",
             "itemtype": "method",
             "name": "_clicCalcul",
@@ -329,7 +516,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 277,
+            "line": 291,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/calculer-itineraire` a réussi.\nElle demande alors la vue de recharger l'itinéraire.\n<br/> Voir {{#crossLink \"Controleur/_clicCalcul:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_clicCalculOk",
@@ -340,12 +527,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 288,
+            "line": 303,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/calculer-itineraire` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/_clicCalcul:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_clicCalculErr",
@@ -356,12 +545,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 302,
+            "line": 318,
             "description": "Affiche l'écran de chargement puis appelle le service `/controleur/supprimer-livraison` qui permet de supprimer une livraison.\n<br/>Si l'appel au service réussit, càd que la suppression s'est bien déroulée, la méthode \n{{#crossLink \"Controleur/_suppressionOk:method\"}}{{/crossLink}} est appelée \n( {{#crossLink \"Controleur/_suppressionErr:method\"}}{{/crossLink}} dans le cas contraire).",
             "itemtype": "method",
             "name": "demandeDeSuppression",
@@ -377,7 +568,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 316,
+            "line": 332,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/supprimer-livraison` a réussi.\nElle demande alors la vue de recharger l'itinéraire ainsi que les livraisons.\n<br/> Voir {{#crossLink \"Controleur/demandeDeSuppression:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_suppressionOk",
@@ -388,12 +579,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 327,
+            "line": 344,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/supprimer-livraison` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/demandeDeSuppression:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_suppressionErr",
@@ -404,12 +597,14 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 341,
+            "line": 359,
             "description": "Affiche l'écran de chargement puis appelle le service `/controleur/ajouter-livraison` qui permet d'ajouter une livraison.\n <br/>Si l'appel au service réussit, càd que l'ajout s'est bien déroulé, la méthode \n {{#crossLink \"Controleur/_ajouterLivraisonOk:method\"}}{{/crossLink}} est appelée \n ( {{#crossLink \"Controleur/_ajouterLivraisonErr:method\"}}{{/crossLink}} dans le cas contraire).",
             "itemtype": "method",
             "name": "ajouterLivraison",
@@ -432,7 +627,7 @@
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 359,
+            "line": 377,
             "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/ajouter-livraison` a réussi.\nElle demande alors la vue de recharger l'itinéraire ainsi que les livraisons.\n<br/> Voir {{#crossLink \"Controleur/ajouterLivraison:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "nouvelItineraire",
@@ -443,13 +638,15 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 370,
-            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/ahouter-livraison` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/ajouterLivraison:method\"}}{{/crossLink}}",
+            "line": 389,
+            "description": "Cette méthode est appelée lorsqu'un appel au service `/controleur/ajouter-livraison` a échoué.\nElle ferme alors l'écran de chargement et affiche un message d'erreur.\n<br/> Voir {{#crossLink \"Controleur/ajouterLivraison:method\"}}{{/crossLink}}",
             "itemtype": "method",
             "name": "_ajouterLivraisonErr",
             "params": [
@@ -459,24 +656,717 @@
                     "type": "String"
                 }
             ],
+            "access": "private",
+            "tagname": "",
             "class": "Controleur",
             "module": "controleur"
         },
         {
             "file": "controleur\\controleur.js",
-            "line": 385,
+            "line": 405,
             "description": "Instance de la classe {{#crossLink \"Vue\"}}{{/crossLink}} associée au modèle.",
             "itemtype": "property",
             "name": "vue",
             "type": "Vue",
             "class": "Controleur",
             "module": "controleur"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 25,
+            "description": "Instance de la classe {{#crossLink \"Com\"}}{{/crossLink}} permettant de communiquer\navec le serveur.",
+            "itemtype": "property",
+            "name": "com",
+            "type": "Com",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 34,
+            "description": "Instance de la classe {{#crossLink \"Com\"}}{{/crossLink}} permettant de transmettre\nles interactions utilisateur.",
+            "itemtype": "property",
+            "name": "ctrl",
+            "type": "Controleur",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 42,
+            "description": "Tableau de String. Banque de couleurs des plages horaires",
+            "itemtype": "property",
+            "name": "couleurPlages",
+            "type": "String[]",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 48,
+            "description": "Liste des intersection du plan",
+            "itemtype": "property",
+            "name": "intersections",
+            "type": "VueIntersection[]",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 53,
+            "description": "Liste des routes du plan",
+            "itemtype": "property",
+            "name": "routes",
+            "type": "VueRoute[]",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 59,
+            "description": "Icone donné aux intersections associées à une livraison hors de sa plage horaire",
+            "itemtype": "property",
+            "name": "warningIcon",
+            "type": "Icon",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 74,
+            "description": "Vue de la feuille de route (PDF)",
+            "itemtype": "property",
+            "name": "feuilleDeRoute",
+            "type": "VueFeuilleDeRoute",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 81,
+            "description": "Vue de la légende (Panneau latéral)",
+            "itemtype": "property",
+            "name": "vueLegende",
+            "type": "VueLegende",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 92,
+            "description": "Ouvre la popup d'erreur avec le message souhaité (voir modals Bootstrap)",
+            "itemtype": "method",
+            "name": "erreur",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message à afficher",
+                    "type": "String"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 103,
+            "description": "Ferme la popup d'erreur (voir modals Bootstrap)",
+            "itemtype": "method",
+            "name": "fermerErreur",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 111,
+            "description": "Ouvre la popup d'info avec le message souhaité (voir modals Bootstrap)",
+            "itemtype": "method",
+            "name": "info",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message à afficher",
+                    "type": "String"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 122,
+            "description": "Ferme la popup d'info (voir modals Bootstrap)",
+            "itemtype": "method",
+            "name": "fermerInfo",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 130,
+            "description": "Affiche l'écran de chargement avec le message souhaité (voir modals Bootstrap)",
+            "itemtype": "method",
+            "name": "afficherChargement",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message à afficher",
+                    "type": "String"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 144,
+            "description": "Ferme l'écran de chargement' (voir modals Bootstrap)",
+            "itemtype": "method",
+            "name": "fermerChargement",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 159,
+            "description": "Appel le bon service pour recharger l'itinéraire.",
+            "itemtype": "method",
+            "name": "nouvelItineraire",
+            "params": [
+                {
+                    "name": "chargerLivraisons",
+                    "description": "faut-il recharger aussi les livraisons",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 179,
+            "description": "Retour du service `/modele/livraisons`, on charge les livraisons sur le plan\npuis on demande le nouvel itinéraire.",
+            "itemtype": "method",
+            "name": "livraisonPuisItineraireOk",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "Reponse du service, pas utilisé",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 191,
+            "description": "Echec du service `/modele/itineraire`, on ferme l'écran de chargement\npuis on affiche le message d'erreur.",
+            "itemtype": "method",
+            "name": "nouvelItineraireErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur renvoyé par le service",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 203,
+            "description": "Retour du service `/modele/itineraire`,\non parcours alors le XML reçu pour créer l'itinéraire.<br/>\n\n     <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n     <feuilleDeRoute>\n         <itineraire>\n             <etape heurePassage=\"0h00\" secondesAttente=\"0\" idIntersection=\"0\" idPlageHoraire=\"0\">\n                 <livraison idClient=\"0\" adresse=\"0\"/>\n             </etape>\n         </itineraire>\n         <livraisonsImpossibles>\n             <livraison idClient=\"0\" adresse=\"0\"/>\n         </livraisonsImpossibles>\n     </feuilleDeRoute>",
+            "itemtype": "method",
+            "name": "nouvelItineraireOk",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "XML renvoyé par le service",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 267,
+            "description": "Détruit les livraisons, la légende, appelle le bon service pour recharger les livraisons.",
+            "itemtype": "method",
+            "name": "nouvellesLivraisons",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 277,
+            "description": "Echec du service `/modele/livraisons`, on ferme l'écran de chargement\npuis on affiche le message d'erreur.",
+            "itemtype": "method",
+            "name": "nouvellesLivraisonsErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur renvoyé par le service",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 289,
+            "description": "Retour du service `/modele/livraisons`,\non parcours alors le XML reçu pour créer les livraisons.<br/>\n\n     <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n     <livraisons idEntrepot=\"0\">\n         <plage debut=\"0h00\" fin=\"23h59\">\n             <livraison idClient=\"0\" adresse=\"0\"/>\n         </plage>\n     </livraisons>",
+            "itemtype": "method",
+            "name": "nouvellesLivraisonsOk",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "XML renvoyé par le service",
+                    "type": "String"
+                },
+                {
+                    "name": "laisserChargement",
+                    "description": "Empeche la fermeture de l'écran de chargement",
+                    "type": "Boolean"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 339,
+            "description": "Détruit les routes, les intersections, appelle le bon service pour recharger le plan.",
+            "itemtype": "method",
+            "name": "nouveauPlan",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 350,
+            "description": "Echec du service `/modele/plan`, on ferme l'écran de chargement\npuis on affiche le message d'erreur.",
+            "itemtype": "method",
+            "name": "retourModelePlanErr",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Message d'erreur renvoyé par le service",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 362,
+            "description": "Retour du service `/modele/plan`,\non parcours alors le XML reçu pour créer le plan.<br/>\n\n     <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n     <plan>\n         <intersection id=\"0\" x=\"0\" y=\"0\">\n             <route id=\"0\" idDestination=\"0\" nom=\"nom de la route\"/>\n         </intersection>\n     </plan>",
+            "itemtype": "method",
+            "name": "retourModelePlanOk",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "XML renvoyé par le service",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 431,
+            "description": "Affiche les éléments du plan dans la map Leaflet.",
+            "itemtype": "method",
+            "name": "afficher",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 444,
+            "description": "Enlève les éléments du plan de la map Leaflet.",
+            "itemtype": "method",
+            "name": "masquer",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 459,
+            "description": "Réinitialise les données de livraison. Remet un plan vierge.",
+            "itemtype": "method",
+            "name": "razLivraison",
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 473,
+            "description": "Crée et ajoute une intersection à la liste des intersections.",
+            "itemtype": "method",
+            "name": "ajouterIntersection",
+            "params": [
+                {
+                    "name": "pos",
+                    "description": "position sur la map (cf Leaflet)",
+                    "type": "LngLat"
+                },
+                {
+                    "name": "id",
+                    "description": "ID de l'intersection",
+                    "type": "Integer"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 484,
+            "description": "Crée et ajoute une route à la liste des routes.",
+            "itemtype": "method",
+            "name": "ajouterRoute",
+            "params": [
+                {
+                    "name": "i1",
+                    "description": "Départ de la route",
+                    "type": "VueIntersection"
+                },
+                {
+                    "name": "i2",
+                    "description": "Arrivée de la route",
+                    "type": "VueIntersection"
+                },
+                {
+                    "name": "nom",
+                    "description": "Nom de la route",
+                    "type": "String"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 499,
+            "description": "Renvoie la VueIntersection correspondant à cet ID",
+            "itemtype": "method",
+            "name": "getIntersection",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "ID de l'intersection",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "VueIntersection"
+            },
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 514,
+            "description": "Renvoie la route, si elle existe, qui va de l'intersection dont l'id vaut id1\nà l'intersection dont l'id vaut id2",
+            "itemtype": "method",
+            "name": "getRoute",
+            "params": [
+                {
+                    "name": "id1",
+                    "description": "ID départ",
+                    "type": "Integer"
+                },
+                {
+                    "name": "id2",
+                    "description": "ID arrivée",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "VueRoute"
+            },
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 532,
+            "description": "Signale au controleur que l'utilisateur veut supprimer une livraison.",
+            "itemtype": "method",
+            "name": "_livraisonSupprimee",
+            "params": [
+                {
+                    "name": "idLivraison",
+                    "description": "ID de la livraison.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "idIntersection",
+                    "description": "ID de l'intersection associée à la livraison.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 545,
+            "description": "Passe les intersections où il y a une livraison en mode `séléctionnable` et leur\nassocie un écouteur de clic.",
+            "itemtype": "method",
+            "name": "_ajoutLivraison",
+            "params": [
+                {
+                    "name": "idIntersection",
+                    "description": "ID de l'intersection où l'on veut la livraison.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 572,
+            "description": "Renvoie une fonction bien formée pour l'ajout de livraison.",
+            "itemtype": "method",
+            "name": "genererFctPopup",
+            "params": [
+                {
+                    "name": "idInter",
+                    "description": "ID de l'intersection où l'on veut la livraison.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "idLiv",
+                    "description": "ID de la livraison qui doit précéder celle que l'on crée.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "idClient",
+                    "description": "ID du client à livrer.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 585,
+            "description": "Notifie le controleur que l'utilisateur veut ajouter une livraison.",
+            "itemtype": "method",
+            "name": "genererFctPopup",
+            "params": [
+                {
+                    "name": "idInter",
+                    "description": "ID de l'intersection où l'on veut la livraison.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "livraison",
+                    "description": "ID de la livraison qui doit précéder celle que l'on crée.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "client",
+                    "description": "ID du client à livrer.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "Vue",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 749,
+            "description": "Position géographique",
+            "itemtype": "property",
+            "name": "pos",
+            "type": "[x,y]",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 754,
+            "description": "ID de l'intersection",
+            "itemtype": "property",
+            "name": "id",
+            "type": "Integer",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 977,
+            "description": "Valeurs par défaut pour les arcs\n\n     {ecartArc, ecartSuivant, nbLigne, couleur}",
+            "itemtype": "property",
+            "name": "defaut",
+            "type": "Object",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 991,
+            "description": "Intersection de départ",
+            "itemtype": "property",
+            "name": "A",
+            "type": "VueIntersection",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 997,
+            "description": "Intersection d'arrivée",
+            "itemtype": "property",
+            "name": "B",
+            "type": "VueIntersection",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1003,
+            "description": "Nom de la route",
+            "itemtype": "property",
+            "name": "nom",
+            "type": "String",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1009,
+            "description": "Options par défaut pour une route dans Leaflet",
+            "itemtype": "property",
+            "name": "paramDefaut",
+            "type": "Object",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1015,
+            "description": "Objet Polyline Leaflet représentant la route",
+            "itemtype": "property",
+            "name": "ligneBase",
+            "type": "L.Polyline",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1021,
+            "description": "Tableau d'objets Polyline Leaflet représentant les différents passages sur cette route.",
+            "itemtype": "property",
+            "name": "ligneBase",
+            "type": "L.Polyline[]",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1032,
+            "description": "Change le nom de la route.",
+            "itemtype": "method",
+            "name": "setNom",
+            "params": [
+                {
+                    "name": "nom",
+                    "description": "nom de la route.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Retourne l'objet courant.",
+                "type": "VueRoute"
+            },
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1047,
+            "description": "Ajoute à la map Leaflet",
+            "itemtype": "method",
+            "name": "afficher",
+            "return": {
+                "description": "Retourne l'objet courant.",
+                "type": "VueRoute"
+            },
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1061,
+            "description": "Enlève de la map Leaflet",
+            "itemtype": "method",
+            "name": "masquer",
+            "return": {
+                "description": "Retourne l'objet courant.",
+                "type": "VueRoute"
+            },
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1077,
+            "description": "Gestion du `click`.",
+            "itemtype": "method",
+            "name": "_clic",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1085,
+            "description": "Gestion du `mouseover`. On change la couleur de la route.",
+            "itemtype": "method",
+            "name": "_mouseover",
+            "class": "VueRoute",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1093,
+            "description": "Gestion du `mouseout`. On remet la couleur de la route.",
+            "itemtype": "method",
+            "name": "_mouseout",
+            "class": "VueRoute",
+            "module": "vue"
         }
     ],
     "warnings": [
         {
             "message": "Missing item type\nDescription",
-            "line": " controleur\\controleur.js:238"
+            "line": " controleur\\controleur.js:252"
         }
     ]
 }

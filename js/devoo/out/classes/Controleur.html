@@ -38,13 +38,18 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Com.html">Com</a></li>
                                 <li><a href="../classes/Controleur.html">Controleur</a></li>
                                 <li><a href="../classes/Vue.html">Vue</a></li>
+                                <li><a href="../classes/VueIntersection.html">VueIntersection</a></li>
+                                <li><a href="../classes/VueLegende.html">VueLegende</a></li>
+                                <li><a href="../classes/VueRoute.html">VueRoute</a></li>
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/appcom.html">appcom</a></li>
                                 <li><a href="../modules/controleur.html">controleur</a></li>
+                                <li><a href="../modules/vue.html">vue</a></li>
                             </ul>
                         </div>
                     </div>
@@ -146,31 +151,31 @@
                                             <h3>Methods</h3>
                         
                                             <ul class="index-list methods">
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__ajouterLivraisonErr">_ajouterLivraisonErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__annulerErr">_annulerErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__annulerOk">_annulerOk</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__chargerLivraisonsErr">_chargerLivraisonsErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__chargerLivraisonsOk">_chargerLivraisonsOk</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__chargerPlanErr">_chargerPlanErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__chargerPlanOk">_chargerPlanOk</a>
                         
                                                     </li>
@@ -178,27 +183,27 @@
                                                         <a href="#method__clicCalcul">_clicCalcul</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__clicCalculErr">_clicCalculErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__clicCalculOk">_clicCalculOk</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__retablirErr">_retablirErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__retablirOk">_retablirOk</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__suppressionErr">_suppressionErr</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method__suppressionOk">_suppressionOk</a>
                         
                                                     </li>
@@ -234,7 +239,7 @@
                                                         <a href="#method_demandeDeSuppression">demandeDeSuppression</a>
                         
                                                     </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method private">
                                                         <a href="#method_nouvelItineraire">nouvelItineraire</a>
                         
                                                     </li>
@@ -250,6 +255,10 @@
                         
                                             <ul class="index-list properties">
                                                     <li class="index-item property">
+                                                        <a href="#property_com">com</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
                                                         <a href="#property_vue">vue</a>
                         
                                                     </li>
@@ -262,7 +271,7 @@
                                     <div id="methods" class="api-class-tabpanel">
                                         <h2 class="off-left">Methods</h2>
                         
-                                            <div id="method__ajouterLivraisonErr" class="method item">
+                                            <div id="method__ajouterLivraisonErr" class="method item private">
                                                 <h3 class="name"><code>_ajouterLivraisonErr</code></h3>
                                             
                                                     <div class="args">
@@ -275,6 +284,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -283,7 +293,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l370"><code>controleur\controleur.js:370</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l389"><code>controleur\controleur.js:389</code></a>
                                                     </p>
                                             
                                             
@@ -291,7 +301,7 @@
                                                 </div>
                                             
                                                 <div class="description">
-                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/ahouter-livraison</code> a échoué.
+                                                    <p>Cette méthode est appelée lorsqu&#39;un appel au service <code>/controleur/ajouter-livraison</code> a échoué.
                                             Elle ferme alors l&#39;écran de chargement et affiche un message d&#39;erreur.
                                             <br/> Voir <a href="../classes/Controleur.html#method_ajouterLivraison" class="crosslink">ajouterLivraison</a></p>
                                             
@@ -317,7 +327,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__annulerErr" class="method item">
+                                            <div id="method__annulerErr" class="method item private">
                                                 <h3 class="name"><code>_annulerErr</code></h3>
                                             
                                                     <div class="args">
@@ -330,6 +340,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -338,7 +349,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l77"><code>controleur\controleur.js:77</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l84"><code>controleur\controleur.js:84</code></a>
                                                     </p>
                                             
                                             
@@ -372,7 +383,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__annulerOk" class="method item">
+                                            <div id="method__annulerOk" class="method item private">
                                                 <h3 class="name"><code>_annulerOk</code></h3>
                                             
                                                     <div class="args">
@@ -385,6 +396,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -393,7 +405,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l65"><code>controleur\controleur.js:65</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l71"><code>controleur\controleur.js:71</code></a>
                                                     </p>
                                             
                                             
@@ -428,7 +440,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__chargerLivraisonsErr" class="method item">
+                                            <div id="method__chargerLivraisonsErr" class="method item private">
                                                 <h3 class="name"><code>_chargerLivraisonsErr</code></h3>
                                             
                                                     <div class="args">
@@ -441,6 +453,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -449,7 +462,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l215"><code>controleur\controleur.js:215</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l228"><code>controleur\controleur.js:228</code></a>
                                                     </p>
                                             
                                             
@@ -483,7 +496,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__chargerLivraisonsOk" class="method item">
+                                            <div id="method__chargerLivraisonsOk" class="method item private">
                                                 <h3 class="name"><code>_chargerLivraisonsOk</code></h3>
                                             
                                                     <div class="args">
@@ -496,6 +509,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -504,7 +518,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l204"><code>controleur\controleur.js:204</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l216"><code>controleur\controleur.js:216</code></a>
                                                     </p>
                                             
                                             
@@ -538,7 +552,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__chargerPlanErr" class="method item">
+                                            <div id="method__chargerPlanErr" class="method item private">
                                                 <h3 class="name"><code>_chargerPlanErr</code></h3>
                                             
                                                     <div class="args">
@@ -551,6 +565,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -559,7 +574,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l165"><code>controleur\controleur.js:165</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l176"><code>controleur\controleur.js:176</code></a>
                                                     </p>
                                             
                                             
@@ -593,7 +608,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__chargerPlanOk" class="method item">
+                                            <div id="method__chargerPlanOk" class="method item private">
                                                 <h3 class="name"><code>_chargerPlanOk</code></h3>
                                             
                                                     <div class="args">
@@ -606,6 +621,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -614,7 +630,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l154"><code>controleur\controleur.js:154</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l164"><code>controleur\controleur.js:164</code></a>
                                                     </p>
                                             
                                             
@@ -663,7 +679,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l262"><code>controleur\controleur.js:262</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l276"><code>controleur\controleur.js:276</code></a>
                                                     </p>
                                             
                                             
@@ -682,7 +698,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__clicCalculErr" class="method item">
+                                            <div id="method__clicCalculErr" class="method item private">
                                                 <h3 class="name"><code>_clicCalculErr</code></h3>
                                             
                                                     <div class="args">
@@ -695,6 +711,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -703,7 +720,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l288"><code>controleur\controleur.js:288</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l303"><code>controleur\controleur.js:303</code></a>
                                                     </p>
                                             
                                             
@@ -737,7 +754,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__clicCalculOk" class="method item">
+                                            <div id="method__clicCalculOk" class="method item private">
                                                 <h3 class="name"><code>_clicCalculOk</code></h3>
                                             
                                                     <div class="args">
@@ -750,6 +767,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -758,7 +776,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l277"><code>controleur\controleur.js:277</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l291"><code>controleur\controleur.js:291</code></a>
                                                     </p>
                                             
                                             
@@ -792,7 +810,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__retablirErr" class="method item">
+                                            <div id="method__retablirErr" class="method item private">
                                                 <h3 class="name"><code>_retablirErr</code></h3>
                                             
                                                     <div class="args">
@@ -805,6 +823,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -813,7 +832,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l115"><code>controleur\controleur.js:115</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l124"><code>controleur\controleur.js:124</code></a>
                                                     </p>
                                             
                                             
@@ -847,7 +866,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__retablirOk" class="method item">
+                                            <div id="method__retablirOk" class="method item private">
                                                 <h3 class="name"><code>_retablirOk</code></h3>
                                             
                                                     <div class="args">
@@ -860,6 +879,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -868,7 +888,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l103"><code>controleur\controleur.js:103</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l111"><code>controleur\controleur.js:111</code></a>
                                                     </p>
                                             
                                             
@@ -903,7 +923,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__suppressionErr" class="method item">
+                                            <div id="method__suppressionErr" class="method item private">
                                                 <h3 class="name"><code>_suppressionErr</code></h3>
                                             
                                                     <div class="args">
@@ -916,6 +936,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -924,7 +945,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l327"><code>controleur\controleur.js:327</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l344"><code>controleur\controleur.js:344</code></a>
                                                     </p>
                                             
                                             
@@ -958,7 +979,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method__suppressionOk" class="method item">
+                                            <div id="method__suppressionOk" class="method item private">
                                                 <h3 class="name"><code>_suppressionOk</code></h3>
                                             
                                                     <div class="args">
@@ -971,6 +992,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -979,7 +1001,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l316"><code>controleur\controleur.js:316</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l332"><code>controleur\controleur.js:332</code></a>
                                                     </p>
                                             
                                             
@@ -1040,7 +1062,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l341"><code>controleur\controleur.js:341</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l359"><code>controleur\controleur.js:359</code></a>
                                                     </p>
                                             
                                             
@@ -1112,7 +1134,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l52"><code>controleur\controleur.js:52</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l58"><code>controleur\controleur.js:58</code></a>
                                                     </p>
                                             
                                             
@@ -1151,7 +1173,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l187"><code>controleur\controleur.js:187</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l199"><code>controleur\controleur.js:199</code></a>
                                                     </p>
                                             
                                             
@@ -1209,7 +1231,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l137"><code>controleur\controleur.js:137</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l147"><code>controleur\controleur.js:147</code></a>
                                                     </p>
                                             
                                             
@@ -1261,7 +1283,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l179"><code>controleur\controleur.js:179</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l191"><code>controleur\controleur.js:191</code></a>
                                                     </p>
                                             
                                             
@@ -1291,7 +1313,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l129"><code>controleur\controleur.js:129</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l139"><code>controleur\controleur.js:139</code></a>
                                                     </p>
                                             
                                             
@@ -1321,7 +1343,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l229"><code>controleur\controleur.js:229</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l243"><code>controleur\controleur.js:243</code></a>
                                                     </p>
                                             
                                             
@@ -1359,7 +1381,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l302"><code>controleur\controleur.js:302</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l318"><code>controleur\controleur.js:318</code></a>
                                                     </p>
                                             
                                             
@@ -1394,7 +1416,7 @@
                                             
                                             
                                             </div>
-                                            <div id="method_nouvelItineraire" class="method item">
+                                            <div id="method_nouvelItineraire" class="method item private">
                                                 <h3 class="name"><code>nouvelItineraire</code></h3>
                                             
                                                     <div class="args">
@@ -1407,6 +1429,7 @@
                                             
                                             
                                             
+                                                    <span class="flag private">private</span>
                                             
                                             
                                             
@@ -1415,7 +1438,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l359"><code>controleur\controleur.js:359</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l377"><code>controleur\controleur.js:377</code></a>
                                                     </p>
                                             
                                             
@@ -1464,7 +1487,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l91"><code>controleur\controleur.js:91</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l99"><code>controleur\controleur.js:99</code></a>
                                                     </p>
                                             
                                             
@@ -1487,6 +1510,32 @@
                                     <div id="properties" class="api-class-tabpanel">
                                         <h2 class="off-left">Properties</h2>
                         
+                                            <div id="property_com" class="property item">
+                                                <h3 class="name"><code>com</code></h3>
+                                                <span class="type"><a href="../classes/Com.html" class="crosslink">Com</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/controleur_controleur.js.html#l43"><code>controleur\controleur.js:43</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Instance de la classe <a href="../classes/Com.html" class="crosslink">Com</a> permettant de communiquer
+                                            avec le serveur.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
                                             <div id="property_vue" class="property item">
                                                 <h3 class="name"><code>vue</code></h3>
                                                 <span class="type"><a href="../classes/Vue.html" class="crosslink">Vue</a></span>
@@ -1498,7 +1547,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/controleur_controleur.js.html#l385"><code>controleur\controleur.js:385</code></a>
+                                                    <a href="../files/controleur_controleur.js.html#l405"><code>controleur\controleur.js:405</code></a>
                                                     </p>
                                             
                                             
