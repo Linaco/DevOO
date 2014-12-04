@@ -29,7 +29,7 @@ public class ServeurBuilder {
 	}
 	
 	/**
-	 * methodes pas ï¿½ jour car format de sortie non specifie
+	 * methodes pas à jour car format de sortie non specifie
 	 * @param c
 	 * @return
 	 */

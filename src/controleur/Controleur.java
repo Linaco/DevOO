@@ -9,7 +9,7 @@ import modele.*;
 public class Controleur {
 	
 	/**
-	 * Attribut de classe DateFormat permettant le formatage de l'heure ï¿½ partir d'une String
+	 * Attribut de classe DateFormat permettant le formatage de l'heure à partir d'une String
 	 */
 	
 	
@@ -30,12 +30,12 @@ public class Controleur {
 	
 	
 	/**
-	 * Remise ï¿½ zï¿½ro de la feuille de route
-	 * Appelle ï¿½ la mï¿½thode pour charger le document passï¿½ en paramï¿½tre
+	 * Remise à zéro de la feuille de route
+	 * Appelle a la méthode pour charger le document passé en paramètre
 	 * @param livDoc
-	 * 		: document ï¿½ parser
+	 * 		: document a parser
 	 * @return boolean
-	 * 		 true si la feuille de route est correctement gï¿½nï¿½rï¿½e //
+	 * 		 true si la feuille de route est correctement généré //
 	 * 		 false si la feuille est incorrecte
 	 */
 	public boolean chargerLivraisons(Document livDoc){
@@ -50,12 +50,12 @@ public class Controleur {
 	}
 	
 	/**
-	 * Remise ï¿½ zï¿½ro du graphe routier
-	 * Appelle ï¿½ la mï¿½thode pour charger le document passï¿½ en paramï¿½tre
+	 * Remise à zéro du graphe routier
+	 * Appelle ici la méthode pour charger le document passé en paramètre
 	 * @param plan
 	 * 		: document ï¿½ parser
 	 * @return boolean
-	 * 		 true si le graphe routier est correctement gï¿½nï¿½rï¿½ //
+	 * 		 true si le graphe routier est correctement généré //
 	 * 		 false si le graphe routier incorrecte
 	 */
 	public boolean chargerPlan(Document plan){
@@ -95,7 +95,7 @@ public class Controleur {
 	 * Ajoute une livraison et l'enregistre dans la pile pour undo/redo
 	 * @param idIntersection : id de l'intersection de l'adresse de livraison
 	 * @param idClient : id du client de la livraison
-	 * @param idLivraisonPrecedente : id de la livraison effectuï¿½ avant celle ajoutï¿½e
+	 * @param idLivraisonPrecedente : id de la livraison effectuée avant celle ajoutée
 	 */
 	public void ajouterLivraison(int idIntersection, int idClient, int idLivraisonPrecedente) {
 		System.out.println("debut controleur");
