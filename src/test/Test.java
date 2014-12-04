@@ -1,9 +1,18 @@
 package test;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.*;
+import java.nio.file.Path;
+
+import javax.xml.parsers.*;
+
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
 import modele.*;
+import controleur.*;
 
 public class Test {
 	public static void main(String[] args){
@@ -51,6 +60,12 @@ public class Test {
 			} else {
 				System.out.println("X - Livraison - Construc");
 			}
+			System.out.println("==============================");
+			String path = new File("Tests/Plan-Minimal.xml").getAbsolutePath();
+			System.out.println("Vérifiez que vous disposez du Fichier à :"+path);
+			File file = new File(path);
+			ChargerPlan plan = new ChargerPlan(stringToDom(loadFile(file)));
+			
 			
 		} else {
 			System.out.println("X - Création d'une intersection");
@@ -61,7 +76,7 @@ public class Test {
 	private static boolean ConstrucLivraison(Intersection inter, int i, int j) {
 		Livraison liv = new Livraison(inter, i, j);
 		if( (inter == liv.getPointLivraison()) &&
-				(i == liv.getIdLiv()) &&
+				(i == liv.getIdInPH()) &&
 				(j == liv.getIdClient())
 				){
 			return true;
@@ -126,5 +141,31 @@ public class Test {
 	public static void displayLivraison(Livraison item){
 		
 	}
+	
+	public static Document stringToDom(String xmlSource) 
+            throws SAXException, ParserConfigurationException, IOException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        return builder.parse(new InputSource(new StringReader(xmlSource)));
+    }
+	
+	 public static String loadFile(File f) {
+		    try {
+		       BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
+		       StringWriter out = new StringWriter();
+		       int b;
+		       while ((b=in.read()) != -1)
+		           out.write(b);
+		       out.flush();
+		       out.close();
+		       in.close();
+		       return out.toString();
+		    }
+		    catch (IOException ie)
+		    {
+		         ie.printStackTrace(); 
+		         return "";
+		    }
+		}
 
 }
