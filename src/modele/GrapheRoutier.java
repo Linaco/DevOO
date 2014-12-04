@@ -73,7 +73,7 @@ public class GrapheRoutier {
     
     /**
      * Ajoute l'intersection donnée au graphe routier
-     * @param inter Intersection : l'intersection à ajouter au graphe routier
+     * @param inter : l'intersection à ajouter au graphe routier
      */
     public void ajouterIntersection(Intersection inter){
     	this.listeIntersection.add(inter.getId(),inter);
@@ -81,7 +81,7 @@ public class GrapheRoutier {
     
     /**
      * Permet de savoir si une intersection avec un identifiant donné existe
-     * @param idInter int : l'identifiant de l'intersection pour laquelle on veut savoir si elle existe
+     * @param idInter : l'identifiant de l'intersection pour laquelle on veut savoir si elle existe
      * @return boolean : vaut true si et seulement si l'intersection existe dans le graphe
      */
     public boolean interExiste(int idInter){
@@ -103,8 +103,8 @@ public class GrapheRoutier {
     
     /**
      * 
-     * @param depart Intersection : L'intersection dont on veut connaitre la route sortante
-     * @param arrivee Intersection : L'intersection dont on veut connaitre la route entrante
+     * @param depart : L'intersection dont on veut connaitre la route sortante
+     * @param arrivee : L'intersection dont on veut connaitre la route entrante
      * @return Route : La route allant de départ à arrivée
      */
     public Route getRoute(Intersection depart, Intersection arrivee){
@@ -119,7 +119,7 @@ public class GrapheRoutier {
    /**
     * Calcul le plus court chemin entre le depart et l'arrivée donnés
     * @param depart Intersection : Intersection correspondant au point de départ du chemin calculé
-    * @param arrivee Intersection : Intersection correspondant au point d'arrivée du chemin calculé
+    * @param arrivee : Intersection correspondant au point d'arrivée du chemin calculé
     * @return Object[] : Tableau contenant la liste ordonnée des routes à suivre pour atteindre l'arrivée depuis le départ avec un cout minimal et le cout de la solution, null si aucune solution
     */
      public Object[] calculerPlusCourtChemin(Intersection depart, Intersection arrivee) {
@@ -197,7 +197,7 @@ public class GrapheRoutier {
      
      /**
       * Permet d'obtenir l'intersection ayant l'id donné
-      * @param idIntersection int : identifiant de l'intersection à retrouver
+      * @param idIntersection : identifiant de l'intersection à retrouver
       * @return Intersection : l'intersection correspondant à idIntersection
       */
      public Intersection getIntersection(int idIntersection) {

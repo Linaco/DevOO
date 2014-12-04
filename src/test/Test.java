@@ -1,6 +1,5 @@
 package test;
 import modele.*;
-import controleur.Controleur;
 
 public class Test {
 	public static void main(String[] args){

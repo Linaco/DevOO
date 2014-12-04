@@ -5,8 +5,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import modele.*;
-
 /**
  * 
  */
@@ -21,6 +19,9 @@ public class FeuilleDeRoute {
 
     private ArrayList<Etape> itineraire;
 	
+    /**
+     * 
+     */
     public FeuilleDeRoute() {
 		grapheLivraison = new GrapheLivraison();
     	this.plagesHoraires= new ArrayList<>();
@@ -153,6 +154,7 @@ public class FeuilleDeRoute {
     * @param nouvelleLivraison
     * @param livraisonPrecedente
     */
+   @SuppressWarnings("unchecked")
    public void ajouterLivraison(Livraison nouvelleLivraison, Livraison livraisonPrecedente, GrapheRoutier carte){
 	   PlageHoraire pH = nouvelleLivraison.getPlageHoraire();
 	   Boolean b = false;
@@ -206,8 +208,13 @@ public class FeuilleDeRoute {
     * @param livraison
     * @param grapheroutier
     */
+<<<<<<< HEAD
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
 	   System.out.println("Debut");
+=======
+   @SuppressWarnings("unchecked")
+public void supprimerLivraison(Livraison l, GrapheRoutier carte){
+>>>>>>> 33ab8f89435c37bfa9f3d4fc35ab3afa9134cc09
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
 	   this.getGrapheLivraison().getLivraisons().remove(l);
@@ -242,6 +249,7 @@ public class FeuilleDeRoute {
     * Calcul le parcours pour les livraisons demandees et cree l'itineraire
     * @param carte Le Graphe Routier a utiliser pour calculer le parcours
     */
+   @SuppressWarnings("unchecked")
    public void calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
         List<Livraison> livraisonsPlageSuivante;
@@ -365,6 +373,12 @@ public class FeuilleDeRoute {
         }
    }
    
+	/**
+	 * Génère une String au format xml 
+	 * Cette dernière contient l'ensemble des livraisons réparties en 2 sous ensembles :
+	 * itineraire qui contient les livraisons réalisable et livraisonsImpossibles
+	 * @return string
+	 */
 	public String getItineraireXML(){
 		String res = "";
 		res += "<feuilleDeRoute>";

@@ -101,7 +101,7 @@ function Controleur(){
         com.appelService("controleur/supprimer-livraison",""+id,this._suppressionOk, this._suppressionErr, true);
     };   
     this._suppressionOk = function(rep) {
-        vue.afficherChargement("Actualisation des données...");
+        //vue.afficherChargement("Actualisation des données...");
         vue.nouvelItineraire(true);
     }; 
     this._suppressionErr = function(msg) {

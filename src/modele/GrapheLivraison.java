@@ -26,8 +26,8 @@ public class GrapheLivraison implements Graph {
 	
 	/**
 	 * Constructeur de GrapheLivraison
-	 * @param matriceAdjacence int[][] : Matrice contenant les couts des plus courts chemins entre chaque livraison. Le depet doit etre a l'indice 0.
-	 * @param lLivraisons List Livraison : Liste des livraisons pour la tournee a calculer, ordonnee selon le meme ordre que les colonnes de la matrice d'adjacence.
+	 * @param matriceAdjacence : Matrice contenant les couts des plus courts chemins entre chaque livraison. Le depet doit etre a l'indice 0.
+	 * @param lLivraisons : Liste des livraisons pour la tournee a calculer, ordonnee selon le meme ordre que les colonnes de la matrice d'adjacence.
 	 */
 	public GrapheLivraison(int[][] matriceAdjacence, List<Livraison> lLivraisons){
 		this.nbSommets = matriceAdjacence[0].length;
@@ -157,8 +157,13 @@ public class GrapheLivraison implements Graph {
 
 	/**
 	 * Permet d'obtenir une livraison par son identifiant
+<<<<<<< HEAD
 	 * @param idLivraison int : identifiant de la livraison ï¿½ retrouver
 	 * @return Livraison : 
+=======
+	 * @param idLivraison : identifiant de la livraison à retrouver
+	 * @return Livraison : la livraison correspondant à idLivraison
+>>>>>>> 33ab8f89435c37bfa9f3d4fc35ab3afa9134cc09
 	 */
 	public Livraison getLivraison(int idLivraison) {
 		Livraison l = null;

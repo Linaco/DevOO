@@ -13,9 +13,12 @@ public class Intersection {
 	
 	/**
 	 * Constructeur d'intersection, initialisation de l'ArrayList
-	 * @param id
-	 * @param x
+	 * @param id  id de l'intersection
+	 * 		
+	 * @param 
+	 * 		 x  valeur de x
 	 * @param y
+	 * 		 valeur de y
 	 */
 	public Intersection(int id, int x, int y ){
 		this.id = id;
@@ -27,32 +30,36 @@ public class Intersection {
 	//Getters
 	/**
 	 * Getter de la liste de route sortant de l'intersection
-	 * @return List<Route> troncSortants
+	 * @return List<{@link Route}> : troncSortants
 	 */
 	public List<Route> getTroncsSortants(){return this.troncSortants;}
 	
 	/**
 	 * Getter de l'id
-	 * @return id
+	 * @return 
+	 * 		int : id de l'intersection
 	 */
 	public int getId(){return id;}
 	
 	/**
 	 * getter de la position x
-	 * @return x
+	 * @return int : position x
+	 * 		
 	 */
 	public int getX(){return x;}
 
 	/**
 	 * getter de la position y
-	 * @return y
+	 * @return int : position y
+	 * 		
 	 */
 	public int getY(){return y;}
 	
 	
 	/**
-	 * Ajout de la route passï¿½ en parametre a troncsSortants
-	 * @param route
+	 * Ajout de la route passée en parametre a troncsSortants
+	 * @param Route : route à ajouter
+	 * 		
 	 */
 	public void addTroncSortant(Route route){
 		this.troncSortants.add(route);
@@ -72,6 +79,10 @@ public class Intersection {
 		return toStringXML();
 	}
 	
+	/**
+	 * Renvoie les informations sur une Intersection dans un String au format xml
+	 * @return String : chaine générée
+	 */
 	public String toStringXML(){
 		String res = "";
 		res += "<intersection id=\""+this.id+"\" x=\""+this.x+"\" y=\""+this.y+"\" >";
