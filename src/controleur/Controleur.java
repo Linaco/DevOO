@@ -19,6 +19,7 @@ public class Controleur {
 	private Stack<Commande> listeAnnules;
 	/**
 	 * Constructeur de Controleur
+	 * Initialisation du graphe routier et de la feuille de route
 	 */
 	 public Controleur(){
 		grapheRoutier = new GrapheRoutier();
@@ -27,18 +28,18 @@ public class Controleur {
 	
 	
 	/**
-	 * Génération de la FeuilleDeRoute à partir d'un document xml passé en paramètre
-	 * Le document est parsé 2 fois, une fois pour générer les PlagesHoraires,
-	 * une fois pour générer les Livraisons et les lier à la PlageHoraire parente
-	 * Si tout se passe bien, renvoie true
-	 * Sinon renvoie false avec affichage en console du type de problème
+	 * Remise à zéro de la feuille de route
+	 * Appelle à la méthode pour charger le document passé en paramètre
 	 * @param livDoc
+	 * 		: document à parser
 	 * @return boolean
+	 * 		 true si la feuille de route est correctement générée //
+	 * 		 false si la feuille est incorrecte
 	 */
 	public boolean chargerLivraisons(Document livDoc){
 		
 		feuilledeRoute.clean();
-		feuilledeRoute = CommandeChargerLivraisons.chargerLivraisons(livDoc, grapheRoutier);
+		feuilledeRoute = ChargerLivraisons.chargerLivraisons(livDoc, grapheRoutier);
 		if(feuilledeRoute.getPlagesHoraires().size() == 0){
 			return false;
 		}else{
@@ -47,17 +48,17 @@ public class Controleur {
 	}
 	
 	/**
-	 * Génération du GrapheRoutier à partir d'un document xml passé en paramètre
-	 * Le document est parsé 2 fois, une fois pour générer les Intersections,
-	 * une fois pour générer les Routes et les lier aux Intersections correspondantes
-	 * Si tout se passe bien, renvoie true
-	 * Sinon renvoie false avec affichage en console du type de problème
+	 * Remise à zéro du graphe routier
+	 * Appelle à la méthode pour charger le document passé en paramètre
 	 * @param plan
+	 * 		: document à parser
 	 * @return boolean
+	 * 		 true si le graphe routier est correctement généré //
+	 * 		 false si le graphe routier incorrecte
 	 */
 	public boolean chargerPlan(Document plan){
 		grapheRoutier.clean();
-		grapheRoutier = CommandeChargerPlan.chargerPlan(plan);
+		grapheRoutier = ChargerPlan.chargerPlan(plan);
 		if(grapheRoutier.getListeIntersections().size() == 0){
 			return false;
 		}else{
@@ -68,8 +69,9 @@ public class Controleur {
 	
 	
 	/**
-	 * getter du graphe Routier contenant les Intersections
-	 * @return GrapheRoutier
+	 * getter sur grapheRoutier
+	 * @return {@link GrapheRoutier} : graphe routier du controleur 
+	 * 		
 	 */
 	public GrapheRoutier getGrapheRoutier() {
 		return this.grapheRoutier;
@@ -78,7 +80,7 @@ public class Controleur {
 	
 	
 	/** getter de la feuille de route contenant les PlageHoraire de livraisons
-	 * @return FeuilleDeRoute
+	 * @return {@link FeuilleDeRoute} : feuille de route du controleur
 	 */
 	public FeuilleDeRoute getFeuilleDeRoute() {
 		return this.feuilledeRoute;
@@ -88,9 +90,9 @@ public class Controleur {
 	
 	/**
 	 * Ajoute une livraison et l'enregistre dans la pile pour undo/redo
-	 * @param idIntersection
-	 * @param idClient
-	 * @param idLivraisonPrecedente
+	 * @param idIntersection : id de l'intersection de l'adresse de livraison
+	 * @param idClient : id du client de la livraison
+	 * @param idLivraisonPrecedente : id de la livraison effectué avant celle ajoutée
 	 */
 	public void ajouterLivraison(int idIntersection, int idClient, int idLivraisonPrecedente) {
 		Livraison precedente = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraisonPrecedente);
@@ -111,7 +113,7 @@ public class Controleur {
 	
 	/**
 	 * Supprime la livraison concernee
-	 * @param idLivraison id de la livraison a supprimer
+	 * @param idLivraison : id de la livraison a supprimer
 	 */
 	public void supprimerLivraison(int idLivraison) {
 		Livraison livraison = this.getFeuilleDeRoute().getGrapheLivraison().getLivraison(idLivraison);
