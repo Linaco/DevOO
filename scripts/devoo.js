@@ -41,6 +41,7 @@ function Controleur(){
         vue.afficherChargement("Création du réseau routier...\n"
                 + "Merci de patienter quelques instants.");
         com.envoyerXml(evt,'controleur/charger-plan',this._chargerPlanOk,this._chargerLivraisonsErr, true);
+        document.getElementById("charger-plan").value = null;
     }.bind(this);
 
     // déclenche le clic sur l'élément 'input' de la page html
@@ -60,6 +61,7 @@ function Controleur(){
         vue.afficherChargement("Chargement des données de livraisons...\n"
                 + "Merci de patienter quelques instants.");
         com.envoyerXml(evt,'controleur/charger-livraisons',this._chargerLivraisonsOk,this._chargerLivraisonsErr,true);
+        document.getElementById("charger-livraisons").value = null;
     }.bind(this);
 
     this.clicTelechargerInitineraire = function(){
