@@ -40,6 +40,12 @@ function Controleur(){
     ///////////////////////////////////////////////////////////////////////////////////
     // >> attributs
 
+    /**
+     * Instance de la classe {{#crossLink "Com"}}{{/crossLink}} permettant de communiquer
+     * avec le serveur.
+     * @property com
+     * @type Com
+     */
     var com = new Com();
 
     var vue;
@@ -69,6 +75,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/annuler:method"}}{{/crossLink}}
      * @method _annulerOk
      * @param {String} rep Réponse du service (aucune pour ce service)
+     * @private
      */
     this._annulerOk = function(rep) {
         vue.nouvelItineraire(true);
@@ -80,6 +87,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/annuler:method"}}{{/crossLink}}
      * @method _annulerErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._annulerErr = function(msg) {
         vue.fermerChargement();
@@ -107,6 +115,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/retablir:method"}}{{/crossLink}}
      * @method _retablirOk
      * @param {String} rep Réponse du service (aucune pour ce service)
+     * @private
      */
     this._retablirOk = function(rep) {
         vue.nouvelItineraire(true);
@@ -118,6 +127,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/retablir:method"}}{{/crossLink}}
      * @method _retablirErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._retablirErr = function(msg) {
         vue.fermerChargement();
@@ -157,6 +167,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/chargerPlan:method"}}{{/crossLink}}
      * @method _chargerPlanOk
      * @param {String} msg Réponse du service (aucune pour ce service).
+     * @private
      */
     this._chargerPlanOk = function(msg){
         vue.nouveauPlan();
@@ -168,6 +179,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/chargerPlan:method"}}{{/crossLink}}
      * @method _chargerPlanErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._chargerPlanErr = function(msg){
         vue.fermerChargement();
@@ -207,6 +219,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/chargerLivraisons:method"}}{{/crossLink}}
      * @method _chargerLivraisonsOk
      * @param {String} msg Réponse du service (aucune pour ce service).
+     * @private
      */
     this._chargerLivraisonsOk = function(msg){
         vue.nouvellesLivraisons();
@@ -218,6 +231,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/chargerLivraisons:method"}}{{/crossLink}}
      * @method _chargerLivraisonsErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._chargerLivraisonsErr = function(msg){
         vue.fermerChargement();
@@ -280,6 +294,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/_clicCalcul:method"}}{{/crossLink}}
      * @method _clicCalculOk
      * @param {String} msg Réponse du service (aucune pour ce service).
+     * @private
      */
     this._clicCalculOk = function(msg) {
         vue.nouvelItineraire();
@@ -291,6 +306,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/_clicCalcul:method"}}{{/crossLink}}
      * @method _clicCalculErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._clicCalculErr = function(msg) {
         vue.fermerChargement();
@@ -319,6 +335,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/demandeDeSuppression:method"}}{{/crossLink}}
      * @method _suppressionOk
      * @param {String} msg Réponse du service (aucune pour ce service).
+     * @private
      */
     this._suppressionOk = function(rep) {
         vue.nouvelItineraire(true);
@@ -330,6 +347,7 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/demandeDeSuppression:method"}}{{/crossLink}}
      * @method _suppressionErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._suppressionErr = function(msg) {
         vue.fermerChargement();
@@ -362,17 +380,19 @@ function Controleur(){
      * <br/> Voir {{#crossLink "Controleur/ajouterLivraison:method"}}{{/crossLink}}
      * @method nouvelItineraire
      * @param {String} msg Réponse du service (aucune pour ce service).
+     * @private
      */
     this._ajouterLivraisonOk = function(rep) {
         vue.nouvelItineraire(true);
     };
 
     /**
-     * Cette méthode est appelée lorsqu'un appel au service `/controleur/ahouter-livraison` a échoué.
+     * Cette méthode est appelée lorsqu'un appel au service `/controleur/ajouter-livraison` a échoué.
      * Elle ferme alors l'écran de chargement et affiche un message d'erreur.
      * <br/> Voir {{#crossLink "Controleur/ajouterLivraison:method"}}{{/crossLink}}
      * @method _ajouterLivraisonErr
      * @param {String} msg Message d'erreur retourné par le service.
+     * @private
      */
     this._ajouterLivraisonErr = function(msg) {
         vue.fermerChargement();

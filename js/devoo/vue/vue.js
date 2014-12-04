@@ -1,30 +1,65 @@
-///////////////////////////////////////////////////
-// Class Vue
 
 /**
- * Description
+ * Vue de l'application, gère toutes les informations graphiques renvoyées à l'utilsateur.
+ * @module vue
+ */
+
+///////////////////////////////////////////////////////////////////////////////////////
+// >>> Class Vue
+
+/**
+ * Vue de l'application, gère toutes les informations graphiques renvoyées à l'utilsateur.
+ * <br/>
+ * L'application utilise Leaflet (plus les plugins suivants : label, easyButton, polylineDecorator),
+ * Bootstrap et jsPDF.
  *
  * @class Vue
  * @author Robin Nicolet
  * @constructor
  */
 function Vue(controleur, com){
-    // attributs
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> attributs
+
+    /**
+     * Instance de la classe {{#crossLink "Com"}}{{/crossLink}} permettant de communiquer
+     * avec le serveur.
+     * @property com
+     * @type Com
+     */
     this.com = com;
-    this.ctrl = controleur;
     var com = this.com;
 
-    this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
+    /**
+     * Instance de la classe {{#crossLink "Com"}}{{/crossLink}} permettant de transmettre
+     * les interactions utilisateur.
+     * @property ctrl
+     * @type Controleur
+     */
+    this.ctrl = controleur;
 
+    /**
+     * Tableau de String. Banque de couleurs des plages horaires
+     * @property couleurPlages {String[]}
+     */
+    this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF','pink','green','blue','white'];
+
+    /**
+     * Liste des intersection du plan
+     * @property intersections {VueIntersection[]}
+     */
     this.intersections = [];
+    /**
+     * Liste des routes du plan
+     * @property routes {VueRoute[]}
+     */
     this.routes = [];
-    this.itineraire;
 
-    /*this.warningIcon = L.AwesomeMarkers.icon({
-        icon: 'coffee',
-        markerColor: 'red'
-    });*/
-
+    /**
+     * Icone donné aux intersections associées à une livraison hors de sa plage horaire
+     * @property warningIcon {Icon}
+     */
     this.warningIcon = L.icon({
         iconUrl: 'http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/process-warning-icon.png',
         shadowUrl: null,
@@ -36,35 +71,67 @@ function Vue(controleur, com){
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
+    /**
+     * Vue de la feuille de route (PDF)
+     * @property feuilleDeRoute {VueFeuilleDeRoute}
+     */
     this.feuilleDeRoute = new VueFeuilleDeRoute(com, this);
     var feuilleDeRoute = this.feuilleDeRoute;
 
+    /**
+     * Vue de la légende (Panneau latéral)
+     * @property vueLegende {VueLegende}
+     */
     this.vueLegende = new VueLegende(com, this);
 
-    // functions
-    this.enableRedo = function(){
-        console.log("Vue.enableRedo");
-    };
-    this.disableRedo = function(){
-        console.log("Vue.disableRedo");
-    }
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> methodes
+
+    // > Popups
+
+    /**
+     * Ouvre la popup d'erreur avec le message souhaité (voir modals Bootstrap)
+     * @method erreur
+     * @param msg {String} Message à afficher
+     */
     this.erreur = function(msg){
         this.fermerInfo();
         document.getElementById("msg-erreur").textContent = msg;
         $('#modal-erreur').modal('show');
     }
+
+    /**
+     * Ferme la popup d'erreur (voir modals Bootstrap)
+     * @method fermerErreur
+     */
     this.fermerErreur = function(){
         $('#modal-erreur').modal('hide');
     }
+
+    /**
+     * Ouvre la popup d'info avec le message souhaité (voir modals Bootstrap)
+     * @method info
+     * @param msg {String} Message à afficher
+     */
     this.info = function(msg){
         this.fermerErreur();
         document.getElementById("msg-info").textContent = msg;
         $('#modal-info').modal('show');
     }
+
+    /**
+     * Ferme la popup d'info (voir modals Bootstrap)
+     * @method fermerInfo
+     */
     this.fermerInfo = function(){
         $('#modal-info').modal('hide');
     }
 
+    /**
+     * Affiche l'écran de chargement avec le message souhaité (voir modals Bootstrap)
+     * @method afficherChargement
+     * @param msg {String} Message à afficher
+     */
     this.afficherChargement = function(msg){
         document.getElementById("msg-chargement").textContent
             = msg;
@@ -74,6 +141,10 @@ function Vue(controleur, com){
         $('#modalChargement').modal('show');
     }
 
+    /**
+     * Ferme l'écran de chargement' (voir modals Bootstrap)
+     * @method fermerChargement
+     */
     this.fermerChargement = function(){
         console.log("fermer");
         //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
@@ -83,7 +154,13 @@ function Vue(controleur, com){
         //console.log(document.getElementsByTagName(" bootstrap-backdrop"));
     }
 
-    //visibilité
+    // > Actions utilisateur
+
+    /**
+     * Appel le bon service pour recharger l'itinéraire.
+     * @method nouvelItineraire
+     * @param chargerLivraisons {boolean} faut-il recharger aussi les livraisons
+     */
     this.nouvelItineraire = function(chargerLivraisons) {
             console.log(this.intersections.length);
         for(var j = 0; j < this.routes.length; ++j){
@@ -97,19 +174,52 @@ function Vue(controleur, com){
         } else {
             com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);   
         }
-     };
+    };
+
+    /**
+     * Retour du service `/modele/livraisons`, on charge les livraisons sur le plan
+     * puis on demande le nouvel itinéraire.
+     * @method livraisonPuisItineraireOk
+     * @param str {String} Reponse du service, pas utilisé
+     * @private
+     */
     this.livraisonPuisItineraireOk = function(str) {
         this.nouvellesLivraisonsOk(str, true);
-        console.log("PuisOK");
-        //this.fermerChargement();
-        //this.afficherChargement("Récupération du nouvel itinéraire");
-        //com.appelService('modele/itineraire','',this.nouvelItineraireOk,this.nouvelItineraireErr, true);
         this.nouvelItineraire(false);
     }.bind(this);
+
+    /**
+     * Echec du service `/modele/itineraire`, on ferme l'écran de chargement
+     * puis on affiche le message d'erreur.
+     * @method nouvelItineraireErr
+     * @param msg {String} Message d'erreur renvoyé par le service
+     * @private
+     */
     this.nouvelItineraireErr = function(msg) {
         this.fermerChargement();
         this.erreur(msg);
     }.bind(this);
+
+    /**
+     * Retour du service `/modele/itineraire`,
+     * on parcours alors le XML reçu pour créer l'itinéraire.<br/>
+     *
+     *      <?xml version="1.0" encoding="UTF-8"?>
+     *      <feuilleDeRoute>
+     *          <itineraire>
+     *              <etape heurePassage="0h00" secondesAttente="0" idIntersection="0" idPlageHoraire="0">
+     *                  <livraison idClient="0" adresse="0"/>
+     *              </etape>
+     *          </itineraire>
+     *          <livraisonsImpossibles>
+     *              <livraison idClient="0" adresse="0"/>
+     *          </livraisonsImpossibles>
+     *      </feuilleDeRoute>
+     *
+     * @method nouvelItineraireOk
+     * @param str {String} XML renvoyé par le service
+     * @private
+     */
     this.nouvelItineraireOk = function(str) {
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
@@ -154,19 +264,44 @@ function Vue(controleur, com){
 
     }.bind(this);
 
+    /**
+     * Détruit les livraisons, la légende, appelle le bon service pour recharger les livraisons.
+     * @method nouvellesLivraisons
+     */
     this.nouvellesLivraisons = function(){
         this.razLivraison();
         this.vueLegende.raz();
         com.appelService('modele/livraisons','',this.nouvellesLivraisonsOk,this.nouvellesLivraisonsErr, true);
     };
 
-    /*<plage debut="8" fin="10">
-        <livraison id="2" idClient="546" idIntersection="" />
-    </plage>*/
+    /**
+     * Echec du service `/modele/livraisons`, on ferme l'écran de chargement
+     * puis on affiche le message d'erreur.
+     * @method nouvellesLivraisonsErr
+     * @param msg {String} Message d'erreur renvoyé par le service
+     * @private
+     */
     this.nouvellesLivraisonsErr = function(msg) {
         this.fermerChargement();
         this.erreur(msg);
     }.bind(this);
+
+    /**
+     * Retour du service `/modele/livraisons`,
+     * on parcours alors le XML reçu pour créer les livraisons.<br/>
+     *
+     *      <?xml version="1.0" encoding="UTF-8"?>
+     *      <livraisons idEntrepot="0">
+     *          <plage debut="0h00" fin="23h59">
+     *              <livraison idClient="0" adresse="0"/>
+     *          </plage>
+     *      </livraisons>
+     *
+     * @method nouvellesLivraisonsOk
+     * @param str {String} XML renvoyé par le service
+     * @param laisserChargement {boolean} Empeche la fermeture de l'écran de chargement
+     * @private
+     */
     this.nouvellesLivraisonsOk = function(str, laisserChargement) {
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
@@ -200,18 +335,46 @@ function Vue(controleur, com){
         }
         this.afficher();
     }.bind(this);
+
+    /**
+     * Détruit les routes, les intersections, appelle le bon service pour recharger le plan.
+     * @method nouveauPlan
+     */
     this.nouveauPlan = function(){
         this.masquer();
         this.intersections = [];
         this.routes = [];
         com.appelService('modele/plan','',this.retourModelePlanOk,this.retourModelePlanErr, true);
     };
+
+    /**
+     * Echec du service `/modele/plan`, on ferme l'écran de chargement
+     * puis on affiche le message d'erreur.
+     * @method retourModelePlanErr
+     * @param msg {String} Message d'erreur renvoyé par le service
+     * @private
+     */
     this.retourModelePlanErr = function(msg) {
         this.fermerChargement();
         this.erreur(msg);
     };
+
+    /**
+     * Retour du service `/modele/plan`,
+     * on parcours alors le XML reçu pour créer le plan.<br/>
+     *
+     *      <?xml version="1.0" encoding="UTF-8"?>
+     *      <plan>
+     *          <intersection id="0" x="0" y="0">
+     *              <route id="0" idDestination="0" nom="nom de la route"/>
+     *          </intersection>
+     *      </plan>
+     *
+     * @method retourModelePlanOk
+     * @param str {String} XML renvoyé par le service
+     * @private
+     */
     this.retourModelePlanOk = function(str){
-        //this.info(str);
         var parser=new DOMParser();
         var doc=parser.parseFromString(str,"text/xml");
 
@@ -246,7 +409,7 @@ function Vue(controleur, com){
             var it = its[i];
             var id1 = it.getAttribute("id");
             var routes = it.getElementsByTagName("route");
-            //console.log('routes',routes);
+
             for( var j = 0; j < routes.length; ++j){
                 var route = routes[j];
                 var idRoute = route.getAttribute("id");
@@ -263,6 +426,12 @@ function Vue(controleur, com){
         this.fermerChargement();
     }.bind(this);
 
+    // > Affichage
+
+    /**
+     * Affiche les éléments du plan dans la map Leaflet.
+     * @method afficher
+     */
     this.afficher = function() {
         for( var i = 0; i < this.routes.length; ++i ){
             this.routes[i].afficher();
@@ -272,6 +441,10 @@ function Vue(controleur, com){
         }
     };
 
+    /**
+     * Enlève les éléments du plan de la map Leaflet.
+     * @method masquer
+     */
     this.masquer = function() {
         for( var i = 0; i < this.intersections.length; ++i ){
             this.intersections[i].masquer();
@@ -281,7 +454,12 @@ function Vue(controleur, com){
         }
     };
 
-    //métier
+    // > Opérations sur les objets
+
+    /**
+     * Réinitialise les données de livraison. Remet un plan vierge.
+     * @method razLivraison
+     */
     this.razLivraison = function() {
         for(var i = 0; i < this.intersections.length; ++i){
             this.intersections[i].razLivraison();
@@ -292,11 +470,24 @@ function Vue(controleur, com){
         }
     };
 
+    /**
+     * Crée et ajoute une intersection à la liste des intersections.
+     * @method ajouterIntersection
+     * @param pos {LngLat} position sur la map (cf Leaflet)
+     * @param id {Integer} ID de l'intersection
+     */
     this.ajouterIntersection = function(pos, id) {
         return this.intersections[this.intersections.length]
             = new VueIntersection(pos,id);
     }
 
+    /**
+     * Crée et ajoute une route à la liste des routes.
+     * @method ajouterRoute
+     * @param i1 {VueIntersection} Départ de la route
+     * @param i2 {VueIntersection} Arrivée de la route
+     * @param nom {String} Nom de la route
+     */
     this.ajouterRoute = function(i1,i2,nom){
         var a = this.getIntersection(i1),
             b = this.getIntersection(i2);
@@ -305,12 +496,12 @@ function Vue(controleur, com){
         return null;
     }
 
-    /*this.ajouterLivraison = function(idIntersection) {
-        var i = getIntersection(idIntersection);
-        if(i) i.setLivraison(true);
-        return this;
-    }*/
-
+    /**
+     * Renvoie la VueIntersection correspondant à cet ID
+     * @method getIntersection
+     * @param id {Integer} ID de l'intersection
+     * @return {VueIntersection}
+     */
     this.getIntersection = function(id) {
         for( var i = 0; i < this.intersections.length; ++i ){
             if( this.intersections[i].id == id){
@@ -320,6 +511,14 @@ function Vue(controleur, com){
         return null;
     }
 
+    /**
+     * Renvoie la route, si elle existe, qui va de l'intersection dont l'id vaut id1
+     * à l'intersection dont l'id vaut id2
+     * @method getRoute
+     * @param id1 {Integer} ID départ
+     * @param id2 {Integer} ID arrivée
+     * @return {VueRoute}
+     */
     this.getRoute = function(id1,id2) {
         var it1 = this.getIntersection(id1);
         if(it1){
@@ -328,6 +527,14 @@ function Vue(controleur, com){
         return null;
     };
 
+    // > Evenements 
+
+    /**
+     * Signale au controleur que l'utilisateur veut supprimer une livraison.
+     * @method _livraisonSupprimee
+     * @param idLivraison {Integer} ID de la livraison.
+     * @param idIntersection {Integer} ID de l'intersection associée à la livraison.
+     */
     this._livraisonSupprimee = function(idLivraison, idIntersection){
         var it = this.getIntersection(idIntersection);
         it.closePopup();
@@ -335,6 +542,12 @@ function Vue(controleur, com){
         this.ctrl.demandeDeSuppression(idLivraison);
     }
 
+    /**
+     * Passe les intersections où il y a une livraison en mode `séléctionnable` et leur
+     * associe un écouteur de clic.
+     * @method _ajoutLivraison
+     * @param idIntersection {Integer} ID de l'intersection où l'on veut la livraison.
+     */
     this._ajoutLivraison = function(idIntersection) {
         var value = document.getElementById("input-client").value;
         if(!value){
@@ -356,28 +569,41 @@ function Vue(controleur, com){
         }
     }.bind(this);
 
+    /**
+     * Renvoie une fonction bien formée pour l'ajout de livraison.
+     * @method genererFctPopup
+     * @param idInter {Integer} ID de l'intersection où l'on veut la livraison.
+     * @param idLiv {Integer} ID de la livraison qui doit précéder celle que l'on crée.
+     * @param idClient {Integer} ID du client à livrer.
+     */
     this.genererFctPopup = function(idInter, idLiv, idClient) {
         return function() {
             ctrl.vue._livraisonPrecedenteOk(idInter, idLiv, idClient);
         };
     };
 
+    /**
+     * Notifie le controleur que l'utilisateur veut ajouter une livraison.
+     * @method genererFctPopup
+     * @param idInter {Integer} ID de l'intersection où l'on veut la livraison.
+     * @param livraison {Integer} ID de la livraison qui doit précéder celle que l'on crée.
+     * @param client {Integer} ID du client à livrer.
+     */
     this._livraisonPrecedenteOk = function(idIntersection, livraison, client){
-        console.log("ok",idIntersection,livraison);
         // Pas besoin de tout remettre, on va réafficher
         this.ctrl.ajouterLivraison(idIntersection,livraison,client);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Initialisation
 
+    // > Création de la map 
 
-    //Constructeur
-    // initialisation de la map
     this.map = L.map('map',{maxBounds:[[-0.1,-0.1],[0.9,0.9]],zoomControl:false}).setView([0.4, 0.4], 10);
-    //this.map.attributionControl.setPosition('bottomleft');
+    
+    // > Création des controles 
+
     L.control.attribution({prefix: 'Projet DevOO - INSA de Lyon - H4104 - 2014', position: 'topleft'}).addTo(this.map);
-    // Ajout des controls (boutons)
-    //console.log("ctrl : ");
-    //console.log(controleur);
     L.control.zoom({position:'topright', zoomInTitle: "Zoomer"}).addTo(this.map);
     L.easyButton('fa-arrow-circle-left', controleur.annuler, 'Undo', this.map);
     L.easyButton('fa-arrow-circle-right', controleur.retablir, 'Redo', this.map);
@@ -385,22 +611,38 @@ function Vue(controleur, com){
     document.getElementById('charger-plan').addEventListener('change', controleur.chargerPlan, false);
     L.easyButton('fa-cubes', controleur.clicChargerLivraisons, 'Charger les livraison', this.map).setPosition('bottomleft');
     document.getElementById('charger-livraisons').addEventListener('change', controleur.chargerLivraisons, false);
-    //L.easyButton('fa-plus', null, 'Ajouter une livraison', this.map).setPosition('bottomleft');
     this.controlCalcul = L.easyButton('fa-refresh', controleur._clicCalcul, "Calculer l'itinéraire", this.map).setPosition('bottomleft');
-    //this.controlCalcul.getContainer().getElementsByTagName('i')[0].className += " fa-spin";
-    //console.log(this.controlCalcul.getContainer().className);
     var controlFDR = L.easyButton('fa-file-text', controleur.clicTelechargerInitineraire, "Télécharger la feuille de route", this.map).setPosition('bottomright');
+
+    // > Initialisation > Préparation des dialogues
 
     $('#modalChargement').modal({backdrop: 'static', keyboard: false, show:false});
     $('#modal-info').modal({backdrop: false, show: false});
     $('#modal-erreur').modal({backdrop: false, show: false});
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+// >>> Class VueLegende
+
+/**
+ * Vue de la légende, gère la partie droite de l'IHM
+ *
+ * @class VueLegende
+ * @author Anthony Laou-Hine
+ * @constructor
+ */
 function VueLegende(com, vue){
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Attributs 
+
     this.vue = vue;
     this.com = com;
     this.lateral = document.getElementById('lateral');
     this.couleurPlages = ['#2974FF','#62FF29','#FF00FF','#00C8FF'];
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Methodes
 
     this.displayPlagesHoraires = function() {
         this.com.appelService('modele/plagesHoraires', '', this._plageOk, this._plageErr, true);
@@ -489,10 +731,30 @@ function VueLegende(com, vue){
     };
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+// >>> Class VueIntersection
+
+/**
+ * Vue graphique d'une intersection, d'un noeud du graphe
+ *
+ * @class VueIntersection
+ * @author Robin Nicolet
+ * @constructor
+ */
 function VueIntersection(pos, id){
 
-    // attributs
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Attributs
+
+    /**
+     * Position géographique
+     * @property pos {[x,y]}
+     */
     this.pos = pos;
+    /**
+     * ID de l'intersection
+     * @property id {Integer}
+     */
     this.id = id;
 
     this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
@@ -516,7 +778,9 @@ function VueIntersection(pos, id){
     this.entrepot = false;
     this.routesSortantes = [];
 
-    // methodes
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Methodes
+
     this.setLivraison = function(id, idClient, plage, hdp) {
         console.log("setLivraison");
         this.livraison = {
@@ -539,13 +803,8 @@ function VueIntersection(pos, id){
     }
 
     this.setHeurePassage = function(hdp) {
-        //console.log("heurePassage",this.cercle.getPopup());
-        //var popup = this.cercle.getPopup();
-        //if(popup){
-            var div = this.divPopup;//popup.getContent();
-            div.getElementsByTagName("hdp")[0].textContent = hdp;
-            //popup.update();
-        //}
+        var div = this.divPopup;
+        div.getElementsByTagName("hdp")[0].textContent = hdp;
     };
 
     this.setEntrepot = function(bool) {
@@ -608,7 +867,6 @@ function VueIntersection(pos, id){
         this.cercle.setStyle(this.paramSelec);
         this.etat = "selectionnable";
         
-        //this._clic = this._clicSelectionnable;
         this.activerClic(this._clicSelectionnable);
         return this;
     };
@@ -625,7 +883,6 @@ function VueIntersection(pos, id){
             div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._ajoutLivraison("+this.id+");");
             this.cercle.bindPopup(div);
         }
-        //this._clic = this._clicStandard;
         this.activerClic(this._clicStandard);
         return this;
     };
@@ -652,8 +909,6 @@ function VueIntersection(pos, id){
     this.afficher = function(){
         this.cercle.addTo(map);
         if(this.marker){
-            console.log("Afficher");
-            //this.ajouterMarker("nlanlanl");
             this.marker.addTo(map);
         }
         return this;
@@ -668,12 +923,9 @@ function VueIntersection(pos, id){
     }
 
     this.enleverMarker = function() {
-        //this.cercle.unbindLabel();
         if(this.marker)map.removeLayer(this.marker);
     };
     this._clicMarker = function() {
-        //this.enleverMarker();
-        //this.marker= null;
         this.cercle.fire("click");
     };
 
@@ -683,9 +935,6 @@ function VueIntersection(pos, id){
         this.marker = L.marker(this.cercle.getLatLng(),{icon:warning})
                     .on('click',this._clicMarker,this)
                     .addTo(map);
-        /*this.marker = this.cercle.bindLabel(msg,{noHide:true})
-                        .on("click",this.supprimerMarker,this)
-                        .addTo(map);*/
     };
 
     this._clicSelectionnable = function() {
@@ -700,20 +949,38 @@ function VueIntersection(pos, id){
         } else {
             this.cercle.openPopup();
         }
-        //this.etatSelectionnable();
     }
 
-    // Constructeur
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Initialisation
 
-    this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut)/*
-            .bindPopup("Intersection "+id+"<br>("+pos[0]+","+pos[1]+")", {offset: L.point(0,-10),closeButton:false})
-            .on("mouseover",function () {this.openPopup();})
-            .on("mouseout",function () {this.closePopup();})*/;
+    this.cercle = L.circle(pos, this.rayonDefaut, this.paramDefaut);
+
     return this;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+// >>> Class VueRoute
+
+/**
+ * Vue graphique d'une route, d'un tronçon du graphe
+ *
+ * @class VueRoute
+ * @author Robin Nicolet
+ * @constructor
+ */
 function VueRoute(intersec1, intersec2, nom){
-    // attributs
+    
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Attributs
+
+    /**
+     * Valeurs par défaut pour les arcs
+     *
+     *      {ecartArc, ecartSuivant, nbLigne, couleur}
+     *
+     * @property defaut {Object}
+     */
     this.defaut = {
         ecartArc: 0.05,
         ecartSuivant : 0.06,
@@ -721,19 +988,53 @@ function VueRoute(intersec1, intersec2, nom){
         couleur: '#5f5f5f'
     }
 
+    /**
+     * Intersection de départ
+     * @property A {VueIntersection}
+     */
     this.A = intersec1;
+
+    /**
+     * Intersection d'arrivée
+     * @property B {VueIntersection}
+     */
     this.B = intersec2;
+
+    /**
+     * Nom de la route
+     * @property nom {String}
+     */
     this.nom = nom;
 
-
+    /**
+     * Options par défaut pour une route dans Leaflet
+     * @property paramDefaut {Object}
+     */
     this.paramDefaut = {weight:5,color: this.defaut.couleur ,opacity:0.8};
     
+    /**
+     * Objet Polyline Leaflet représentant la route 
+     * @property ligneBase {L.Polyline}
+     */
     this.ligneBase;
 
+    /**
+     * Tableau d'objets Polyline Leaflet représentant les différents passages sur cette route.
+     * @property ligneBase {L.Polyline[]}
+     */
     this.passages = [];
 
-    // methodes
-    // setters
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Methodes
+
+    // > Setters
+
+    /**
+     * Change le nom de la route.
+     * @method setNom
+     * @param nom {String} nom de la route.
+     * @return {VueRoute} Retourne l'objet courant.
+     */
     this.setNom = function(nom) {
         this.ligneBase.unbindLabel();
         this.nom = nom;
@@ -741,7 +1042,13 @@ function VueRoute(intersec1, intersec2, nom){
         return this;
     };
 
-    // affichage
+    // > Affichage
+
+    /**
+     * Ajoute à la map Leaflet
+     * @method afficher
+     * @return {VueRoute} Retourne l'objet courant.
+     */
     this.afficher = function(){
         this.ligneBase.addTo(map);
         for( var i = 0; i < this.passages.length; ++i){
@@ -751,6 +1058,11 @@ function VueRoute(intersec1, intersec2, nom){
         return this;
     }
 
+    /**
+     * Enlève de la map Leaflet
+     * @method masquer
+     * @return {VueRoute} Retourne l'objet courant.
+     */
     this.masquer = function(){
         map.removeLayer(this.ligneBase);
         map.removeLayer(this.decorateurSens);
@@ -760,20 +1072,34 @@ function VueRoute(intersec1, intersec2, nom){
         return this;
     }
 
-    // events
+    // > Evenement
+
+    /**
+     * Gestion du `click`.
+     * @method _clic
+     */
     this._clic = function(){
         console.log('clic',this);
     }.bind(this);
 
+    /**
+     * Gestion du `mouseover`. On change la couleur de la route.
+     * @method _mouseover
+     */
     this._mouseover = function() {
         this.ligneBase.setStyle({color:"#0f0"});
     }.bind(this);
 
+    /**
+     * Gestion du `mouseout`. On remet la couleur de la route.
+     * @method _mouseout
+     */
     this._mouseout = function() {
         this.ligneBase.setStyle({color: '#5f5f5f'});
     }.bind(this);
 
-    // métier
+    // > Modification des objets
+
     this.ajouterPassage = function(idLivraison, couleur) {
         var path = ArcMaker.arcPath(this.A.pos, this.B.pos,
                 this.defaut.ecartArc + this.defaut.ecartSuivant*(1+this.passages.length),
@@ -782,7 +1108,6 @@ function VueRoute(intersec1, intersec2, nom){
         opt.color = couleur;
         opt.opacity = 0.9;
         opt.idLivraison = idLivraison;
-        //console.log(opt);
         var ligne = L.polyline(path, opt);
         ligne.on('mouseover', this._mouseover, this);
         ligne.on('mouseout', this._mouseout, this);
@@ -797,7 +1122,9 @@ function VueRoute(intersec1, intersec2, nom){
         this.passages = [];
     };
 
-    // initialisation
+    ///////////////////////////////////////////////////////////////////////////////////
+    // >> Initialisation
+
     this.A.ajouterRouteSortante(this);
 
     this.path = ArcMaker.arcPath(this.A.pos, this.B.pos,
@@ -816,20 +1143,4 @@ function VueRoute(intersec1, intersec2, nom){
         ]
     });
     return this;
-}
-
-function VueEtape(idIntersection, idLivraison, plage){
-    this.intersection = idIntersection;
-    this.livraison = idLivraison;
-    this.plage = plage;
-}
-
-function VueItineraire(){
-    // attributs
-    this.etapes = [];
-    // methodes
-    this.ajouterEtape = function(idIntersection, idLivraison, plage){
-        this.etapes[this.etapes.length]
-            = new VueEtape(idIntersection, idLivraison, plage);
-    }
 }
