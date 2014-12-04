@@ -111,7 +111,9 @@ function Controleur(){
 
     this.ajouterLivraison = function(idIntersection, idLivraison, idClient){
         vue.afficherChargement("Ajout en cours, veuillez patienter...");
-        com.appelService("controleur/ajouter-livraison",idIntersection+"\n"+idClient+"\n"+idLivraison,this._ajouterLivraisonOk,this._ajouterLivraisonErr,true);
+        var param = idIntersection+"\n"+idClient+"\n"+idLivraison;
+        console.log(param);
+        com.appelService("controleur/ajouter-livraison",param,this._ajouterLivraisonOk,this._ajouterLivraisonErr,true);
     }
     this._ajouterLivraisonOk = function(rep) {
         vue.nouvelItineraire(true);

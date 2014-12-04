@@ -251,7 +251,7 @@ public class FeuilleDeRoute {
     * @param carte Le Graphe Routier a utiliser pour calculer le parcours
     */
    @SuppressWarnings("unchecked")
-   public void calculerParcours(GrapheRoutier carte) {
+   public boolean calculerParcours(GrapheRoutier carte) {
         List<Livraison> livraisonsPlageCourante;
         List<Livraison> livraisonsPlageSuivante;
         List<Livraison> toutesLivraisons = new ArrayList<>();
@@ -263,6 +263,11 @@ public class FeuilleDeRoute {
 
         for(PlageHoraire p: plagesHoraires){
             toutesLivraisons.addAll(p.getListeLivraison());
+        }
+        
+        System.err.println();
+        if(toutesLivraisons.size() == 0){
+        	return false;
         }
         
         //Calcul de tous les plus courts chemins adequats
@@ -372,6 +377,8 @@ public class FeuilleDeRoute {
                 itineraire.remove(itineraire.size()-1);
             }
         }
+        
+        return true;
    }
    
 	/**
