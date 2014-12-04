@@ -151,18 +151,26 @@ public class Controleur {
 	/**
 	 * annule l'ajout/suppression et met a jour les piles
 	 */
-	public void annuler() {
+	public boolean annuler() {
+		if(listeFaits.isEmpty()){
+			return false;
+		}
 		Commande c = this.listeFaits.pop();
 		c.annuler();
 		this.listeAnnules.push(c); // met sur la pile des actions annullees
+		return true;
 	}
 	
 	/**
 	 * Retabli l'annulation et met a jour les piles
 	 */
-	public void retablir() {
+	public boolean retablir() {
+		if(listeAnnules.isEmpty()){
+			return false;
+		}		
 		Commande c = this.listeAnnules.pop();
 		c.executer();
 		this.listeFaits.push(c); // remet sur la pile des actions faites
+		return true;
 	}
 }
