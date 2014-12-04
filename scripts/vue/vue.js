@@ -114,6 +114,10 @@ function Vue(controleur, com){
         console.log("etapes",etapes.length);
         for(var i = 1; i < etapes.length; ++i){
             var id2 = etapes[i].getAttribute("idIntersection");
+            var intersection = this.getIntersection(id2);
+            var hdp = etapes[i].getAttribute("heurePassage");
+            if(intersection.livraison)intersection.setHeurePassage(hdp);
+
             var route = this.getRoute(id1, id2);
             if(route){
                 var idPlage = etapes[i-1].getAttribute("idPlageHoraire");
@@ -496,6 +500,8 @@ function VueIntersection(pos, id){
     this.etat = "standard";
     this.marker = null;
 
+    this.divPopup = null;
+
     this.cercle;
 
     this.livraison = null;
@@ -504,6 +510,7 @@ function VueIntersection(pos, id){
 
     // methodes
     this.setLivraison = function(id, idClient, plage, hdp) {
+        console.log("setLivraison");
         this.livraison = {
             id: id,
             idClient: idClient,
@@ -518,9 +525,20 @@ function VueIntersection(pos, id){
         div.getElementsByTagName("plage")[0].textContent = plage;
         div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._livraisonSupprimee("+this.livraison.id+","+this.id+");");
         this.cercle.bindPopup(div);
+        this.divPopup = div;
         this.majEtat();
         return this;
     }
+
+    this.setHeurePassage = function(hdp) {
+        //console.log("heurePassage",this.cercle.getPopup());
+        //var popup = this.cercle.getPopup();
+        //if(popup){
+            var div = this.divPopup;//popup.getContent();
+            div.getElementsByTagName("hdp")[0].textContent = hdp;
+            //popup.update();
+        //}
+    };
 
     this.setEntrepot = function(bool) {
         this.entrepot = bool ? true : false;
@@ -532,6 +550,7 @@ function VueIntersection(pos, id){
 
     this.razLivraison = function() {
         this.livraison = null;
+        this.enleverMarker();
         this.marker = null;
         this.entrepot = false;
         this.setRayon(this.rayonDefaut);
@@ -642,11 +661,11 @@ function VueIntersection(pos, id){
 
     this.enleverMarker = function() {
         //this.cercle.unbindLabel();
-        map.removeLayer(this.marker);
+        if(this.marker)map.removeLayer(this.marker);
     };
-    this.supprimerMarker = function() {
-        this.enleverMarker();
-        this.marker= null;
+    this._clicMarker = function() {
+        //this.enleverMarker();
+        //this.marker= null;
         this.cercle.fire("click");
     };
 
@@ -654,7 +673,7 @@ function VueIntersection(pos, id){
         console.log("Ajouter Marker",warning);
         console.log(this.cercle.getLatLng());
         this.marker = L.marker(this.cercle.getLatLng(),{icon:warning})
-                    .on('click',this.supprimerMarker,this)
+                    .on('click',this._clicMarker,this)
                     .addTo(map);
         /*this.marker = this.cercle.bindLabel(msg,{noHide:true})
                         .on("click",this.supprimerMarker,this)
