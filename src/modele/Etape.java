@@ -97,11 +97,17 @@ public class Etape {
 		String res = "";
 		String minutes = String.format("%02d", this.heureDePassage.getMinutes());
 		String heure = heureDePassage.getHours() + "h" + minutes ;
+		int idClient=-1;
+
 		
 		res += "<etape heurePassage=\""+heure+"\" secondesAttente=\""+ 
 				this.secondesAttenteAvantPassage +"\" idIntersection=\"" +
 				adresse.getId() + "\" idPlageHoraire=\"" + 
-				getPlage(plages) + "\" idClient=\""+livraison.getIdClient() +"\" adresse=\""+adresse.getId() +"\" />";
+				getPlage(plages) + "\">";
+		if(livraison != null){
+			res+="<livraison idClient=\""+idClient +"\" adresse=\""+adresse.getId() +"\" />";
+		}		
+		res+= "</etape>";
 		return res;
 	}
 	
