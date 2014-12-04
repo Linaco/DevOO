@@ -13,7 +13,7 @@ function Vue(controleur, com){
     this.itineraire;
 
 
-    this.feuilleDeRoute = new VueFeuilleDeRoute(com, doc, this);
+    this.feuilleDeRoute = new VueFeuilleDeRoute(com, this);
     var feuilleDeRoute = this.feuilleDeRoute;
 
     this.vueLegende = new VueLegende(com, this);
