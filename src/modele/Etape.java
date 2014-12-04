@@ -120,4 +120,10 @@ public class Etape {
 		}
 		return -1;
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		Etape e = (Etape) o;
+		return e.adresse.equals(this.adresse) && e.heureDePassage.equals(this.heureDePassage);
+	}
 }
