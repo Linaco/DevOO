@@ -101,7 +101,7 @@ public class FeuilleDeRoute {
 	   int pos = this.itineraire.indexOf(etape);
 	   int nextLivraison = 0;
 	   System.err.println("99");
-	   nextLivraison+=pos;
+	   nextLivraison+=pos+1;
 	   while(!this.itineraire.get(nextLivraison).hasLivraison()){
 		  nextLivraison++;
 		  if(nextLivraison==this.itineraire.size()){
@@ -123,8 +123,7 @@ public class FeuilleDeRoute {
 	   List<Integer> listePosition = new ArrayList<Integer>();
 	   Etape etape = livraison.getEtape();
 	   int pos = this.itineraire.indexOf(etape);
-	   int previousLivraison = 0;
-	   previousLivraison += pos-1;
+	   int previousLivraison = pos-1;
 	   while(!this.itineraire.get(previousLivraison).hasLivraison()){
 		   previousLivraison--;
 		   if(previousLivraison==-1){
@@ -184,7 +183,7 @@ public class FeuilleDeRoute {
 		   pH.addLivraison(nouvelleLivraison);
 		   plagesHoraires.add(pH);
 	   }else{
-		   System.err.println(1);
+		   //System.err.println(1);
 		   plagesHoraires.get(index).addLivraison(livraisonPrecedente,nouvelleLivraison);
 	   }
 	   //this.getGrapheLivraison().getLivraisons().add(this.getGrapheLivraison().getLivraisons().indexOf(livraisonPrecedente)+1,nouvelleLivraison);
@@ -195,13 +194,13 @@ public class FeuilleDeRoute {
 	   System.err.println(3 + " "+listeLivraisons.indexOf(livraisonPrecedente));
 	   listeLivraisons.add(listeLivraisons.indexOf(livraisonPrecedente),nouvelleLivraison);*/
 
-	   System.err.println(4);
+	   //System.err.println(4);
 	   List<Integer> posEtapes = trouverSuivant(livraisonPrecedente);
 	   //Retrait des etapes obsolètes
 	   for(int i=0; i<posEtapes.get(1)-posEtapes.get(0)-1;i++){
 		   itineraire.remove(posEtapes.get(0)+1);
 	   }
-	   System.err.println("precedente --> "+livraisonPrecedente.getIdLiv());
+	   //System.err.println("precedente --> "+livraisonPrecedente.getIdLiv());
 	   //ajout des nouvelles étapes de livraison précédente-->nouvelle livraison
 	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(livraisonPrecedente.getPointLivraison(), nouvelleLivraison.getPointLivraison());
 	   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
@@ -234,13 +233,18 @@ public class FeuilleDeRoute {
 
    @SuppressWarnings("unchecked")
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
+	   System.err.println("Suppression");
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
-	   this.getGrapheLivraison().getLivraisons().remove(l);
+	   //this.getGrapheLivraison().getLivraisons().remove(l);
+	   System.err.println("0");
 	   int positionPrecedente = trouverPrecedent(l).get(0);
+	   System.err.println("1");
 	   int positionSuivante = trouverSuivant(l).get(1);
 	   //supression des etapes
+	   System.err.println(positionSuivante+" "+positionPrecedente);
 	   for(int i=0;i<positionSuivante-positionPrecedente-1;i++){
+		   System.err.println("remove");
 		   itineraire.remove(positionPrecedente+1);
 	   }
 	   //liaison entre précédent et suivant

@@ -23,10 +23,10 @@ function Controleur(){
         console.log("undo");
         vue.afficherChargement("Annulation de l'action...");
         com.appelService("controleur/annuler","",this._annulerOk,this._annulerErr,true);
-    };
+    }.bind(this);
     this._annulerOk = function(rep) {
         vue.nouvelItineraire(true);
-    };
+    }.bind(this);
     this._annulerErr = function(msg) {
         vue.fermerChargement();
         vue.erreur(msg);
@@ -35,10 +35,10 @@ function Controleur(){
         console.log("redo");
         vue.afficherChargement("Retablissement de l'action...");
         com.appelService("controleur/retablir","",this._retablirOk,this._retablirErr,true);
-    };
+    }.bind(this);
     this._retablirOk = function(rep) {
         vue.nouvelItineraire(true);
-    };
+    }.bind(this);
     this._retablirErr = function(msg) {
         vue.fermerChargement();
         vue.erreur(msg);

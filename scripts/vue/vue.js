@@ -62,11 +62,10 @@ function Vue(controleur, com){
 
     //visibilité
     this.nouvelItineraire = function(chargerLivraisons) {
-        for(var i = 0; i < this.intersections.length; ++i){
-            var routes = this.intersections[i].routes;
-            for(var j = 0; j < this.routes.length; ++j){
-                this.routes[j].razPassages();
-            }
+            console.log(this.intersections.length);
+        for(var j = 0; j < this.routes.length; ++j){
+            //console.log("RAAAAZ");
+            this.routes[j].razPassages();
         }
         if(chargerLivraisons){
             this.razLivraison();
@@ -97,6 +96,7 @@ function Vue(controleur, com){
         var etapes = fdr.getElementsByTagName("etape");
         var id1 = etapes[0].getAttribute("idIntersection");
 
+        console.log("etapes",etapes.length);
         for(var i = 1; i < etapes.length; ++i){
             var id2 = etapes[i].getAttribute("idIntersection");
             var route = this.getRoute(id1, id2);
@@ -182,8 +182,8 @@ function Vue(controleur, com){
         var xmin, xmax, ymin, ymax;
 
         var plan = doc.getElementsByTagName("plan")[0];
-        //console.log("plan",plan);
-        var its = doc.getElementsByTagName("intersection");
+        console.log("plan",plan);
+        var its = plan.getElementsByTagName("intersection");
         for( var i = 0; i < its.length; ++i){
             var it = its[i];
             var id = it.getAttribute("id");
@@ -210,6 +210,7 @@ function Vue(controleur, com){
             var it = its[i];
             var id1 = it.getAttribute("id");
             var routes = it.getElementsByTagName("route");
+            //console.log('routes',routes);
             for( var j = 0; j < routes.length; ++j){
                 var route = routes[j];
                 var idRoute = route.getAttribute("id");
@@ -543,12 +544,12 @@ function VueIntersection(pos, id){
                 this.etatDesactive();
                 break;
         }
-    }
+    };
 
     this.ajouterRouteSortante = function(route) {
         //console.log("ajouterRouteSortante : route ", route);
         this.routesSortantes[this.routesSortantes.length] = route;
-    }
+    };
 
     this.etatSelectionnable = function(){
         this.cercle.setStyle(this.paramSelec);
@@ -557,7 +558,7 @@ function VueIntersection(pos, id){
         //this._clic = this._clicSelectionnable;
         this.activerClic(this._clicSelectionnable);
         return this;
-    }
+    };
 
     this.etatStandard = function(){
         this.cercle.setStyle(this.livraison ? this.paramLivraison :
@@ -574,14 +575,14 @@ function VueIntersection(pos, id){
         //this._clic = this._clicStandard;
         this.activerClic(this._clicStandard);
         return this;
-    }
+    };
 
     this.etatDesactive = function(){
         this.cercle.setStyle(this.paramDesactive);
         this.etat = "desactive";
         this.desactiverClic();
         return this;
-    }
+    };
 
     this.desactiverClic = function() {
         this.cercle.off("click");
