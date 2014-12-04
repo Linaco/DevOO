@@ -48,9 +48,18 @@ function VueFeuilleDeRoute(appCom, vue){
                         $('#FDR').append("<p>Temps de livraison : 10 min</p>")
                         var start = heure.substring(0,heure.length - 2);
                         var nbr = heure.substring(heure.length-2,heure.length);
-                        nbr = parseInt(nbr) + 10;
-
-                        heure = start.concat(nbr);
+						start = parseInt(start);
+						nbr = parseInt(nbr) + 10;
+						if(nbr>60){
+							nbr = nbr - 60;
+							start = start + 1;
+						}
+						var heure = "";
+                        heure = (heure.concat(start)+"h");
+						if(nbr<10){
+							heure = heure + "0";
+						}
+						heure=heure.concat(nbr);
                     }                  
                 }
                 $('#FDR').append("<p>");
