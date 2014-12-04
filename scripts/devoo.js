@@ -112,7 +112,6 @@ function Controleur(){
     this.ajouterLivraison = function(idIntersection, idLivraison, idClient){
         vue.afficherChargement("Ajout en cours, veuillez patienter...");
         var param = idIntersection+"\n"+idClient+"\n"+idLivraison;
-        console.log(param);
         com.appelService("controleur/ajouter-livraison",param,this._ajouterLivraisonOk,this._ajouterLivraisonErr,true);
     }
     this._ajouterLivraisonOk = function(rep) {
@@ -239,7 +238,7 @@ function Com(){
                 }
             };
             xmlhttp.onerror = function (e) {
-                fctErr(xmlhttp.responseText);
+                fctErr("Connexion impossible avec le serveur...");
             };
             xmlhttp.send(msg);
         }
