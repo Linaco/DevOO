@@ -99,32 +99,14 @@ public class ServeurBuilder {
 		};
 		
 		new ServiceControleur(c,"ajouter-livraison",this.serveur){
-			protected Reponse getReponse(InputStream in){
-				
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			    DocumentBuilder builder;
-				try {
-					builder = factory.newDocumentBuilder();
-					try {
-						
-						Document doc = builder.parse(in);
-						//a changer
-						//this.getControleur().chargerPlan(doc);
-						
-						return Reponse.succes("La communication s'est bien dï¿½roulï¿½e.");
-						
-					} catch (SAXException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Woops,\nnous n'avons pas pu interprï¿½ter le fichier transmis.\n"
-								+ "Veuillez vous assurer qu'il ne contient aucune erreur.");
-					} catch (IOException e) {
-						e.printStackTrace();
-						return Reponse.erreur("Erreur lors de la lecture du fichier.");
-					}
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-					return Reponse.erreur("Problï¿½me d'initialisation dans la gestion du service");
-				}
+			protected Reponse getReponse(String in){
+				String[] parts = in.split("\n");
+				int idIntersection = Integer.parseInt(parts[0]);
+				int idClient = Integer.parseInt(parts[1]);
+				int idLivraisonPrecedente = Integer.parseInt(parts[2]);
+				System.err.println(parts);
+				this.getControleur().ajouterLivraison(idIntersection, idClient, idLivraisonPrecedente);
+				return Reponse.succes("Ajout livraison terminée.");
 			}
 		};
 		
@@ -132,7 +114,7 @@ public class ServeurBuilder {
 			protected Reponse getReponse(String in){
 				int idLivraison = Integer.parseInt(in);
 				this.getControleur().supprimerLivraison(idLivraison);
-				return Reponse.succes("Suppression terminï¿½e.");
+				return Reponse.succes("Suppression terminée.");
 			}
 		};
 		
