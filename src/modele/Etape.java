@@ -101,7 +101,7 @@ public class Etape {
 		res += "<etape heurePassage=\""+heure+"\" secondesAttente=\""+ 
 				this.secondesAttenteAvantPassage +"\" idIntersection=\"" +
 				adresse.getId() + "\" idPlageHoraire=\"" + 
-				getPlage(plages) + "\"/>";
+				getPlage(plages) + "\" idClient=\""+livraison.getIdClient() +"\" adresse=\""+adresse.getId() +"\" />";
 		return res;
 	}
 	
