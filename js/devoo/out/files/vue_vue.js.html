@@ -846,30 +846,105 @@
                              */
                             this.id = id;
                         
+                            /**
+                             * Paramètre par défaut du cercle pour Leaflet
+                             * @property paramDefaut {Object}
+                             */
                             this.paramDefaut = {color: &#x27;#fff&#x27;, opacity: 0.5, fillColor: &#x27;#fff&#x27;, fillOpacity: 0.5};
+                            /**
+                             * Paramètre du cercle pour Leaflet pour signaler une livraison
+                             * @property paramLivraison {Object}
+                             */
                             this.paramLivraison = {color: &#x27;#0f0&#x27;, opacity: 0.5, fillColor: &#x27;#ff0&#x27;, fillOpacity: 0.5};
+                            /**
+                             * Paramètre du cercle pour Leaflet pour signaler l&#x27;entrepot
+                             * @property paramEntrepot {Object}
+                             */
                             this.paramEntrepot = {color: &#x27;#0ff&#x27;, opacity: 0.5, fillColor: &#x27;#0ff&#x27;, fillOpacity: 0.5};
+                            /**
+                             * Paramètre du cercle pour Leaflet pour signaler qui l&#x27;intersection est sélectionnable
+                             * @property paramSelec {Object}
+                             */
                             this.paramSelec = {color: &#x27;red&#x27;, opacity: 0.8, fillColor: &#x27;yellow&#x27;, fillOpacity: 0.8};
+                            /**
+                             * Paramètre du cercle pour Leaflet pour signaler qu&#x27;on ne peut pas intéragir avec l&#x27;intersection
+                             * @property paramEntrepot {Object}
+                             */
                             this.paramDesactive = {color: &#x27;#a0a0a0&#x27;, fillColor: &#x27;a0a0a0&#x27;};
+                            /**
+                             * Rayon par défaut du cercle Leaftlet
+                             * @property paramEntrepot {Object}
+                             */
                             this.rayonDefaut = 520;
+                            /**
+                             * Rayon du cercle Leaftlet pour une livraison
+                             * @property paramEntrepot {Object}
+                             */
                             this.rayonLivraison = 1000;
+                            /**
+                             * Rayon du cercle Leaftlet pour l&#x27;entrepot
+                             * @property paramEntrepot {Object}
+                             */
                             this.rayonEntrepot = 1500;
+                            /**
+                             * Rayon de l&#x27;instance
+                             * @property paramEntrepot {Object}
+                             */
                             this.rayon = this.rayonDefaut;
                         
+                            /**
+                             * Etat de l&#x27;intersection : standard, selectionnable, desactive
+                             * @property etat {String}
+                             */
                             this.etat = &quot;standard&quot;;
+                            /**
+                             * Marker Leaflet pour mettre un overlay/iconemarker sur l&#x27;intersection
+                             * @property marker {L.Marker}
+                             */
                             this.marker = null;
                         
+                            /**
+                             * Element DOM pour l&#x27;intérieur de la popup
+                             * @property divPopup {Element}
+                             */
                             this.divPopup = null;
                         
+                            /**
+                             * Cercle Leaflet qui symbolise d&#x27;intersection
+                             * @property cercle {Object}
+                             */
                             this.cercle;
                         
+                            /**
+                             * Paramètres de la livraison, si il y en a une. &#x60;null&#x60; sinon.
+                             * @property livraison {Object}
+                             */
                             this.livraison = null;
+                        
+                            /**
+                             * &#x60;true&#x60; si l&#x27;intersection est celle de l&#x27;entrepôt
+                             * @property entrepot {Boolean}
+                             */
                             this.entrepot = false;
+                        
+                            /**
+                             * Routes qui partent de cette intersection.
+                             * @property routesSortantes {VueRoute[]}
+                             */
                             this.routesSortantes = [];
                         
                             ///////////////////////////////////////////////////////////////////////////////////
                             // &gt;&gt; Methodes
                         
+                            /**
+                             * Ajoute des données de livraison. Crée la popup que l&#x27;on va afficher au clic.
+                             * @method setLivraison
+                             * @param {Integer} id ID de la livraison
+                             * @param {Integer} idClient ID du client
+                             * @param {String} plage Plage horaire textuelle
+                             * @param {String} hdp Heure de passage textuelle
+                             * @return this {VueIntersection}
+                             */
                             this.setLivraison = function(id, idClient, plage, hdp) {
                                 console.log(&quot;setLivraison&quot;);
                                 this.livraison = {
@@ -880,22 +955,33 @@
                                 };
                                 this.setRayon(this.rayonLivraison);
                                 var div = document.getElementById(&#x27;popup-livraison&#x27;).cloneNode(true);
-                                //console.log(&quot;div&quot;,div);
                                 div.getElementsByTagName(&quot;client&quot;)[0].textContent = this.livraison.idClient;
+                        
                                 if(hdp)div.getElementsByTagName(&quot;hdp&quot;)[0].textContent = this.livraison.hdp;
                                 div.getElementsByTagName(&quot;plage&quot;)[0].textContent = plage;
                                 div.getElementsByTagName(&quot;button&quot;)[0].setAttribute(&quot;onclick&quot;,&quot;ctrl.vue._livraisonSupprimee(&quot;+this.livraison.id+&quot;,&quot;+this.id+&quot;);&quot;);
+                                
                                 this.cercle.bindPopup(div);
                                 this.divPopup = div;
                                 this.majEtat();
                                 return this;
                             }
                         
+                            /**
+                             * Change l&#x27;heure de passage de la popup.
+                             * @method setHeurePassage
+                             * @param {String} hdp heure de passage
+                             */
                             this.setHeurePassage = function(hdp) {
                                 var div = this.divPopup;
                                 div.getElementsByTagName(&quot;hdp&quot;)[0].textContent = hdp;
                             };
                         
+                            /**
+                             * Spécifie si l&#x27;entrepot est sur cette intersection. Met à jour l&#x27;état.
+                             * @method setEntrepot
+                             * @param {Boolean} bool &#x60;true&#x60; si l&#x27;entrepot est ici
+                             */
                             this.setEntrepot = function(bool) {
                                 this.entrepot = bool ? true : false;
                                 if(this.entrepot){
@@ -904,6 +990,10 @@
                                 }
                             };
                         
+                            /**
+                             * Supprime toutes les infos qui concernent les livraisons. Met à jour l&#x27;état
+                             * @method razLivraison
+                             */
                             this.razLivraison = function() {
                                 this.livraison = null;
                                 this.enleverMarker();
@@ -915,6 +1005,11 @@
                                 this.majEtat();
                             };
                         
+                            /**
+                             * Retourne, si elle existe, la route qui mène à l&#x27;intersection demandée.
+                             * @method getRouteIntersection
+                             * @param {Integer} idIntersection ID de l&#x27;intersection où la route doit mener.
+                             */
                             this.getRouteIntersection = function(idIntersection) {
                                 for(var i = 0; i &lt; this.routesSortantes.length; ++i){
                                     if(this.routesSortantes[i].B.id == idIntersection){
@@ -924,15 +1019,32 @@
                                 return null;
                             };
                         
+                            /**
+                             * Setter du rayon...
+                             * @method setRayon
+                             * @param {Number} r Nouveau rayon. Attention aucune vérification n&#x27;est faite.
+                             */
                             this.setRayon = function(r){
                                 this.rayon = r;
                                 this.cercle.setRadius(r);
                             }
                         
+                            /**
+                             * Ferme la popup associée à l&#x27;intersection.
+                             * @method closePopup
+                             */
                             this.closePopup = function() {
                                 this.cercle.closePopup();
                             };
                         
+                            /**
+                             * Appelle la bonne fonction de mise à jout d&#x27;état fonctionnel.
+                             * &lt;br/&gt; cf.
+                             * {{#crossLink &quot;VueIntersection/etatStandard:method&quot;}}{{/crossLink}},
+                             * {{#crossLink &quot;VueIntersection/etatSelectionnable:method&quot;}}{{/crossLink}},
+                             * {{#crossLink &quot;VueIntersection/etatDesactive:method&quot;}}{{/crossLink}},
+                             * @method majEtat
+                             */
                             this.majEtat = function(){
                                 switch(this.etat){
                                     case &quot;standard&quot;:
