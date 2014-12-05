@@ -78,7 +78,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "vue\\vue.js",
-            "line": 965,
+            "line": 1077,
             "description": "Vue de l'application, gère toutes les informations graphiques renvoyées à l'utilsateur."
         }
     },
@@ -174,7 +174,7 @@
             "module": "vue",
             "namespace": "",
             "file": "vue\\vue.js",
-            "line": 965,
+            "line": 1077,
             "description": "Vue graphique d'une route, d'un tronçon du graphe",
             "author": "Robin Nicolet",
             "is_constructor": 1
@@ -1221,7 +1221,293 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 977,
+            "line": 760,
+            "description": "Paramètre par défaut du cercle pour Leaflet",
+            "itemtype": "property",
+            "name": "paramDefaut",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 765,
+            "description": "Paramètre du cercle pour Leaflet pour signaler une livraison",
+            "itemtype": "property",
+            "name": "paramLivraison",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 770,
+            "description": "Paramètre du cercle pour Leaflet pour signaler l'entrepot",
+            "itemtype": "property",
+            "name": "paramEntrepot",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 775,
+            "description": "Paramètre du cercle pour Leaflet pour signaler qui l'intersection est sélectionnable",
+            "itemtype": "property",
+            "name": "paramSelec",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 780,
+            "description": "Paramètre du cercle pour Leaflet pour signaler qu'on ne peut pas intéragir avec l'intersection",
+            "itemtype": "property",
+            "name": "paramEntrepot",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 785,
+            "description": "Rayon par défaut du cercle Leaftlet",
+            "itemtype": "property",
+            "name": "paramEntrepot",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 790,
+            "description": "Rayon du cercle Leaftlet pour une livraison",
+            "itemtype": "property",
+            "name": "paramEntrepot",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 795,
+            "description": "Rayon du cercle Leaftlet pour l'entrepot",
+            "itemtype": "property",
+            "name": "paramEntrepot",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 800,
+            "description": "Rayon de l'instance",
+            "itemtype": "property",
+            "name": "paramEntrepot",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 806,
+            "description": "Etat de l'intersection : standard, selectionnable, desactive",
+            "itemtype": "property",
+            "name": "etat",
+            "type": "String",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 811,
+            "description": "Marker Leaflet pour mettre un overlay/iconemarker sur l'intersection",
+            "itemtype": "property",
+            "name": "marker",
+            "type": "L.Marker",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 817,
+            "description": "Element DOM pour l'intérieur de la popup",
+            "itemtype": "property",
+            "name": "divPopup",
+            "type": "Element",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 823,
+            "description": "Cercle Leaflet qui symbolise d'intersection",
+            "itemtype": "property",
+            "name": "cercle",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 829,
+            "description": "Paramètres de la livraison, si il y en a une. `null` sinon.",
+            "itemtype": "property",
+            "name": "livraison",
+            "type": "Object",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 835,
+            "description": "`true` si l'intersection est celle de l'entrepôt",
+            "itemtype": "property",
+            "name": "entrepot",
+            "type": "Boolean",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 841,
+            "description": "Routes qui partent de cette intersection.",
+            "itemtype": "property",
+            "name": "routesSortantes",
+            "type": "VueRoute[]",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 850,
+            "description": "Ajoute des données de livraison. Crée la popup que l'on va afficher au clic.",
+            "itemtype": "method",
+            "name": "setLivraison",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "ID de la livraison",
+                    "type": "Integer"
+                },
+                {
+                    "name": "idClient",
+                    "description": "ID du client",
+                    "type": "Integer"
+                },
+                {
+                    "name": "plage",
+                    "description": "Plage horaire textuelle",
+                    "type": "String"
+                },
+                {
+                    "name": "hdp",
+                    "description": "Heure de passage textuelle",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "VueIntersection"
+            },
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 881,
+            "description": "Change l'heure de passage de la popup.",
+            "itemtype": "method",
+            "name": "setHeurePassage",
+            "params": [
+                {
+                    "name": "hdp",
+                    "description": "heure de passage",
+                    "type": "String"
+                }
+            ],
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 891,
+            "description": "Spécifie si l'entrepot est sur cette intersection. Met à jour l'état.",
+            "itemtype": "method",
+            "name": "setEntrepot",
+            "params": [
+                {
+                    "name": "bool",
+                    "description": "`true` si l'entrepot est ici",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 904,
+            "description": "Supprime toutes les infos qui concernent les livraisons. Met à jour l'état",
+            "itemtype": "method",
+            "name": "razLivraison",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 919,
+            "description": "Retourne, si elle existe, la route qui mène à l'intersection demandée.",
+            "itemtype": "method",
+            "name": "getRouteIntersection",
+            "params": [
+                {
+                    "name": "idIntersection",
+                    "description": "ID de l'intersection où la route doit mener.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 933,
+            "description": "Setter du rayon...",
+            "itemtype": "method",
+            "name": "setRayon",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "Nouveau rayon. Attention aucune vérification n'est faite.",
+                    "type": "Number"
+                }
+            ],
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 943,
+            "description": "Ferme la popup associée à l'intersection.",
+            "itemtype": "method",
+            "name": "closePopup",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 951,
+            "description": "Appelle la bonne fonction de mise à jout d'état fonctionnel.\n<br/> cf.\n{{#crossLink \"VueIntersection/etatStandard:method\"}}{{/crossLink}},\n{{#crossLink \"VueIntersection/etatSelectionnable:method\"}}{{/crossLink}},\n{{#crossLink \"VueIntersection/etatDesactive:method\"}}{{/crossLink}},",
+            "itemtype": "method",
+            "name": "majEtat",
+            "class": "VueIntersection",
+            "module": "vue"
+        },
+        {
+            "file": "vue\\vue.js",
+            "line": 1089,
             "description": "Valeurs par défaut pour les arcs\n\n     {ecartArc, ecartSuivant, nbLigne, couleur}",
             "itemtype": "property",
             "name": "defaut",
@@ -1231,7 +1517,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 991,
+            "line": 1103,
             "description": "Intersection de départ",
             "itemtype": "property",
             "name": "A",
@@ -1241,7 +1527,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 997,
+            "line": 1109,
             "description": "Intersection d'arrivée",
             "itemtype": "property",
             "name": "B",
@@ -1251,7 +1537,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1003,
+            "line": 1115,
             "description": "Nom de la route",
             "itemtype": "property",
             "name": "nom",
@@ -1261,7 +1547,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1009,
+            "line": 1121,
             "description": "Options par défaut pour une route dans Leaflet",
             "itemtype": "property",
             "name": "paramDefaut",
@@ -1271,7 +1557,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1015,
+            "line": 1127,
             "description": "Objet Polyline Leaflet représentant la route",
             "itemtype": "property",
             "name": "ligneBase",
@@ -1281,7 +1567,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1021,
+            "line": 1133,
             "description": "Tableau d'objets Polyline Leaflet représentant les différents passages sur cette route.",
             "itemtype": "property",
             "name": "ligneBase",
@@ -1291,7 +1577,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1032,
+            "line": 1144,
             "description": "Change le nom de la route.",
             "itemtype": "method",
             "name": "setNom",
@@ -1311,7 +1597,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1047,
+            "line": 1159,
             "description": "Ajoute à la map Leaflet",
             "itemtype": "method",
             "name": "afficher",
@@ -1324,7 +1610,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1061,
+            "line": 1173,
             "description": "Enlève de la map Leaflet",
             "itemtype": "method",
             "name": "masquer",
@@ -1337,7 +1623,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1077,
+            "line": 1189,
             "description": "Gestion du `click`.",
             "itemtype": "method",
             "name": "_clic",
@@ -1346,7 +1632,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1085,
+            "line": 1197,
             "description": "Gestion du `mouseover`. On change la couleur de la route.",
             "itemtype": "method",
             "name": "_mouseover",
@@ -1355,7 +1641,7 @@
         },
         {
             "file": "vue\\vue.js",
-            "line": 1093,
+            "line": 1205,
             "description": "Gestion du `mouseout`. On remet la couleur de la route.",
             "itemtype": "method",
             "name": "_mouseout",
