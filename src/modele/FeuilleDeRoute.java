@@ -34,6 +34,9 @@ public class FeuilleDeRoute {
         catch(Exception e){}
     }
     
+    /**
+     * Cette fonction permet de réinitialiser les attributs de la feuille de route : itineraire, plagesHoraires, idPhs.
+     */
     public void clean(){
     	this.itineraire.clear();
     	this.plagesHoraires.clear();
@@ -41,9 +44,30 @@ public class FeuilleDeRoute {
     }
     
     //getters
-    public List<PlageHoraire> getPlagesHoraires(){return this.plagesHoraires;}
-    public Intersection getEntrepot(){return this.entrepot;}
+    
+    /**
+     * getter plagesHoraires
+     * @return plagesHoraires
+     * 		: liste des plages horaires
+     */
+    public List<PlageHoraire> getPlagesHoraires() {
+    	return this.plagesHoraires;
+    	}
+    
+    /**
+     * getter de entrepot
+     * @return entrepot
+     * 		: intersection "entrepot" de la feuille de route
+     */
+    public Intersection getEntrepot() {
+    	return this.entrepot;
+    	}
 
+    /**
+     * getter de itineraire
+     * @return itineraire
+     * 		: liste des étapes d'itineraire
+     */
     public ArrayList<Etape> getItineraire() {
         return itineraire;
     }
@@ -57,10 +81,19 @@ public class FeuilleDeRoute {
     	return true;
     }
     
+    /**
+     * Cette fonction permet d'ajouter une plage horaire à la liste de plages horaires courante.
+     * @param ph
+     * 		: Plage horaire à ajouter
+     */
     public void ajouterPlageHoraire(PlageHoraire ph){
     	this.plagesHoraires.add(ph.getIdPlageHoraire(),ph);
     }
     
+    /**
+     * Cette fonction permet de renseigner l'attribut "entrepot" de la feuille de livraison
+     * @param entrepot
+     */
     public void renseignerEntrepot(Intersection entrepot){
     	this.entrepot = entrepot;
     }
@@ -77,10 +110,23 @@ public class FeuilleDeRoute {
     	}
     }
     
+    /**
+     * Permet de retrouver une plage horaire en fonction de son id
+     * @param id
+     * 		: entier
+     * @return plageHoraire
+     */
     public PlageHoraire rechercherPHParId(int id){
     	return this.plagesHoraires.get(id);
     }
+   
     
+   /**
+    * Permet de retrouver une plage horaire en fonction de sa Date
+    * @param hDeb
+    * 		: Date à rechercher
+    * @return plageHoraire
+    */
    public PlageHoraire rechercherPHParHD(Date hDeb){
 	   for(int i=0;i<plagesHoraires.size();i++){
 		   if(hDeb.equals(plagesHoraires.get(i).getHeureDebut())){
@@ -90,9 +136,14 @@ public class FeuilleDeRoute {
 	   return null;
    }
    /**
-    * Fonction permettant de retrouver la position dans itinéraire de la livraison suivante dans la liste des étapes
+    * Fonction permettant de retrouver la position dans l'itinéraire courant de la livraison suivante.
+    * La fonction prend en paramètre la livraison dont on souhaite trouver la livraison précédente et renvoie un liste d'entiers
+    * contenant la position de la livraison passée en paramètre en 0 dans la liste, et la position de la livraison suivante en
+    * 1 dans la liste.
     * @param livraison
+    * 		: livraison à partir de laquelle chercher
     * @return liste<Integer>
+    * 		: liste contenant les positions résultats : [positionLivraison, positionSuivante]
     */
    public List<Integer> trouverSuivant(Livraison livraison){
 	   System.err.println("98");
@@ -115,9 +166,14 @@ public class FeuilleDeRoute {
 	   return listePosition;
    }
    /**
-    * Fonction permettant de retrouver la position dans itinéraire de la livraison précédente dans la liste des étapes
+    * Fonction permettant de retrouver la position dans l'itinéraire courant de la livraison précédente.
+    * La fonction prend en paramètre la livraison dont on souhaite trouver la livraison suivante et renvoie un liste d'entiers
+    * contenant la position de la livraison passée en paramètre en 1 dans la liste, et la position de la livraison suivante en
+    * 0 dans la liste.
     * @param livraison
+    * 		: livraison à partir de laquelle chercher
     * @return List<Integer>
+    * 		: liste contenant les positions résultats : [positionPrécedente, positionLivraison]
     */
    public List<Integer> trouverPrecedent(Livraison livraison){
 	   List<Integer> listePosition = new ArrayList<Integer>();
@@ -137,9 +193,12 @@ public class FeuilleDeRoute {
    }
    
    /**
-    * Cette fonction permet de mettre à jour les horaires de passage de chaque étape suivant l'étape selectionnée en paramètres. 
+    * Cette fonction permet de mettre à jour les horaires de passage de chaque étape de l'itinéraire courant,
+    * suivant l'étape selectionnée en paramètre.
     * @param etape
-    * @param grapheRoutier
+    * 		: etape à partir de laquelle les temps de passages seront mis à jour
+    * @param carte
+    * 		: graphe routier courant nécessaire pour récupérer les plus courts chemins
     */
    public void majHeureDePassage(Etape etape, GrapheRoutier carte){
 	   
@@ -163,8 +222,19 @@ public class FeuilleDeRoute {
    
    /**
     * Fonction permettant d'ajouter une nouvelle livraison à la feuile de route tout en mettant à jour l'itinéraire.
+    * Cette fonction prend comme premier paramètre la livraison à ajouter et comme second paramètre la livraison à la 
+    * suite de laquelle la nouvelle livraison doit être placée.
+    * La nouvelle livraison est ajoutée à la plage horaire correspondante dans la liste courante des plages horaires.
+    * Puis les étapes reliant la livraison suivante et la livraison précédente sont supprimées avant de calculer les
+    * nouvelles étapes devant relier la livraison précédente et la nouvelle livraison, et la nouvelle livraison et la
+    * livraison suivante. Les nouvelles étapes sont ajoutées à l'itinéraire courant, et l'on finit par mettre à jour
+    * les horaires de passages en appelant la fonction majHeureDePassage.
     * @param nouvelleLivraison
+    * 		: livraison à ajouter
     * @param livraisonPrecedente
+    * 		: livraison précédant la nouvelle livraison
+    * @param carte
+    * 		: Graphe routier courant nécessaire pour réaliser les calculs de plus courts chemins
     */
    @SuppressWarnings("unchecked")
    public void ajouterLivraison(Livraison nouvelleLivraison, Livraison livraisonPrecedente, GrapheRoutier carte){
@@ -179,28 +249,17 @@ public class FeuilleDeRoute {
 		   }
 	   }
 	   if(!b){
-		   // On ne devrait jamais arriver l�.......
 		   pH.addLivraison(nouvelleLivraison);
 		   plagesHoraires.add(pH);
 	   }else{
-		   //System.err.println(1);
 		   plagesHoraires.get(index).addLivraison(livraisonPrecedente,nouvelleLivraison);
 	   }
-	   //this.getGrapheLivraison().getLivraisons().add(this.getGrapheLivraison().getLivraisons().indexOf(livraisonPrecedente)+1,nouvelleLivraison);
-
-	   /*System.err.println(2);
-	   List<Livraison> listeLivraisons = this.getGrapheLivraison().getLivraisons();
-	   System.err.println(livraisonPrecedente);
-	   System.err.println(3 + " "+listeLivraisons.indexOf(livraisonPrecedente));
-	   listeLivraisons.add(listeLivraisons.indexOf(livraisonPrecedente),nouvelleLivraison);*/
-
-	   //System.err.println(4);
 	   List<Integer> posEtapes = trouverSuivant(livraisonPrecedente);
 	   //Retrait des etapes obsolètes
 	   for(int i=0; i<posEtapes.get(1)-posEtapes.get(0)-1;i++){
 		   itineraire.remove(posEtapes.get(0)+1);
 	   }
-	   //System.err.println("precedente --> "+livraisonPrecedente.getIdLiv());
+	   
 	   //ajout des nouvelles étapes de livraison précédente-->nouvelle livraison
 	   Object[]resultatCalcul = carte.calculerPlusCourtChemin(livraisonPrecedente.getPointLivraison(), nouvelleLivraison.getPointLivraison());
 	   List<Intersection> listeIntersection = (List<Intersection>)resultatCalcul[0];
@@ -213,6 +272,7 @@ public class FeuilleDeRoute {
 	   nouvelleLivraison.setEtapePassagePrevue(nouvellesEtapes.get(nouvellesEtapes.size()-1));
 	   itineraire.addAll(posEtapes.get(0)+1, nouvellesEtapes);
 	   int positionNouvelleLivraison = posEtapes.get(0)+nouvellesEtapes.size();
+	   
 	   //ajout des nouvelles étapes de nouvelle livraison-->livraison suivante
 	   resultatCalcul = carte.calculerPlusCourtChemin(nouvelleLivraison.getPointLivraison(), itineraire.get(positionNouvelleLivraison+1).getAdresse());
 	   listeIntersection = (List<Intersection>)resultatCalcul[0];
@@ -222,29 +282,29 @@ public class FeuilleDeRoute {
 		   nouvellesEtapes.add(new Etape(heureCourante,listeIntersection.get(i)));
 	   }
 	   itineraire.addAll(positionNouvelleLivraison+1, nouvellesEtapes);
-	   //this.majHeureDePassage(itineraire.get(positionNouvelleLivraison+nouvellesEtapes.size()), carte);
    }
    
    /**
-    * Fonction permettant de supprimer une livraison de la feuille de route tout en mettant à jour l'itinéraire
+    * Fonction permettant de supprimer une livraison de la feuille de route tout en mettant à jour l'itinéraire courant.
+    * La livraison est supprimée de la plage horaire correspondante dans la liste des plages horaires. Puis on récupère 
+    * les positions des livraisons suivante et précédente avant de supprimer les étapes reliant la livraison à supprimer
+    * et les étapes suivante/précédente. Et pour finir on calcule les étapes reliant les livraison suivante et précédente.
+    * Les nouvelles étapes sont ajoutées à l'itinéraire courant, et l'on finit par demander une mise à jour des horaires
+    * de passage en appelant la fonction majHeureDePassage.
     * @param livraison
-    * @param grapheroutier
+    * 		: livraison à supprimer
+    * @param carte
+    * 		: graphe routier courant permettant d'effectuer les calculs de plus courts chemins.
     */
 
    @SuppressWarnings("unchecked")
    public void supprimerLivraison(Livraison l, GrapheRoutier carte){
-	   System.err.println("Suppression");
 	   PlageHoraire pH = l.getPlageHoraire();
 	   pH.deleteLivraison(l);
-	   //this.getGrapheLivraison().getLivraisons().remove(l);
-	   System.err.println("0");
 	   int positionPrecedente = trouverPrecedent(l).get(0);
-	   System.err.println("1");
 	   int positionSuivante = trouverSuivant(l).get(1);
 	   //supression des etapes
-	   System.err.println(positionSuivante+" "+positionPrecedente);
 	   for(int i=0;i<positionSuivante-positionPrecedente-1;i++){
-		   System.err.println("remove");
 		   itineraire.remove(positionPrecedente+1);
 	   }
 	   //liaison entre précédent et suivant
