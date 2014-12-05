@@ -757,30 +757,105 @@ function VueIntersection(pos, id){
      */
     this.id = id;
 
+    /**
+     * Paramètre par défaut du cercle pour Leaflet
+     * @property paramDefaut {Object}
+     */
     this.paramDefaut = {color: '#fff', opacity: 0.5, fillColor: '#fff', fillOpacity: 0.5};
+    /**
+     * Paramètre du cercle pour Leaflet pour signaler une livraison
+     * @property paramLivraison {Object}
+     */
     this.paramLivraison = {color: '#0f0', opacity: 0.5, fillColor: '#ff0', fillOpacity: 0.5};
+    /**
+     * Paramètre du cercle pour Leaflet pour signaler l'entrepot
+     * @property paramEntrepot {Object}
+     */
     this.paramEntrepot = {color: '#0ff', opacity: 0.5, fillColor: '#0ff', fillOpacity: 0.5};
+    /**
+     * Paramètre du cercle pour Leaflet pour signaler qui l'intersection est sélectionnable
+     * @property paramSelec {Object}
+     */
     this.paramSelec = {color: 'red', opacity: 0.8, fillColor: 'yellow', fillOpacity: 0.8};
+    /**
+     * Paramètre du cercle pour Leaflet pour signaler qu'on ne peut pas intéragir avec l'intersection
+     * @property paramEntrepot {Object}
+     */
     this.paramDesactive = {color: '#a0a0a0', fillColor: 'a0a0a0'};
+    /**
+     * Rayon par défaut du cercle Leaftlet
+     * @property paramEntrepot {Object}
+     */
     this.rayonDefaut = 520;
+    /**
+     * Rayon du cercle Leaftlet pour une livraison
+     * @property paramEntrepot {Object}
+     */
     this.rayonLivraison = 1000;
+    /**
+     * Rayon du cercle Leaftlet pour l'entrepot
+     * @property paramEntrepot {Object}
+     */
     this.rayonEntrepot = 1500;
+    /**
+     * Rayon de l'instance
+     * @property paramEntrepot {Object}
+     */
     this.rayon = this.rayonDefaut;
 
+    /**
+     * Etat de l'intersection : standard, selectionnable, desactive
+     * @property etat {String}
+     */
     this.etat = "standard";
+    /**
+     * Marker Leaflet pour mettre un overlay/iconemarker sur l'intersection
+     * @property marker {L.Marker}
+     */
     this.marker = null;
 
+    /**
+     * Element DOM pour l'intérieur de la popup
+     * @property divPopup {Element}
+     */
     this.divPopup = null;
 
+    /**
+     * Cercle Leaflet qui symbolise d'intersection
+     * @property cercle {Object}
+     */
     this.cercle;
 
+    /**
+     * Paramètres de la livraison, si il y en a une. `null` sinon.
+     * @property livraison {Object}
+     */
     this.livraison = null;
+
+    /**
+     * `true` si l'intersection est celle de l'entrepôt
+     * @property entrepot {Boolean}
+     */
     this.entrepot = false;
+
+    /**
+     * Routes qui partent de cette intersection.
+     * @property routesSortantes {VueRoute[]}
+     */
     this.routesSortantes = [];
 
     ///////////////////////////////////////////////////////////////////////////////////
     // >> Methodes
 
+    /**
+     * Ajoute des données de livraison. Crée la popup que l'on va afficher au clic.
+     * @method setLivraison
+     * @param {Integer} id ID de la livraison
+     * @param {Integer} idClient ID du client
+     * @param {String} plage Plage horaire textuelle
+     * @param {String} hdp Heure de passage textuelle
+     * @return this {VueIntersection}
+     */
     this.setLivraison = function(id, idClient, plage, hdp) {
         console.log("setLivraison");
         this.livraison = {
@@ -791,22 +866,33 @@ function VueIntersection(pos, id){
         };
         this.setRayon(this.rayonLivraison);
         var div = document.getElementById('popup-livraison').cloneNode(true);
-        //console.log("div",div);
         div.getElementsByTagName("client")[0].textContent = this.livraison.idClient;
+
         if(hdp)div.getElementsByTagName("hdp")[0].textContent = this.livraison.hdp;
         div.getElementsByTagName("plage")[0].textContent = plage;
         div.getElementsByTagName("button")[0].setAttribute("onclick","ctrl.vue._livraisonSupprimee("+this.livraison.id+","+this.id+");");
+        
         this.cercle.bindPopup(div);
         this.divPopup = div;
         this.majEtat();
         return this;
     }
 
+    /**
+     * Change l'heure de passage de la popup.
+     * @method setHeurePassage
+     * @param {String} hdp heure de passage
+     */
     this.setHeurePassage = function(hdp) {
         var div = this.divPopup;
         div.getElementsByTagName("hdp")[0].textContent = hdp;
     };
 
+    /**
+     * Spécifie si l'entrepot est sur cette intersection. Met à jour l'état.
+     * @method setEntrepot
+     * @param {Boolean} bool `true` si l'entrepot est ici
+     */
     this.setEntrepot = function(bool) {
         this.entrepot = bool ? true : false;
         if(this.entrepot){
@@ -815,6 +901,10 @@ function VueIntersection(pos, id){
         }
     };
 
+    /**
+     * Supprime toutes les infos qui concernent les livraisons. Met à jour l'état
+     * @method razLivraison
+     */
     this.razLivraison = function() {
         this.livraison = null;
         this.enleverMarker();
@@ -826,6 +916,11 @@ function VueIntersection(pos, id){
         this.majEtat();
     };
 
+    /**
+     * Retourne, si elle existe, la route qui mène à l'intersection demandée.
+     * @method getRouteIntersection
+     * @param {Integer} idIntersection ID de l'intersection où la route doit mener.
+     */
     this.getRouteIntersection = function(idIntersection) {
         for(var i = 0; i < this.routesSortantes.length; ++i){
             if(this.routesSortantes[i].B.id == idIntersection){
@@ -835,15 +930,42 @@ function VueIntersection(pos, id){
         return null;
     };
 
+    /**
+     * Setter du rayon...
+     * @method setRayon
+     * @param {Number} r Nouveau rayon. Attention aucune vérification n'est faite.
+     */
     this.setRayon = function(r){
         this.rayon = r;
         this.cercle.setRadius(r);
     }
 
+    /**
+     * Ajoute une route à la liste des routes sortantes.
+     * @method ajouterRouteSortante
+     * @param {VueRoute} route route à ajouter
+     */
+    this.ajouterRouteSortante = function(route) {
+        //console.log("ajouterRouteSortante : route ", route);
+        this.routesSortantes[this.routesSortantes.length] = route;
+    };
+
+    /**
+     * Ferme la popup associée à l'intersection.
+     * @method closePopup
+     */
     this.closePopup = function() {
         this.cercle.closePopup();
     };
 
+    /**
+     * Appelle la bonne fonction de mise à jour pour l'état fonctionnel courant.
+     * <br/> cf.
+     * {{#crossLink "VueIntersection/etatStandard:method"}}{{/crossLink}},
+     * {{#crossLink "VueIntersection/etatSelectionnable:method"}}{{/crossLink}},
+     * {{#crossLink "VueIntersection/etatDesactive:method"}}{{/crossLink}},
+     * @method majEtat
+     */
     this.majEtat = function(){
         switch(this.etat){
             case "standard":
@@ -858,11 +980,11 @@ function VueIntersection(pos, id){
         }
     };
 
-    this.ajouterRouteSortante = function(route) {
-        //console.log("ajouterRouteSortante : route ", route);
-        this.routesSortantes[this.routesSortantes.length] = route;
-    };
-
+    /**
+     * Passe l'intersection dans l'état `selectionnable`
+     * @method etatSelectionnable
+     * @return {VueRoute} this 
+     */
     this.etatSelectionnable = function(){
         this.cercle.setStyle(this.paramSelec);
         this.etat = "selectionnable";
@@ -871,6 +993,11 @@ function VueIntersection(pos, id){
         return this;
     };
 
+    /**
+     * Passe l'intersection dans l'état `standard`
+     * @method etatStandard
+     * @return {VueRoute} this 
+     */
     this.etatStandard = function(){
         this.cercle.setStyle(this.livraison ? this.paramLivraison :
                             (this.entrepot ? this.paramEntrepot : this.paramDefaut));
@@ -887,6 +1014,11 @@ function VueIntersection(pos, id){
         return this;
     };
 
+    /**
+     * Passe l'intersection dans l'état `desactive`
+     * @method etatDesactive
+     * @return {VueRoute} this 
+     */
     this.etatDesactive = function(){
         this.cercle.setStyle(this.paramDesactive);
         this.etat = "desactive";
@@ -894,11 +1026,21 @@ function VueIntersection(pos, id){
         return this;
     };
 
+    /**
+     * Désactive la possibilité de cliquer sur l'intersection
+     * @method desactiverClic
+     * @return {VueRoute} this 
+     */
     this.desactiverClic = function() {
         this.cercle.off("click");
         return this;
     }
 
+    /**
+     * Active la possibilité de cliquer sur l'intersection
+     * @method activerClic
+     * @return {VueRoute} this 
+     */
     this.activerClic = function(fct){
         this.desactiverClic();
         f = fct ? fct : this._clicStandard;
@@ -906,6 +1048,11 @@ function VueIntersection(pos, id){
         return this;
     }
 
+    /**
+     * Ajoute les éléments à la map Leaflet
+     * @method afficher
+     * @return {VueRoute} this 
+     */
     this.afficher = function(){
         this.cercle.addTo(map);
         if(this.marker){
@@ -914,6 +1061,11 @@ function VueIntersection(pos, id){
         return this;
     }
 
+    /**
+     * Enlève les éléments de la map Leaflet
+     * @method masquer
+     * @return {VueRoute} this 
+     */
     this.masquer = function(){
         map.removeLayer(this.cercle);
         if(this.marker){
@@ -922,13 +1074,27 @@ function VueIntersection(pos, id){
         return this;
     }
 
+    /**
+     * Enlève le marker de la map Leaflet
+     * @method enleverMarker
+     */
     this.enleverMarker = function() {
         if(this.marker)map.removeLayer(this.marker);
     };
+
+    /**
+     * Evenement généré par un clic sur le marker. Transmet le clic au cercle.
+     * @method _clicMarker
+     * @private
+     */
     this._clicMarker = function() {
         this.cercle.fire("click");
     };
 
+    /**
+     * Ajoute le marker à la map Leaflet
+     * @method ajouterMarker
+     */
     this.ajouterMarker = function(warning) {
         console.log("Ajouter Marker",warning);
         console.log(this.cercle.getLatLng());
@@ -937,15 +1103,22 @@ function VueIntersection(pos, id){
                     .addTo(map);
     };
 
+    /**
+     * Clic pour l'état sélectionnable
+     * @method _clicSelectionnable
+     * @deprecated
+     */
     this._clicSelectionnable = function() {
-        console.log("clic selectionnable", this);
         //this.etatStandard();
     }
+
+    /**
+     * Clic pour l'état standard
+     * @method _clicStandard
+     */
     this._clicStandard = function() {
-        console.log("clic standard",this);
         if(this.livraison){
             this.cercle.openPopup();
-            console.log(this.livraison);
         } else {
             this.cercle.openPopup();
         }
